@@ -1,0 +1,84 @@
+\appendix
+\chapter{Data extracted from Google Flight's RPC-request}
+\label{app:DataExtractedFromGoogleFlightsRPCRequest}
+\begin{table}[h]
+	\centering
+    \begin{tabular}{l l}
+        \hline \hline
+        Index                         & Description                                                              \\ \hline
+        Array[0][0][1][3][0][*] 	  & Array of all possible segments (Segment)                                 \\ 
+        Array[0][0][1][3][1][*] 	  & Array of all possible routes (Route)                                     \\ 
+        Segment[1][0]                 & Departure airport (IATA code)                                            \\ 
+        Segment[1][1]                 & Departure date and time                                                  \\ 
+        Segment[1][2]                 & Arrival airport (IATA code)                                              \\ 
+        Segment[1][3]                 & Arrival date and time                                                    \\ 
+        Segment[1][4]                 & Carrier code (IATA code)                                                 \\ 
+        Segment[1][5]                 & Flight number                                                            \\ 
+        Route[0][0]                   & Index of outbound segments                                               \\ 
+        Route[0][1]                   & Index of inbound segments                                                \\ 
+        Route[1]                      & Price of round-trip                                                      \\ 
+        Route[3][0][0]                & Ticketing code of outbound flight (IATA code) \\ 
+        Route[3][1][0]                & Ticketing code of inbound flight (IATA code) \\ \hline
+    \end{tabular}
+	\caption{Information in retrieved Google Flight's RPC response}
+\end{table}
+
+
+\chapter{Selected routes}
+\label{app:SelectedRoutes}
+\begin{table}[h]
+	\centering
+    \begin{tabular}{ l | l | l l }
+        Type        & Outbound airport & \multicolumn{2}{c}{Inbound airports}        \\ \hline \hline
+        US Domestic & ATL & MCO & LAX \\
+        ~           & DEN & PHX & FLL \\
+        ~           & DFW & LAX & SFO \\
+        ~           & LAX & SFO & LAS \\
+        ~           & ORD & LGA & BOS \\
+        EU Domestic & AMS & CDG & LHR \\
+		~           & CDG & AMS & LHR \\
+		~           & LHR & AMS & CDG \\
+        International & AMS & DXB & JFK \\ 
+        ~             & JFK & CDG & LHR \\
+        ~             & LHR & JFK & LAX \\
+    \end{tabular}
+	\caption{Routes to be examined}
+\end{table}
+
+\chapter{Sample JSON RPC}
+\label{app:SampleJSONRPC}
+\small
+\begin{verbatim}
+{'1': [{'1': 'fs', '2':
+  '{"1":{"1":[
+    {"1":[ATL],          # departure airport
+     "2":[MCO],          # arrival airport
+     "3":"2013-08-26"},  # departure date
+    {"1":[MCO],          # departure airport return
+     "2":[ATL},          # arrival airport return
+     "3":"2013-08-19"}   # departure date return
+  ]}}', u'4': 1}],
+'2': {'1': [{'1': 'b_am', '2': 'fs'},
+            {'1': 'b_qu', '2': '2'},
+            {'1': 'b_qc', '2': '2'}
+]}}
+\end{verbatim}
+
+\chapter{Adapted Black-Scholes formula}
+\label{app:AdaptedBlackScholesFormula}
+\begin{align*}
+p_O &= p_I \times N(d_1) - p_S \times e^{-rT}N(d_2) \\
+d_1 &= \frac{\ln(p_I/E) + (r + \sigma^2/2)T}{\sigma \sqrt{T}} \\
+d_2 &= d_1 - \sigma \sqrt{T}
+\end{align*}
+
+\begin{compactdesc}
+\item[$p_O$] is the call value
+\item[$p_I$] is the initial price of th flight
+\item[$T$] is the time to maturity
+\item[$N(\cdot)$] is the cumulative normal probability
+\item[$\sigma$] is the volatility of returns of the underlying flight
+\item[$p_S$] is the strike price of the option
+\item[$r$] is the risk free rate
+\vspace{1ex}
+\end{compactdesc}
