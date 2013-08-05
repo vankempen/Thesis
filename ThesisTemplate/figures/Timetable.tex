@@ -1,0 +1,40 @@
+\documentclass{article}
+\usepackage{pgfgantt}
+\usepackage{tikz}
+
+\usetikzlibrary{external}
+\tikzexternalize
+
+\begin{document}
+
+
+\begin{center}
+\begin{tikzpicture}
+\begin{ganttchart}
+	[hgrid,
+	x unit=.7mm, y unit chart=5mm,
+	today=2013-08-05, today label= ,
+	time slot format=isodate]{2013-07-01}{2013-12-31}
+
+\gantttitle{Timetable}{184} \\
+\gantttitlecalendar{month=shortname} \\
+\gantttitlelist{1,...,24}{7}\gantttitlelist{25,26}{8} \\
+
+\ganttgroup{Phase 1}{2013-07-08}{2013-10-07} \\
+\ganttbar{Collect data}{2013-07-08}{2013-09-30} \\
+\ganttbar{Build parser}{2013-07-29}{2013-08-19} \\
+\ganttbar{Build simulation model}{2013-08-19}{2013-09-16} \\
+\ganttbar{Parse data}{2013-09-30}{2013-10-07} \\
+\\
+\ganttgroup{Phase 2}{2013-09-17}{2013-10-22} \\
+\ganttbar{Build option valuation models}{2013-09-17}{2013-10-22} \\
+\\
+\ganttgroup{Phase 3}{2013-10-22}{2013-11-11} \\
+\ganttbar{Simulation and sensitivity analysis}{2013-10-22}{2013-11-11} \\
+\\
+\ganttbar{Finalize and submit thesis}{2013-11-12}{2013-11-30}
+\end{ganttchart}
+\end{tikzpicture}
+\end{center}
+
+\end{document}
