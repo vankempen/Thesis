@@ -29,7 +29,7 @@ When the company writes an option, it is thereby obliged to offer the underlying
 
 \subsection{Passenger}
 \label{sec:Passenger}
-The most central entity in the simulation is the \emph{passenger}.  In this research, a passenger is defined as a customer who considers to purchase a ticket or option for a particular flight on a particular number of days before actual departure of this flight. The distribution of the arrival process for the simulation of passengers will be derived from the article by \citeA{weatherford1993modeling}. In their paper, the authors simulate the arrival according to a inhomogeneous Poisson process. \todo{def}. \citeA{bertsimas2005simulation} defined a model more specific for the aviation industry based on the PARM-model. \todo{def}.
+The most central entity in the simulation is the \emph{passenger}.  In this research, a passenger is defined as a customer who considers to purchase a ticket or option for a particular flight on a particular number of days before actual departure of this flight. The distribution of the arrival process for the simulation of passengers will be derived from the article by \citeA{weatherford1993modeling}. In their paper, the authors simulate the arrival according to a inhomogeneous Poisson process. \citeA{bertsimas2005simulation} defined a model more specific for the aviation industry based on the PARM-model.
 
 The simulation model upon which this research is based will only consider the arrival of economy class passengers. This is because the data provide no reliable method of distinguishing different classes, and persons that travel in economy are more price elastic than their business class counterparts. They are therefore more likely to consider an airfare~lock-in product to cover their risk.
 
@@ -75,10 +75,12 @@ In a risk neutral setting with equal shared information between option seller an
 \min(P^f \times (p_E - p_I), (1 - P^f) \times p_I)
 \end{equation}
 
-From the third party's perspective the minimum option price the company is willing to accept follows the equation:
-\begin{equation*}
-P^f \times (p_E - p_I)
-\end{equation*}
+From the third party's perspective the minimum option price the company is willing to accept is equal to the expected increase of $p_I$. For a set $\left\{ E(p_1), E(p_2), \ldots, E(p_n)\right\}$ where $E(p_i)$ is the expected result (i.e., $(p_i - p_I) \times P^{\,p_i}$) of price $p_i$ occurring at maturity. The value of $p_O$ can thus be defined as:
+\begin{equation}
+p_O = \sum\limits_{i=1}^n\begin{cases}
+	 E(p_i), & \mbox{if } E(p_i) > 0 \\
+	0, & \mbox{if } E(p_i) \le 0 \end{cases}
+\end{equation}
 
 This minimum price is related to the costs an option writer expects from selling the airfare~lock-in product. The formula yields the prices at which the company anticipates to lose as much as it gains from selling the option (i.e., the resulting profit from selling this option is $0$).
 
@@ -102,6 +104,7 @@ The stationary points are thus dependent on the ratio $\frac{p_E}{p_I}$. This is
 For combinations of $P^f$ and $\frac{p_E}{p_I}$ that result in an outcome left of the stationary line there is an call option price that both satisfies the passenger and the provider. The combinations to the right of this function do not result in such an option price, and the customer will rather directly buy the flight ticket. An option seller can still target passengers in this area by providing them with a ticket and an option that allows the customers to return the ticket's without additional costs.
 
 \subsubsection{Option style}
+\label{sec:OptionStyle}
 While customers might be allowed to execute their option during the whole period up till maturity (i.e., American style), I will assume that all options are exercised on the date of maturity (i.e., European option). This is in accordance with the theory of \citeA{merton1973theory}, who states that an American option that does not return dividends should rationally only be exercised at maturity. This assumption can easily be illustrated with the use of an example. If a customer who has bought a real option has decided to exercise the option, it has nothing to lose by waiting till the option matures. By waiting this extra time, the customer only gains an advantage which allows him to still withhold himself from actually buying the ticket. In this way, when there occurs an unforeseen situation after his decision, he still has not bought the ticket and can waive the flight. Therefore it would be unrealistic of the customer to exercise the option before the date of maturity.
 
 
@@ -192,8 +195,8 @@ This simulation model generates passengers that want to buy tickets of a certain
 To make sure the models are not overfitted on the train data, the simulation will be run on the separate set of test data.
 
 \subsubsection{Sensitivity Analysis}
-During the simulation a sensitivity analysis will be performed as well. In this analysis the three~parameters --- \begin{inparaenum}[\itshape (i)\upshape]
+During the simulation a sensitivity analysis will be performed as well. In this analysis the three~parameters of a passenger --- \begin{inparaenum}[\itshape (i)\upshape]
 \item risk-utility,
-\item accuracy of forecast, and
+\item forecasting technique, and
 \item likelihood of travelling.
-\end{inparaenum} --- of a passenger will be altered to see what the effect of these properties is on the price setting model.
+\end{inparaenum} --- will be altered to see what the effect of these properties is on the price setting model.

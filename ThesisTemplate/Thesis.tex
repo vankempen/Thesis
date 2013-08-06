@@ -49,7 +49,6 @@
 \usepackage{cleveref, nameref}		%  link to labels by actual names
 \usepackage{apacite}				%  apa style bibliography
 
-
 %
 %  Definitions
 %
@@ -111,10 +110,9 @@
 \input{misc/Titlepage}
 \input{misc/ExecutiveSummary}
 \newpage
-{\linespread{1}
-\tableofcontents
-}
-%  Mainmatter
+{\linespread{1} \tableofcontents}
+
+%%  Mainmatter
 \mainmatter
 \input{chapters/01_Introduction}
 \input{chapters/02_ResearchQuestions}
@@ -122,7 +120,7 @@
 \input{chapters/04_Methodology}
 \input{misc/Planning}
 
-%  Backmatter
+%%  Backmatter
 \input{misc/Appendices} %  before backmatter, because of chapter numbering
 \backmatter
 \bibliography{\biblioname}

@@ -116,12 +116,16 @@ d_2 &= d_1 - \sigma \sqrt{T - t}
 \end{align*}
 
 \noindent
-\citeA{black1973pricing} make a few assumptions of the underlying stock, knowing: \todo{expl: also airlines?}
+\citeA{black1973pricing} make a few assumptions of the underlying stock, including:
 \begin{compactitem}
 \item The option style is European;
 \item The stock price follows a geometric Brownian motion (i.e., log-normal distribution) with constant drift and volatility;
 \item The stock pays no intermediary dividends.
 \end{compactitem}
+
+\noindent
+These assumptions might also be applicable to airfares. For instance, a rational customer would only exercise its airfare~lock-in product at maturity (see \typenameref{sec:OptionStyle} in \cref{chap:Methodology} for a detailed explanation). Furthermore, the numerous factors and entities that influence the price of a ticket can be very unpredictable. This implies a random walk where price increases and decreases follow a certain log-normal distribution with an upward trend.
+
 The model proved itself to be very useful on the stock-market and was quickly implemented. While implementers of the tool use it often with adjustments, the equation approaches the actual observed option prices on the exchanges \cite{bodie2008investments}. 
 Next to option valuation in financial markets, the Black--Scholes-model proved itself to also be applicable to other assets. For example, \citeA{finch1998option} give the example of the valuation of the options held by a firm which allows it to abandon the capital investment of a project prior to completion. Another more recent --- but theoretical --- implementation of the method is shown by \citeA{jain11}, who showed that the theory might also be applicable in the airline industry. A full description of this paper can be found in \typenameref{subsec:AviationIndustry}.
 
