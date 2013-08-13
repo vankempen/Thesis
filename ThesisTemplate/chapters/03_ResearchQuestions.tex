@@ -1,0 +1,44 @@
+\chapter{Research Questions}
+\label{chap:ResearchQuestions}
+In this paper, I would like to theoretically and empirically analyse whether it is viable for an external company to offer airfare~lock-in~products. In this thesis, I refer to \emph{viable} as the availability of an option price that both satisfies the option buyer (i.e., customer) and the option writer (i.e., the external company). The external company's minimum price at which he is still willing to sell the option (i.e., \emph{willingness to accept} or \emph{WTA}) is equal to the expected costs of the risk associated with this product. This risk can be expressed as the expected increase in ticket price combined with the probability of the costumer not exercising the option\footnote{This only applies in a risk-neutral, fully predictable setting with rational customers that have equal information. See \autoref{sec:Passenger} for a more detailed description of the theoretical scenario's}. The customer will only accept the offer when his willingness to pay for the option (i.e., \emph{WTP}) is higher than this minimal price. In this thesis I will therefore test what the minimum price of the offer should be according to the seller, and compare this with the maximum price that the customer's \emph{WTP}. The main research question in this paper can be defined as
+
+\begin{quote}\emph{Is it sustainable for an external company without capacity information or seat reservation capabilities to set the price of airfare~lock-in~products at a level that the customer accepts?}\end{quote}
+
+The maximum price a passenger is willing to pay depends upon many internal factors. For the second research question I therefore want to consider the influence of some of these variables on the customer's \emph{WTP} and the relation with the option seller's \emph{WTA}. The three variables that will be considered are
+\begin{compactdesc}
+\item[Risk-utility] This is the customer's preference of risk. A customer can be categorized as \begin{inparaenum}[\itshape (i)\upshape]
+\item risk-averse,
+\item risk-neutral, or
+\item risk-seeking.
+\end{inparaenum} In the setting of airfare~lock-in products, customers that can be labeled as risk-averse are more likely to buy this kind of option, as they are inclined to pay higher prices to cover their uncertainty;
+\item[Forecasting technique] This variable represents the techniques a customer uses to make its own forecast. In my models I will consider three types of techniques, namely predictions based upon: \begin{inparaenum}[\itshape (i)\upshape]
+\item a log-normal distribution with historical volatility,
+\item an empirical distribution acquired from historical data, or
+\item the actual future price (i.e., foreknowledge);
+\end{inparaenum}
+\item[Likelihood of travelling] This factor represents the probability $P^f$ that a customer actually wants to make use of the flight. The allowed values are $0 \le P^f \le 1$ where $0$~represents the state `\emph{certainly not flying}' and $1$ the case  `\emph{certainly flying}'.
+\vspace{1em}
+\end{compactdesc}
+
+\noindent
+My second research question can thus be defined as
+\begin{quote}\emph{What is the influence of the variables risk-utility, accuracy of forecast, and likelihood of travelling on the gap between the option buyer's WTP and the option writer's WTA?}\end{quote}
+
+The accuracy of forecasts depends heavily on the underlying mechanism. In this study I will compare two different valuation strategies empirically, and test which meth\-od ap\-prox\-i\-mates the optimal model most. The first method uses a theoretical approach and evaluates the options using the \emph{Black--Scholes} model. The second method uses numerical approximation to determine the best option price. This method makes use of \emph{Monte~Carlo} simulation.
+
+Both methods will base their forecasts upon aggregated data. The different categories upon which the flights will be divided are \begin{inparaenum}[\itshape (i)\upshape]
+\item per \emph{specific departure airport} (e.g., AMS),
+\item per \emph{specific arrival airport} (e.g., JFK),
+\item per \emph{operating carrier} (e.g., American Airlines), or
+\item a combination of these.
+\end{inparaenum} The model will therefore make predictions on a set of flights that share the same properties, rather than for each individual flight separately. This will not only make the models easier to implement on smaller datasets, but might also prevent the customer from \textit{gaming the system}. For example, when a customer sees that an option for a specific flight is more expensive than other options for the same route, he can conclude that the prices are likely to go up and act accordingly. Making prediction on aggregated data will make this gaming more difficult because the option pricing data will not disclose information on expectations for individual flights.
+
+\noindent
+The third research question in this study is defined as
+
+\begin{quote}\emph{What feasible underlying option valuation strategy --- theoretical or numerical --- approaches the optimal model in option prices best?}\end{quote}
+
+\subsection{Scope}
+This study will analyse a set of 22~different single-legged routes covering flights within the United States and Europe, as well as intercontinental legs (see \cref{app:SelectedRoutes} for a the selected routes). Results of this research will therefore only be generalizable to flights falling within the boundaries of this particular set. However, the findings might be of use to other industries where similar constructions are applicable. Think of other travel-related companies like hotels or car-rental services, or in industries where uncertainty might withhold consumers to buy products like ticket sales for basketball games.
+
+Furthermore, this research will only build models based upon theoretical frameworks and empirical data that is available to the public. I will thus consider the third party as an independent option writer that does not have any inside information or capabilities other than a customer. For instance, the model will assume that the external company has no possibility of reserving capacity on a flight, and therefore has to deal with the risk of sell-outs. In a practical situation, however, the company might make an arrangement with the operating carrier to reserve seats for a certain premium. This would cut uncertainty for the option writer, and thus decrease option prices. The model I use in this study might therefore be harsher than realistically would be the case.
