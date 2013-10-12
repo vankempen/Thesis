@@ -1,0 +1,15 @@
+\chapter{Data analysis}
+\label{chap:DataAnalysis}
+\section{Analysis of dataset}
+As described in section {CITE} the retrieval process of the data took place from {DATE BEGIN} till {DATE END}. During this 12~week period a total of {NUMBER REQ} files were downloaded, which resulted in a dataset of almost 18~gigabytes. Of all these requests {NUMBER OF FAILED} failed to be downloaded at the first instance, and were retried 15~minutes later. In total, of these retried requests {NUMBER FAILED TWICE} failed to be downloaded the second time. Due to the methodology used in this Thesis, in which the 4~data collection points per day are aggregated into a single observation, this {NUMBER OF FAILED TWICE} failed downloads did not create any gaps in the final data matrix. {ANALYSIS?}
+
+After the retrieval of the complete dataset the files were parsed for single-legged flights from the destinations mentioned in {APP 1}, and sorted by outbound/inbound airport, and operating carrier. This resulted in a database containing {NUMBER OF FLIGHTS} flights which included {NUMBER OF DATAPOINTS} price observations. To exclude flights that do contain large areas of missed observations, the same strategy as {ARTICLE PREDICTION} is being used. The researchers excluded flights for which they did observed less than 60 percent of the data points. So in this thesis I have excluded single-legged flights for which only had observations for 25~or less of the total 42~days\footnote{$42*0.6=25.2 days$}. This resulted in a set of {NUM FLIGHTS AFTER CLEANUP} tickets with {NUM DATAPOINTS} airfare observations. A summary of valid flights available per specific dataset can be seen in {TABLE out/in} and {TABLE aircarrier}.
+
+Gaps
+
+
+TODO
+- All dates to UTC {in chapter 4?}
+- Table for total of flights per out/inbound dest, and operating carrier
+- Analysis of sold-out flights
+- Describe data matrix {in chapter 4}
