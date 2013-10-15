@@ -4,7 +4,7 @@
 
 %\pdfcompresslevel=0		%  speedup pdf creation, disable for final version
 %\pdfobjcompresslevel=0	%  speedup pdf creation, disable for final version
-\documentclass[a4paper, oneside, draft]{memoir}
+\documentclass[a4paper, oneside]{memoir}
 
 
 %
@@ -26,16 +26,14 @@
 %\usepackage{charter}					%  non-standard font
 \usepackage{tgpagella}					%  or use this font
 
-\linespread{1.5}
+\linespread{1.15}
 
 %\usepackage[expert]{mathdesign}		%  normal style for equations (necessary?)
 
 \usepackage{amsmath, amsfonts, amssymb}
 \usepackage{booktabs}				%  better looking tables
-\usepackage[some]{background}	    		%  background colors
 \usepackage{xcolor}					%  colors!!
 \usepackage{flafter}				%  show figures, etc. only after appearance in text
-%\usepackage{geometry}				%  for titlepage
 \usepackage{graphicx, pgfplots}			%  figures and plots
 \usepackage{marginnote}				%  notes in margin
 \usepackage{microtype}				%  better formatting
@@ -55,23 +53,13 @@
 \author{\me}
 \title{\doctitle}
 
-%all for titlepage
-\definecolor{titlepagecolor}{cmyk}{1,.60,0,.40}
-\DeclareFixedFont{\bigsf}{T1}{phv}{b}{n}{1.5cm}
-\backgroundsetup{scale=1, angle=0, opacity=1,
-	contents={
-		\begin{tikzpicture}[overlay]
-			\path [fill=titlepagecolor] (-0.5\paperwidth,6.2) rectangle (0.5\paperwidth,10);  
-		\end{tikzpicture}
-	}
-}
 
 %own chapter style
 \titleformat{\chapter}[display]
 	{\centering\bfseries}
 	{\Large\thechapter}
 	{.8ex}
-	{\titlerule \vskip .8ex \huge}
+	{\titlerule \vskip 0.8ex \huge}
 
 %insert .tex figures. \insertfigure{<filename> (must be in figures/)}{<caption>}
 %this also creates label 'fig:<filename>'
@@ -94,8 +82,7 @@
 %
 % PDF settings
 %
-\hypersetup
-{
+\hypersetup{
     pdfauthor={\me},
     pdftitle={\shortdoctitle},
     pdfsubject={\doctitle},
@@ -121,11 +108,11 @@
 
 %%  Mainmatter
 \mainmatter
-\input{chapters/01_Introduction}
-\input{chapters/02_LiteratureReview}
-\input{chapters/03_ResearchQuestions}
+%\input{chapters/01_Introduction}
+%\input{chapters/02_LiteratureReview}
+%\input{chapters/03_ResearchQuestions}
 \input{chapters/04_Methodology}
-\input{misc/Planning}
+\input{chapters/05_DataAnalysis}
 
 %%  Backmatter
 \input{misc/Appendices} %  before backmatter, because of chapter numbering

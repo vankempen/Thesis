@@ -1,15 +1,29 @@
 \chapter{Data analysis}
 \label{chap:DataAnalysis}
-\section{Analysis of dataset}
-As described in section {CITE} the retrieval process of the data took place from {DATE BEGIN} till {DATE END}. During this 12~week period a total of {NUMBER REQ} files were downloaded, which resulted in a dataset of almost 18~gigabytes. Of all these requests {NUMBER OF FAILED} failed to be downloaded at the first instance, and were retried 15~minutes later. In total, of these retried requests {NUMBER FAILED TWICE} failed to be downloaded the second time. Due to the methodology used in this Thesis, in which the 4~data collection points per day are aggregated into a single observation, this {NUMBER OF FAILED TWICE} failed downloads did not create any gaps in the final data matrix. {ANALYSIS?}
+\section{Data description}
+Flight ticket prices were collected 4~times per day for a period ranging from the $9^{th}$ of July till the $29^{th}$ of September. During this data collection phase, airfares on the 22~routes described in \autoref{app:SelectedRoutes} were gathered on flights departing from the $20^{th}$ of August till the $30^{th}$ of December. In these 12~weeks, 158,553~files were requested from Google~Flights' RPC-servers, which resulted in a set of almost 18~gigabites of JSON~data. 15~of these requests failed at the first try, and had to be downloaded again one quarter of an hour later. Of these retries, the automated script also failed to download 2~files at the second request. These failures were the request made on the $20^{th}$ of September at 00:00 for flights departing from JFK to LHR on the $25^{th}$ of September and the request made on the $26^{th}$ of July at 00:00 for flights departing from LHR to LAX on the $1^{st}$ of July. However, due to the methodology used in this research in which the daily 4~data~points are aggregated into a single value, these 2~failures do not create any gaps of missing values in the final data matrix. \todo{analysis}
 
-After the retrieval of the complete dataset the files were parsed for single-legged flights from the destinations mentioned in {APP 1}, and sorted by outbound/inbound airport, and operating carrier. This resulted in a database containing {NUMBER OF FLIGHTS} flights which included {NUMBER OF DATAPOINTS} price observations. To exclude flights that do contain large areas of missed observations, the same strategy as {ARTICLE PREDICTION} is being used. The researchers excluded flights for which they did observed less than 60 percent of the data points. So in this thesis I have excluded single-legged flights for which only had observations for 25~or less of the total 42~days\footnote{$42*0.6=25.2 days$}. This resulted in a set of {NUM FLIGHTS AFTER CLEANUP} tickets with {NUM DATAPOINTS} airfare observations. A summary of valid flights available per specific dataset can be seen in {TABLE out/in} and {TABLE aircarrier}.
+After the retrieval of the data the files were parsed for single-legged flights and every 4~daily price observations aggregated into a single data point. Next, the flights were categorized by outbound/inbound airport, and operating carrier. This resulted in a database containing 462,662 unique flights which included 13,369,730 airfare observations. Due to Google Flights' nature of returning a limited set of airfares for each request, some flights did contain gaps of missing values within their data. In alignment with the study by \citeA{groves2013agent}, this paper therefore excludes flights for which less than $\frac{2}{3}$ of the possible airfare observations are available. So, because there are a total of 42~observations days prior to each flight, tickets that do have fewer points than $42 \times \frac{2}{3} = 28$ available will be excluded from the analysis. Next, because airlines are known to open and close specific price-buckets \cite{mcgill1999revenue}, some gaps were still present in the dataset. These gaps were filled with the data available from observations made in the future. For example, when a particular flight misses a price observation at 35~days before departure, but it does contain the airfare for 34 and 36~days prior to departure, the 35~days' slot would be filled with the same value as the 34~days before departure. In reality this would mean that when a customer's option expires, but the ticket is not available on the date of maturity (i.e., no price observation), the customer would have to wait till the airline opens the sell of that flight again. He would therefore get the ticket at the price in the future. 
 
-Gaps
+\todo[Image]{illustration of process}
+
+Missing data at for the last (few) days prior to departure are considered to be the sell-out of a flight. Because Google Flight's also offers Business and First class tickets, this implies that all the seats are completely sold out, and there is no possibility of still buying the ticket. This means that when a customer's option expires on such a ticket and he wishes to exercise it, an alternative flight has to be offered. To prevent such situations from happening, these missing data on sold-out flights is filled with a penalty similar to the technique used by \citeA{etzioni03}. By introducing such a penalty, the option valuation model is triggered into trying not to offer options when the probability of sell-out is high. Instead of the \$300,000 proposed by the authors, I have chosen to set the penalty at 3 times the average airfare at 1~day before departure. This is more realistic in a sense that the customer could be offered an alternative flight that leaves on the same day plus some extra form of monetary compensation. Furthermore this lower fill-value prevents penalties from biasing the airfares closer to departure.
+
+The empirical dataset shows that in total 258,052 flights are not offered (i.e., sold-out) at 1~day before departure. These tickets take into account almost 56 percent of the all the flights available. Real-world data on the number of sold-out flights is very hard to acquire, because this value could give sensitive information on the performance of an airline.  \todo{Kindervater?}
+
+After cleaning the dataset, it was split into two separate parts. The database used in this research contains airfare observations of flights departing in the period $20^{th}$ of August till the $30^{th}$ of September. As explained in \typenameref{chap:Methodology}, the first 4~weeks of these departing flights --- $20^{th}$ of August till the $16^{th}$ of September --- will be used as the training set for the research. The latter 2~weeks --- from the $17^{th}$ of September till the $30^{th}$ of September --- will be used for testing the proposed option valuation models. This split resulted in a training set containing 321,545 flights with 8,797,071 valid data points, and a test set which includes 4,572,659 airfares on 141,117 flights. A further analysis of these datasets, including more specific statistical numbers on the 22~routes, can be found in \todo{table ref}
+
+\todo[Table]{table with analysis of sets}
 
 
-TODO
-- All dates to UTC {in chapter 4?}
-- Table for total of flights per out/inbound dest, and operating carrier
-- Analysis of sold-out flights
-- Describe data matrix {in chapter 4}
+\section{Simulation}
+
+
+
+
+
+%TODO
+%- All dates to UTC {in chapter 4?}
+%- Table for total of flights per out/inbound dest, and operating carrier
+%- Analysis of sold-out flights
+%- Describe data matrix {in chapter 4}
