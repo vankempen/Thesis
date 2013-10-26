@@ -1,6 +1,7 @@
 \chapter{Methodology}
 \label{chap:Methodology}
 \section{Entities}
+\label{sec:Entities}
 Throughout this research, four~main entities will be used. These concepts are \begin{inparaenum}[\itshape (i)\upshape]
 \item the flight ticket,
 \item the airfare~lock-in product,
@@ -9,6 +10,7 @@ Throughout this research, four~main entities will be used. These concepts are \b
 \end{inparaenum}
 
 \subsection{Flight ticket}
+\label{subsec:FlightTicket}
 A flight ticket gives its holder the right to fly on a particular date and time from and to a particular airport using a specified airline. Flights can be distinct by their unique \emph{call-sign}, which consists of three~different components: \begin{inparaenum}[\itshape (i)\upshape]
 \item the IATA airline code,
 \item the IATA flight number, and
@@ -17,19 +19,19 @@ A flight ticket gives its holder the right to fly on a particular date and time 
 
 A ticket for a particular flight can be bought many weeks prior to departure. At a certain time, tickets are either available or \emph{sold-out} --- in which an alternate flight with compensation is necessary. In the aviation industry, `\emph{sold-out}' does not always mean that there are no tickets available at a future moment in time. As a result of revenue management and discount allocation, airliners are known to open and close certain \emph{discount buckets} \cite{mcgill1999revenue}. The opening and closing of these buckets prevents missed revenues of high-grossing customers due to actual sell-outs. It is therefore possible that a flight seems to be sold-out weeks before departure, but reappears again closer to the deadline.
 
-The revenue management concept of discount buckets has lead to different prices throughout the booking period. Customers that want to buy a seat for a certain flight earlier to the departure date are likely to be offered other fares than early bookers . Flight tickets are thus dynamically priced.
+The revenue management concept of discount buckets has lead to different prices throughout the booking period. Customers that want to buy a seat for a certain flight earlier to the departure date are likely to be offered other fares than early bookers. Flight tickets are thus dynamically priced.
 
 \subsection{Airfare lock-in product}
-The airfare~lock-in products gives its holder the right --- but not the obligation --- to buy the underlying flight on or before a certain maturity date for a predetermined strike price. The holder is thereby covered from sudden increases in price or potential sell-outs, but is still able to not fly at all or gain from large price decreases.
+The airfare~lock-in products gives its holder the right --- but not the obligation --- to buy the underlying flight on or before a certain maturity date for a predetermined strike price. The holder is thereby covered from sudden increases in price or potential sell-outs, but is still able to not fly at all or gain from large price decreases. In this research the strike price $p_s$ is always equal to the airfare when the option is initially offered.
 
 \subsection{External company}
-An external company is the entity that offers the airfare~lock-in products to passengers. The seller sets its minimal option prices based upon the expected loss due to increase or sell-out of the underlying flight. The company therefore only accepts to sell the product when the customer will offer a price that is equal or higher than this expected costs.
+An external company is the entity that offers the airfare~lock-in products to passengers. The seller sets its minimal option prices based upon the expected loss due to fare increases or sell-out of the underlying flight. The company therefore only accepts to sell the product when the customer will offer a price that is equal or higher than this expected costs.
 
-When the company writes an option, it is thereby obliged to offer the underlying ticket at the specified strike price if the holder exercises it. Flight tickets are capacity constrained, and therefore not unlimited. This means that sometimes the situation emerges in which the option holder wants to exercise its right, but the flight is sold-out. The option writer than has to offer the customer a ticket for an alternative flight plus an extra compensation. The level of compensation could be calculated according to European~Legislation\footnote{\url{http://europa.eu/youreurope/citizens/travel/passenger-rights/air/}}. A sell-out thus creates much increased costs. Therefore, the option price will dramatically increase when the probability of a sell-out is high. In such situations the selling company might refrain itself from offer the option for that particular flight in full.
+When the company writes an option, it is thereby obliged to offer the underlying ticket at the specified strike price $p_s$ if the holder decides to exercise it. Flight tickets are capacity constrained, and therefore not unlimited. This means that sometimes the situation emerges in which the option holder wants to exercise its right, but the flight is sold-out. The option writer than has to offer the customer a ticket for an alternative flight plus an extra compensation. \todo[The level of compensation could be calculated according to European~Legislation\footnote{\url{http://europa.eu/youreurope/citizens/travel/passenger-rights/air/}}.]{$3 \times$ \ldots}. A sell-out thus creates much increased costs. Therefore, the option price will dramatically increase when the probability of a sell-out is high. In such situations the selling company might refrain itself from offer the option for that particular flight in full.
 
 \subsection{Passenger}
 \label{sec:Passenger}
-The most central entity in the simulation is the \emph{passenger}.  In this research, a passenger is defined as a customer who considers to purchase a ticket or option for a particular flight on a particular number of days before actual departure of this flight. The distribution of the arrival process for the simulation of passengers will be derived from the article by \citeA{weatherford1993modeling}. In their paper, the authors simulate the arrival according to a inhomogeneous Poisson process. \citeA{bertsimas2005simulation} defined a model more specific for the aviation industry based on the PARM-model.
+The most central entity in the simulation is the \emph{passenger}.  In this research, a passenger is defined as a customer who considers to purchase a ticket or option for a particular flight on a particular number of days before actual departure of this flight. \todo[The distribution of the arrival process for the simulation of passengers will be derived from the article by \citeA{weatherford1993modeling}. In their paper, the authors simulate the arrival according to a inhomogeneous Poisson process. \citeA{bertsimas2005simulation} defined a model more specific for the aviation industry based on the PARM-model.]{move to future research}
 
 The simulation model upon which this research is based will only consider the arrival of economy class passengers. This is because the data provide no reliable method of distinguishing different classes, and persons that travel in economy are more price elastic than their business class counterparts. They are therefore more likely to consider an airfare~lock-in product to cover their risk.
 
@@ -38,7 +40,7 @@ When a doubting passenger arrives at the booking process, there is a series of e
 
 \insertfigure{PassengersDecisionTree}{Passenger's decision tree}
 
-First, the customer has to decide whether to \emph{buy the flight} immediately, \emph{wait} a certain amount of time or \emph{buy an option} on the flight and postpone the decision. Next, after a certain period of time, the customer will know whether he will actually take the flight. The probability of flying or not flying is respectively $P^f$ and $1 - P^f$, and is based upon uncertain events that might occur. For instance, the probability of not flying might consist of the probability that the passenger is not able to take a week vacation from work, or even that the weather is bad when the customer wants to go on a sunny holiday.
+First, the customer has to decide whether to \emph{buy the flight} immediately, \emph{wait} a certain amount of time, or \emph{buy an option} on the flight and postpone the decision. Next, after a certain period of time, the customer will know whether he will actually take the flight. The probability of flying or not flying is respectively $P^f$ and $1 - P^f$, and is based upon uncertain events that might occur. For instance, the probability of not flying might consist of the probability that the passenger is not able to take a week vacation from work, or even that the weather is bad when the customer wants to go on a sunny holiday.
 
 The action that follows this outcome depends upon the decision made in the first phase. The outcome is calculated by comparing the extra costs incurred by the decision with the `\emph{optimal}' decision that would have been made by a passenger that knew whether he would fly or not ($P^f$ would respectively be $1$ or $0$). The difference of these options is the monetary value of the passenger's \emph{regret} of making his first decision. So, when the passenger decides to actually fly, the costs of his chosen path are compared with the costs of directly buying the flight in the first phase (i.e., $p_I$). On the other hand, when the customer decides not to go, the outcome is calculated by comparing the path with \emph{not buying the ticket in the first place} (i.e., $0$).
 
@@ -70,6 +72,7 @@ P^f \times p_O + (1 - P^f) \times p_O = p_O
 \end{equation*}
 
 \subsubsection{Passenger's WTP and the third party's WTA}
+\label{subsec:PassengersWTP}
 In a risk neutral setting with equal shared information between option seller and buyer, the price a passenger is willing to pay for the option equals:
 \begin{equation}
 \min(P^f \times (p_E - p_I), (1 - P^f) \times p_I)

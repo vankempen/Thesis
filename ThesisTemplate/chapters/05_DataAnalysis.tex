@@ -1,29 +1,169 @@
 \chapter{Data analysis}
 \label{chap:DataAnalysis}
 \section{Data description}
-Flight ticket prices were collected 4~times per day for a period ranging from the $9^{th}$ of July till the $29^{th}$ of September. During this data collection phase, airfares on the 22~routes described in \autoref{app:SelectedRoutes} were gathered on flights departing from the $20^{th}$ of August till the $30^{th}$ of December. In these 12~weeks, 158,553~files were requested from Google~Flights' RPC-servers, which resulted in a set of almost 18~gigabites of JSON~data. 15~of these requests failed at the first try, and had to be downloaded again one quarter of an hour later. Of these retries, the automated script also failed to download 2~files at the second request. These failures were the request made on the $20^{th}$ of September at 00:00 for flights departing from JFK to LHR on the $25^{th}$ of September and the request made on the $26^{th}$ of July at 00:00 for flights departing from LHR to LAX on the $1^{st}$ of July. However, due to the methodology used in this research in which the daily 4~data~points are aggregated into a single value, these 2~failures do not create any gaps of missing values in the final data matrix. \todo{analysis}
+Flight ticket prices were collected 4~times per day for a period ranging from the $9^{th}$ of July till the $29^{th}$ of September. During this data collection phase, airfares on the 22~routes described in \autoref{app:SelectedRoutes} were gathered on flights departing from the $20^{th}$ of August till the $30^{th}$ of September. In these 12~weeks, 158,553~files were requested from Google~Flights' RPC-servers, which resulted in a set of almost 18~gigabites of JSON~data. 15~of these requests failed at the first try, and had to be downloaded again one quarter of an hour later. Of these retries, the automated script also failed to download 2~files at the second request. These failures were the request made on the $20^{th}$ of September at 00:00 GMT+2 for flights departing from JFK to LHR on the $25^{th}$ of September and the request made on the $26^{th}$ of July at 00:00 GMT+2 for flights departing from LHR to LAX on the $1^{st}$ of July. As the next paragraphs will explain, these two~failures did not create any gaps of missing data in the final data structure.
 
-After the retrieval of the data the files were parsed for single-legged flights and every 4~daily price observations aggregated into a single data point. Next, the flights were categorized by outbound/inbound airport, and operating carrier. This resulted in a database containing 462,662 unique flights which included 13,369,730 airfare observations. Due to Google Flights' nature of returning a limited set of airfares for each request, some flights did contain gaps of missing values within their data. In alignment with the study by \citeA{groves2013agent}, this paper therefore excludes flights for which less than $\frac{2}{3}$ of the possible airfare observations are available. So, because there are a total of 42~observations days prior to each flight, tickets that do have fewer points than $42 \times \frac{2}{3} = 28$ available will be excluded from the analysis. Next, because airlines are known to open and close specific price-buckets \cite{mcgill1999revenue}, some gaps were still present in the dataset. These gaps were filled with the data available from observations made in the future. For example, when a particular flight misses a price observation at 35~days before departure, but it does contain the airfare for 34 and 36~days prior to departure, the 35~days' slot would be filled with the same value as the 34~days before departure. In reality this would mean that when a customer's option expires, but the ticket is not available on the date of maturity (i.e., no price observation), the customer would have to wait till the airline opens the sell of that flight again. He would therefore get the ticket at the price in the future. 
+After retrieval of the data all the JSON-files were parsed for single-legged return flights and categorized by outbound/inbound airport, and operating carrier. Each flight was distinguished using the characteristics described in \autoref{subsec:FlightTicket}, and departure times were converted to UTC\@. Next, the timeslot $p_{t_n}$ of the lookup time relative to the actual departure time was determined for each flight, where $n = \lfloor \frac{\scriptstyle{hours\ before\ departure}}{6} \rfloor + 1$. Because files were downloaded for 4~times per day, they can be assigned to timeslots consisting of 6~hours. For example, an airfare retrieved 33 hours before departure of the flight will be assigned to timeslot $p_{t_6}$, where $6 = \lfloor \frac{33}{6} \rfloor + 1$. Because ticket prices were acquired from 1~day up until 42~days before departure, a total of 168~timeslots are available ranging from $p_{t_5}$ till $p_{t_{172}}$.
 
-\todo[Image]{illustration of process}
+After parsing of the files, the prices of the 6~hour timeslots were converted to represent daily values. To do so, every 4~timeslots where thus aggregated into a single airfare by averaging the values. For instance, the timeslots $p_{t_{17}}$, $p_{t_{18}}$, $p_{t_{19}}$ and $p_{t_{20}}$ were averaged into a single value $p_{d_4}$ representing the ticket price for that specific flight as available 4~days before departure.
+
+\noindent
+An illustration of this process is given in \autoref{fig:conversionOfTimeslotsIntoDailyAirfares}.
+
+\begin{figure}
+$$
+\kbordermatrix{
+           &\multispan4\hfill$\scriptstyle 1\,dbd$\hfill    &        \\
+    \omit  &\multispan4\quad\downbracefill\quad             &        \\
+    \#1    & p_{t_5} & p_{t_6} & p_{t_7} & p_{t_8} & \vrule & \cdots \\
+    \#2    & p_{t_5} & p_{t_6} & p_{t_7} & p_{t_8} & \vrule & \cdots \\
+    \vdots & \vdots  & \vdots  & \vdots  & \vdots  & \vrule & \ddots \\
+    \#n    & p_{t_5} & p_{t_6} & p_{t_7} & p_{t_8} & \vrule & \cdots 
+}
+\Rightarrow
+\kbordermatrix{
+           & 1\,\scriptstyle{dbd}       & \cdots & 42\,\scriptstyle{dbd}              \\
+    \#1    & \overline{p_{t_{5,6,7,8}}} & \cdots & \overline{p_{t_{169,170,171,172}}} \\
+    \#2    & \overline{p_{t_{5,6,7,8}}} & \cdots & \overline{p_{t_{169,170,171,172}}} \\
+    \vdots & \vdots                     & \ddots & \vdots                             \\
+    \#n    & \overline{p_{t_{5,6,7,8}}} & \cdots & \overline{p_{t_{169,170,171,172}}}
+}
+$$
+\caption{Conversion of timeslots into daily airfares}
+\label{fig:conversionOfTimeslotsIntoDailyAirfares}
+\end{figure}
+
+When certain timeslots contain no price observation, this single timeslot is left out of the calculation of the average airfare for that specific number of days before departure. Only when all 4~of the timeslots for a specific day have no data available, the value in the new data matrix is assigned as \emph{missing value} (i.e., n/a). Due to this methodology in which the daily 4~data~points are aggregated into a single value, the 2~failures described earlier do not create any gaps of missing values in the final data matrix. \todo{analysis}
+
+The conversion into daily values resulted in a database containing 462,662 unique flights which included 12,865,953 airfare observations. Due to Google Flights' nature of returning a limited set of airfares for each request, some flights did contain gaps of missing values within their data. In alignment with the study by \citeA{groves2013agent}, this paper therefore excludes flights for which less than $\frac{2}{3}$ of the possible airfare observations are available. So, because there are a total of 42~observations days prior to each flight, tickets that do have fewer points than $42 \times \frac{2}{3} = 28$ available will be excluded from the analysis. Next, because airlines are known to open and close specific price-buckets \cite{mcgill1999revenue}, some gaps were still present in the dataset. These gaps were filled with the data available from observations made in the future. For example, when a particular flight misses a price observation at 35~days before departure, but it does contain the airfare for 34 and 36~days prior to departure, the 35~days' slot would be filled with the same value as the 34~days before departure. In reality this would mean that when a customer's option expires, but the ticket is not available on the date of maturity (i.e., no price observation). The customer thus would have to wait till the airline resumes the sale of that flight. He would therefore get the ticket at the price in the future.
 
 Missing data at for the last (few) days prior to departure are considered to be the sell-out of a flight. Because Google Flight's also offers Business and First class tickets, this implies that all the seats are completely sold out, and there is no possibility of still buying the ticket. This means that when a customer's option expires on such a ticket and he wishes to exercise it, an alternative flight has to be offered. To prevent such situations from happening, these missing data on sold-out flights is filled with a penalty similar to the technique used by \citeA{etzioni03}. By introducing such a penalty, the option valuation model is triggered into trying not to offer options when the probability of sell-out is high. Instead of the \$300,000 proposed by the authors, I have chosen to set the penalty at 3 times the average airfare at 1~day before departure. This is more realistic in a sense that the customer could be offered an alternative flight that leaves on the same day plus some extra form of monetary compensation. Furthermore this lower fill-value prevents penalties from biasing the airfares closer to departure.
 
-The empirical dataset shows that in total 258,052 flights are not offered (i.e., sold-out) at 1~day before departure. These tickets take into account almost 56 percent of the all the flights available. Real-world data on the number of sold-out flights is very hard to acquire, because this value could give sensitive information on the performance of an airline.  \todo{Kindervater?}
+An illustration of this data filling process is given in \autoref{fig:dataFillingOfMissingValues}. Airfares are given as integers representing the price in cents. As can be seen in the figure, the n/a-gaps are filled with the nearest available future price closer to departure. Furthermore, the missing value for theflight with id~\#3 at 1~day before departure is seen as a sold-out ticket. This value is filled with $3 \times \bar{c_1}$, where $\bar{c_1}$ represents the average of the airfares observed at a single day before departure.
 
-After cleaning the dataset, it was split into two separate parts. The database used in this research contains airfare observations of flights departing in the period $20^{th}$ of August till the $30^{th}$ of September. As explained in \typenameref{chap:Methodology}, the first 4~weeks of these departing flights --- $20^{th}$ of August till the $16^{th}$ of September --- will be used as the training set for the research. The latter 2~weeks --- from the $17^{th}$ of September till the $30^{th}$ of September --- will be used for testing the proposed option valuation models. This split resulted in a training set containing 321,545 flights with 8,797,071 valid data points, and a test set which includes 4,572,659 airfares on 141,117 flights. A further analysis of these datasets, including more specific statistical numbers on the 22~routes, can be found in \todo{table ref}
+\begin{figure}
+$$
+\kbordermatrix{
+           & 1\,\scriptstyle{dbd} & 2\,\scriptstyle{dbd} & 3\,\scriptstyle{dbd}  & \cdots \\
+    \#1    & 10000                & 12000                & 12000                 & \cdots \\
+    \#2    & 20000                & \mathrm{n/a}         & 22000                 & \cdots \\
+    \#3    & \mathrm{n/a}         & 32000                & \mathrm{n/a}          & \cdots \\
+    \vdots & \vdots               & \vdots               & \vdots                & \ddots
+}
+\Rightarrow
+\kbordermatrix{
+           & 1\,\scriptstyle{dbd} & 2\,\scriptstyle{dbd} & 3\,\scriptstyle{dbd}  & \cdots \\
+    \#1    & 10000                & 12000                & 12000                 & \cdots \\
+    \#2    & 20000                & 20000                & 22000                 & \cdots \\
+    \#3    & 3 \cdot \bar{c_1}    & 32000                & 32000                 & \cdots \\
+    \vdots & \vdots               & \vdots               & \vdots                & \ddots
+}
+$$
+\caption{Data filling of missing values (i.e., n/a)}
+\label{fig:dataFillingOfMissingValues}
+\end{figure}
+
+The empirical dataset shows that in total 159,600 flights are not offered (i.e., sold-out) at 1~day before departure. These tickets take into account almost 35 percent of the all the flights available. Real-world data on the number of sold-out flights is very hard to acquire, because this value could give sensitive information on the performance of an airline.  \todo{Kindervater?}
+
+
+After cleaning the dataset, it was split into two separate parts. The database used in this research contains airfare observations of flights departing in the period $20^{th}$ of August till the $30^{th}$ of September. As explained in \autoref{chap:Methodology}, the first 4~weeks of these departing flights --- $20^{th}$ of August till the $16^{th}$ of September --- will be used as the training set for the research. The latter 2~weeks --- from the $17^{th}$ of September till the $30^{th}$ of September --- will be used for testing the proposed option valuation models. This split resulted in a training set containing 321,545 flights, and a test set which includes 141,117 flights. An example extract of the final test data matrix used for the flights from AMS to JFK can be found in \autoref{fig:extractFromAMStoJFK}. In this extract, flight with id~\#4 was sold-out 1~day before departure, and that field was thus filled with $3 \times$ the average ticket price at 1~day before departure.
+
+\begin{figure}
+$$
+\kbordermatrix{
+           & 1\,dbd & 2\,dbd & 3\,dbd & 4\,dbd & 5\,dbd & \ldots & 42\,dbd \\
+    \#1    & 57469  & 68619  & 122469 & 222469 & 109644 & \ldots & 65853   \\
+    \#2    & 87119  & 87369  & 93019  & 84469  & 79469  & \ldots & 65853   \\
+    \#3    & 87494  & 86694  & 94744  & 74569  & 70244  & \ldots & 65853   \\
+    \#4    & 410951 & 134430 & 242480 & 108934 & 126369 & \ldots & 123357  \\
+    \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \ddots & \vdots  \\
+    \#252  & 68984  & 69094  & 64669  & 73219  & 70244  & \ldots & 65857
+}
+$$
+\caption{Sample extract from test data matrix AMS to JFK}
+\label{fig:extractFromAMStoJFK}
+\end{figure}
+
+\noindent
+A further analysis of these datasets, including more specific statistical numbers on the 22~routes, can be found in \todo{table ref}
 
 \todo[Table]{table with analysis of sets}
 
 
-\section{Simulation}
+\section{Simulation model}
+\todo{general descr}
+
+\subsection{Simulation process description}
+In this paper a series of simulations will be run to determine the performance of the proposed option valuation models. The simulation model will calculate the expected profits or losses of each of these models. To do so, it will run through a number of steps, namely:
+
+\begin{description}
+\item[Generate passengers] the simulation model will generate a single passenger for each day prior to departure of a specific flight. Because data have been collected on flights up till 42~days before departure, each ticket will receive this same number of passengers with option requests. However, because when selling options with a specific number of days to maturity $m$ it is not possible to buy options fewer that $m$ days to departure, these customers get excluded from the model. As an example, the test dataset containing airfares of tickets from LHR to JFK includes 7,690 unique flights after cleansing. When simulating an this model for options with a maturity of 3 days a total of $(42 - 3) \times 7,690 = 299,910$ passengers will be generated.
+\item[Calculate the passenger's WTP] the passenger's \emph{Willingness To Pay} is determined by calculating the minimum costs incurred when buying the flight immediately or waiting to buy the ticket at maturity. A more complete explanation of this concept can be found in \typenameref{subsec:PassengersWTP}. For the simulation the equation takes into account several properties of a passenger. These parameters are \begin{inparaenum}[\itshape (i)\upshape]
+    \item risk-utility,
+    \item forecasting technique, and
+    \item likelihood of travelling.
+\end{inparaenum} The implementation of these concepts is explained in detail in \todo{ref}.
+\item[Calculate the option seller's WTA] the \emph{Willingness To Accept} of an option according to the external party is calculated using its predictions of how the airfare is expected to change. This variable is dependant upon two parmameters, namely: \begin{inparaenum}[\itshape (i)\upshape]
+    \item Forecasting technique, and
+    \item information transparency.
+    \end{inparaenum} These parameters will be described in detail in \todo{ref}.
+\item[Compare the WTP with the WTA] by comparing the customer's WTP and the seller's WTA, the model can determine whether the customer will buy the offered option. This is the case when the Willingness To Pay of the customer for a certain flight is higher than the Willingness to accept of the seller (i.e., $\text{WTP} \ge \text{WTA}$).
+\item[Sell the option] when the customer will buy the option, the simulation will ``sell'' the option at the specified price.
+\item[Calculate generated profits] when an option is sold to a passenger, the model first checks whether the customer actually wants to exercise its right on the day of maturity. A customer will only exercise its right when he is actualy flying, and the airfare on the date of maturity is higher than the strike price $p_s$. When this is the case, the simulation will compare the airfare at maturity with the strike price, and calculate the profits or losses resulted from the sale of the product. In this paper the strike price of the option is equal to the airfare at the moment of offering the airfare~lock-in product.
+\end{description}
+
+Using the method described above, the simulation will be used to compare the performance of the proposed option valuation models amongst each other. The same procedure will also be used to test the influence of a particular configuration of parameters within a single option valuation model.
+
+\subsection{Parameters of the simulation model}
+\todo{general descr}
+
+\todo{change chaptering}
+
+\paragraph{Number of days to maturity}
+The parameter describing the number of days to maturity is directly related to the airfare~lock-in product itself. This property can be construed as the extra decision time a customer will gain from purchasing the option and gives the passenger the opportunity to wait a specific number of days $m$ without risking a fare fluctuation. This simulation will examine the effects on relative profits of offering options with 3, 7 and 14~days to maturity.
+
+\todo{expectations?}
+
+\paragraph{Simulation of the passenger}
+As described in previous section, the simulation model will generate passengers to determine the performance of each model and configuration of parameters. A passenger will arrive at every day before the departure of the flight for the full observed 42~days. The number of customer arrivals is thus fixed per simulation and can be expressed as $42 - m$, where $m$ is the number of days to maturity.
 
 
+
+
+\begin{figure*}
+	\centering
+	\begin{tikzpicture}[domain=125:500]
+        \begin{axis}[xlabel=price (\$), ylabel=$-\exp{(\frac{x}{1.22*250})}$, title=Risk utility function]
+            \addplot[mark=none] {-exp(x/(1.22*250)}; 
+            %\addlegendentry{$-e^{(\frac{x}{1.22*250})}$}
+            \draw[dashed] (axis cs:250,\pgfkeysvalueof{/pgfplots/ymin}) -- (axis cs:250,-2.27);
+            \draw[dashed] (axis cs:0,-2.27) -- (axis cs:250,-2.27);
+            \draw[dotted,thick] (axis cs:275,\pgfkeysvalueof{/pgfplots/ymin}) -- (axis cs:275,-2.46);
+            \draw[dotted,thick] (axis cs:0,-2.46) -- (axis cs:275,-2.46);
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Stationary points}
+	\label{fig:StationaryPoints}
+\end{figure*}
+
+
+Because pseudo~random generation of numbers and probabilities are used in this model, there is a possibility to generate outliers. To prevent such scenario's from happening, every simulation is run a vast amount of times. The data acquired from these multiple trials is then averaged to get the \todo{something}. This concept is seen in 
+
+Converges to a steady value after about 500~trials.
+
+\todo[Chart]{convergence chart}
+
+
+
+
+%Future research
+%passenger arrival rate to de Boer and Wetherford
+
+%is it really bad? => surplus
 
 
 
 %TODO
-%- All dates to UTC {in chapter 4?}
 %- Table for total of flights per out/inbound dest, and operating carrier
 %- Analysis of sold-out flights
-%- Describe data matrix {in chapter 4}
+
