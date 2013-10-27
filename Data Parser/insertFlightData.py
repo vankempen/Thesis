@@ -78,20 +78,3 @@ if __name__ == '__main__':
     d5.save_data()
     d5.close_file()
 
-"""
-
-import os
-os.chdir('Projects/Google Rev/')
-from libs import HyperDex
-hs = HyperDex.HyperDex('127.0.0.1', 1981)
-hs.create_space('flights', 'hash', 'string outPort, int outDT, \
-int outStops, string inPort, int inDT, int inStops, map(int, int) prices', \
-'outPort, inPort', parts=256, tol=2)
-
-
-import os
-os.chdir('Projects/Google Rev/')
-from libs import HyperDex
-hs = HyperDex.HyperDex('127.0.0.1', 1981, 'flights')
-
-"""
