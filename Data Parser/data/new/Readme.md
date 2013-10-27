@@ -1,0 +1,1 @@
+Folder for storing retrieved Google Flights JSON
