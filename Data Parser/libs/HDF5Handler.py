@@ -88,7 +88,7 @@ class HDF5Handler():
 
 
 class IndexedArray():
-    def __init__(self, data, ind={}, x=25000, y=180):  # y = 122 for 4 weeks! y = 232 for 6 weeks
+    def __init__(self, data, ind=None, x=25000, y=180):  # y = 122 for 4 weeks! y = 232 for 6 weeks
         """numpy array (outDT, outStops, inDT, inStops) with virtual index (flighthash, row_id)
 
         attributes:
@@ -102,6 +102,8 @@ class IndexedArray():
         self.curPos = data.shape[0]
         if self.curPos:  # previous stored data available
             self.flights = np.concatenate((data, self.flights))
+        if not ind:
+            ind = {}
         self.ind = ind
 
     def insert(self, flightHash, flightInfo, daysbb, price):

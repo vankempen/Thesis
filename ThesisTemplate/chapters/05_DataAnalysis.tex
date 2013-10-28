@@ -93,47 +93,80 @@ A further analysis of these datasets, including more specific statistical number
 \section{Simulation model}
 \todo{general descr}
 
+\todo{change chaptering}
+
 \subsection{Simulation process description}
 In this paper a series of simulations will be run to determine the performance of the proposed option valuation models. The simulation model will calculate the expected profits or losses of each of these models. To do so, it will run through a number of steps, namely:
 
 \begin{description}
-\item[Generate passengers] the simulation model will generate a single passenger for each day prior to departure of a specific flight. Because data have been collected on flights up till 42~days before departure, each ticket will receive this same number of passengers with option requests. However, because when selling options with a specific number of days to maturity $m$ it is not possible to buy options fewer that $m$ days to departure, these customers get excluded from the model. As an example, the test dataset containing airfares of tickets from LHR to JFK includes 7,690 unique flights after cleansing. When simulating an this model for options with a maturity of 3 days a total of $(42 - 3) \times 7,690 = 299,910$ passengers will be generated.
+\item[Generate passengers] the simulation model will generate a single passenger for each day prior to departure of a specific flight. Because data have been collected on flights up till 42~days before departure, each ticket will receive this same number of passengers with option requests. However, because when selling options with a specific number of days to maturity $m$ it is not possible to buy options fewer that $m$ days to departure, these customers get excluded from the model. As an example, the test dataset containing airfares of tickets from LHR to JFK includes 7,690 unique flights after cleansing. When simulating this model for options with a maturity of 3 days a total of $(42 - 3) \times 7,690 = 299,910$ passengers will be generated.
 \item[Calculate the passenger's WTP] the passenger's \emph{Willingness To Pay} is determined by calculating the minimum costs incurred when buying the flight immediately or waiting to buy the ticket at maturity. A more complete explanation of this concept can be found in \typenameref{subsec:PassengersWTP}. For the simulation the equation takes into account several properties of a passenger. These parameters are \begin{inparaenum}[\itshape (i)\upshape]
     \item risk-utility,
     \item forecasting technique, and
     \item likelihood of travelling.
 \end{inparaenum} The implementation of these concepts is explained in detail in \todo{ref}.
-\item[Calculate the option seller's WTA] the \emph{Willingness To Accept} of an option according to the external party is calculated using its predictions of how the airfare is expected to change. This variable is dependant upon two parmameters, namely: \begin{inparaenum}[\itshape (i)\upshape]
+\item[Calculate the option seller's WTA] the \emph{Willingness To Accept} of an option according to the external party is calculated using its predictions of how the airfare is expected to change. This variable is dependant upon two parameters, namely: \begin{inparaenum}[\itshape (i)\upshape]
     \item Forecasting technique, and
     \item information transparency.
     \end{inparaenum} These parameters will be described in detail in \todo{ref}.
-\item[Compare the WTP with the WTA] by comparing the customer's WTP and the seller's WTA, the model can determine whether the customer will buy the offered option. This is the case when the Willingness To Pay of the customer for a certain flight is higher than the Willingness to accept of the seller (i.e., $\text{WTP} \ge \text{WTA}$).
+\item[Compare the WTP with the WTA] by comparing the customer's WTP and the seller's WTA, the model can determine whether the customer will buy the offered option. This is the case when the Willingness To Pay of the customer for a certain flight is higher than the Willingness To Accept of the seller (i.e., $\text{WTP} \ge \text{WTA}$).
 \item[Sell the option] when the customer will buy the option, the simulation will ``sell'' the option at the specified price.
-\item[Calculate generated profits] when an option is sold to a passenger, the model first checks whether the customer actually wants to exercise its right on the day of maturity. A customer will only exercise its right when he is actualy flying, and the airfare on the date of maturity is higher than the strike price $p_s$. When this is the case, the simulation will compare the airfare at maturity with the strike price, and calculate the profits or losses resulted from the sale of the product. In this paper the strike price of the option is equal to the airfare at the moment of offering the airfare~lock-in product.
+\item[Calculate generated profits] when an option is sold to a passenger, the model first checks whether the customer actually wants to exercise its right on the day of maturity. A customer will only exercise its right when he is actually flying, and the airfare on the date of maturity is higher than the strike price $p_s$. When this is the case, the simulation will compare the airfare at maturity with the strike price, and calculate the profits or losses resulted from the sale of the product. In this paper the strike price of the option is equal to the airfare at the moment of offering the airfare~lock-in product.
 \end{description}
+
+The whole process described above is summarized in \todo{ref}.
+\todo{Illustration of process}
 
 Using the method described above, the simulation will be used to compare the performance of the proposed option valuation models amongst each other. The same procedure will also be used to test the influence of a particular configuration of parameters within a single option valuation model.
 
 \subsection{Parameters of the simulation model}
-\todo{general descr}
+As stated in the previous section, when calculating the customer's WTP and the seller's WTA, some parameters come to play. This section will elaborate on the precise implementation of these configurable options.
 
-\todo{change chaptering}
 
-\paragraph{Number of days to maturity}
+\paragraph{Option's number of days to maturity}
 The parameter describing the number of days to maturity is directly related to the airfare~lock-in product itself. This property can be construed as the extra decision time a customer will gain from purchasing the option and gives the passenger the opportunity to wait a specific number of days $m$ without risking a fare fluctuation. This simulation will examine the effects on relative profits of offering options with 3, 7 and 14~days to maturity.
 
 \todo{expectations?}
 
-\paragraph{Simulation of the passenger}
-As described in previous section, the simulation model will generate passengers to determine the performance of each model and configuration of parameters. A passenger will arrive at every day before the departure of the flight for the full observed 42~days. The number of customer arrivals is thus fixed per simulation and can be expressed as $42 - m$, where $m$ is the number of days to maturity.
+\paragraph{Passenger's arrival rate}
+As described in previous section, this simulation will generate passengers to determine the performance of each model and configuration of parameters. A passenger will arrive at every day before the departure of the flight for the full observed 42~days. The number of customer arrivals is thus fixed per simulation and can be expressed as $42 - m$, where $m$ is the number of days to maturity.
 
+\paragraph{Passenger's risk-utility}
+In a risk neutral setting with shared information between seller and buyer, there would be no possibility of expected profits for the option writer. This is because the customer's Willingness To Pay will never exceed the Willingness To Accept of the seller. However, customers tend to be risk averse, and are therefore willing to pay something extra in order to prevent risk \todo[(ref)]{literature}. This means that these risk averse customers agree to pay for a premium on top of the current price of a ticket to fixate the price. The concept of such a risk premium thus allows for expected profits in a situation of equal information.
 
+In this thesis, the level of risk aversion is simulated using the exponential risk-utility function for costs:
+$$
+u(p_t) = -e^{p_t/R},\hspace{2em}\text{where } R > 0
+$$
 
+The parameter $R$ is the level of risk aversion of a subject, which will approach risk neutrality as $R \rightarrow \infty$. The precise value of parameter $R$ is calculated using a certain risk premium $RP$. This premium is a percentage of the current price which the customer is willing to pay extra to buy off the risk. Because the parameter $R$ is influenced by different distributions of expected prices, this research will compute the value by considering a hypothetical situation: the customer will have the same utility for a fixed fare increased by $RP$ as for a variable price that has a 50\% probability of dropping half its value and a 50\% probability of increasing with half its value. This can be expressed using the following equation: 
+
+\begin{align*}
+    (1 + RP) \times p_t &= u^{-1}(0.5 \times u(0.5 \times p_t) + 0.5 \times u(1.5 \times p_t)) \\
+    u^{-1}(x) &= R \log(-x)
+\end{align*}
+
+As an example, consider that the current ticket price is \$\,250, and the customer has a $RP$ of 10\%. Instead of buying the ticket immediately, the passenger wishes to wait till a later moment in time. He knows that the fare will not be stable, but will either have a 50\% probability of dropping to \$\,125, or a 50\% change of increasing to \$\,375. A risk neutral customer is not willing to pay anything for an option that fixates the fare at \$\,250, because $.5 \times 125 + .5 * 375 = 250$. However, the customer in this hypothetical setting is not risk neutral, but rather risk averse. As stated before, he is willing to pay a $RP$ of 10\% extra to fixate the price at \$\,250 instead of running the risk of a price increase:
+
+$$
+(1 + 0.10) \times 250 = 0.5 \times u(0.5 \times 250) + 0.5 \times u(1.5 \times 250)
+$$
+
+In which $R$ will thus have the value of 305, which leads to the risk-utility function of this specific customer of
+$$ u(p_t) = -e^{p_t/305} $$
+
+The function is also represented in \autoref{fig:RiskUtilityFunctionOfPassenger}. In this figure, one can see that the passenger's utility for a fixed price of \$\,250 is
+$$ -e^{250/305} = -2.27$$
+
+However, because of the uncertainties of price changes in the future airfare, the customer's utility in the hypothetical setting is
+$$0.5 \times e^{125/305}+0.5 \times e^{375/305} = -2.46$$
+
+This utility corresponds to a value of \$\,275, or 10\% risk premium on top of the current price. The increased price the passenger is willing to pay thereby thus implies the risk neutrality of the passenger.
 
 \begin{figure*}
 	\centering
 	\begin{tikzpicture}[domain=125:500]
-        \begin{axis}[xlabel=price (\$), ylabel=$-\exp{(\frac{x}{1.22*250})}$, title=Risk utility function]
+        \begin{axis}[xlabel=price (\$), ylabel=$-\exp{(\frac{x}{305})}$, title=Risk utility function]
             \addplot[mark=none] {-exp(x/(1.22*250)}; 
             %\addlegendentry{$-e^{(\frac{x}{1.22*250})}$}
             \draw[dashed] (axis cs:250,\pgfkeysvalueof{/pgfplots/ymin}) -- (axis cs:250,-2.27);
@@ -142,12 +175,32 @@ As described in previous section, the simulation model will generate passengers 
             \draw[dotted,thick] (axis cs:0,-2.46) -- (axis cs:275,-2.46);
 		\end{axis}
 	\end{tikzpicture}
-	\caption{Stationary points}
-	\label{fig:StationaryPoints}
+	\caption{Risk-utility function of passenger}
+    \label{fig:RiskUtilityFunctionOfPassenger}
 \end{figure*}
 
+After determining the risk-utility function of a passenger, the model can calculate the utility of other situations. It can do so by calculating the utility of a certain set $S = \left\{ p_1, p_2, \ldots, p_n\right\}$ where $p_n$ is a possible future price with probability $P^{p_n}$ of occurring using the following formula.
+$$
+u(S) = \sum (\forall x \in S: P^{p_n} \times -e^{x/R})
+$$
 
-Because pseudo~random generation of numbers and probabilities are used in this model, there is a possibility to generate outliers. To prevent such scenario's from happening, every simulation is run a vast amount of times. The data acquired from these multiple trials is then averaged to get the \todo{something}. This concept is seen in 
+The price a passenger is than willing to pay is the inverse of this utility:
+
+$$
+u^{-1}(u(S)) = R \log(-u(S))
+$$
+
+
+\paragraph{Passenger's forecasting technique}
+bb
+
+\paragraph{Passenger's likelihood of travelling}
+The passenger's likelihood of travelling represents the probability of the passenger actually wanting to buy a flight ticket at the time of maturity. This parameter $P^f$ is a value between 0 and 1, which represent \emph{certainly \textbf{not} flying} and \emph{certainly flying} respectively. At the time of computing the passenger's WTP, the passenger \emph{does} know the exact value of this variable. Furthermore, the seller will also know the exact level of the parameter during its computation of his Willingness To Accept.
+
+Whether the passenger actualy decides to fly at maturity is simulated by drawing a random variable from a uniform distribution $r^f = U(0,1)$. When $r^f \le P^f$ the passenger decides to fly, and when $r^f > P^f$ he decides not to do so. Whether the passenger actually wants to exercise the option thus depends on the outcome of this simulation, and whether the strike price $p_s$ is littler than the airfare at maturity (i.e., $p_s < p_{t+m}$).
+
+\paragraph{Simulation's number of trials}
+Because pseudorandom generation of numbers and probabilities are used in this model, there is a possibility to generate outliers. To prevent such scenario's from happening, every simulation is run a vast amount of times. The data acquired from these multiple trials is then averaged to get the \todo{something}. This concept is seen in 
 
 Converges to a steady value after about 500~trials.
 
