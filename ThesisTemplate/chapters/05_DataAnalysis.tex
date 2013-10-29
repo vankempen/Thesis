@@ -115,6 +115,7 @@ In this paper a series of simulations will be run to determine the performance o
 \end{description}
 
 The whole process described above is summarized in \todo{ref}.
+
 \todo{Illustration of process}
 
 Using the method described above, the simulation will be used to compare the performance of the proposed option valuation models amongst each other. The same procedure will also be used to test the influence of a particular configuration of parameters within a single option valuation model.
@@ -192,20 +193,65 @@ $$
 
 
 \paragraph{Passenger's forecasting technique}
-bb
+In this research, customers will base their forecast upon a series of historical airfares and probabilities. Theses series can consist of different levels of specificity, namely: \begin{inparaenum}[\itshape (i)\upshape]
+    \item at route level,
+    \item at airliner level, and
+    \item at a global level.
+    \end{inparaenum} When a passenger bases his forecast on a series with specificity \emph{route level}, he will --- as it were --- have all the historical airfare changes of that specific route at his disposal. As an example, consider a customer that wants to decide whether he will buy an option for the flight from AMS to JFK with a maturity of 3~days at 14~days before departure. To make his forecast, he will lookup all the historical airfares of the route AMS to JFK at 14~days before departure in the training set, and compare these with all the fares 3~days later. The passenger will thereby thus get an empirical distribution with relative price changes of an exact same option in the historical dataset. This series will then in combination with the passenger's risk utility be used to compute the customer's forecast.
+
+    The \emph{airliner level} of specificity will look only at historical prices from a specific airliner. So, for example, when a customer wishes to decide whether he wants to buy an option on a flight from DFW to SFO flying Continental, he will only look at the historical prices of that certain airline (i.e., Continental) flying in that specific route (i.e., DFW to SFO).
+
+The most aggregated technique of forecasting is when the passenger will base his forecasts upon a global level. This means that the customer will use \emph{all} the historical prices found in the historical dataset and base his predictions on the empirical distribution of all airfare changes occurred in the training set.
+
+%Another forecasting technique of a passenger is by letting them use a complete random distribution of price changes 
 
 \paragraph{Passenger's likelihood of travelling}
 The passenger's likelihood of travelling represents the probability of the passenger actually wanting to buy a flight ticket at the time of maturity. This parameter $P^f$ is a value between 0 and 1, which represent \emph{certainly \textbf{not} flying} and \emph{certainly flying} respectively. At the time of computing the passenger's WTP, the passenger \emph{does} know the exact value of this variable. Furthermore, the seller will also know the exact level of the parameter during its computation of his Willingness To Accept.
 
-Whether the passenger actualy decides to fly at maturity is simulated by drawing a random variable from a uniform distribution $r^f = U(0,1)$. When $r^f \le P^f$ the passenger decides to fly, and when $r^f > P^f$ he decides not to do so. Whether the passenger actually wants to exercise the option thus depends on the outcome of this simulation, and whether the strike price $p_s$ is littler than the airfare at maturity (i.e., $p_s < p_{t+m}$).
+Whether the passenger actually decides to fly at maturity is simulated by drawing a random variable from a uniform distribution $r^f = U(0,1)$. When $r^f \le P^f$ the passenger decides to fly, and when $r^f > P^f$ he decides not to do so. Whether the passenger actually wants to exercise the option thus depends on the outcome of this simulation, and whether the strike price $p_s$ is littler than the airfare at maturity (i.e., $p_s < p_{t+m}$).
+
+\paragraph{Seller's forecasting technique}
+Next to the forecasting technique of the buyer of the airfare~lock-in product, the seller will also use different types of methods to create its forecasts. These techniques are closely related to the three option valuation methods described in \autoref{subsec:OptionValuationModels}.
+
+\begin{description}
+\item[Foreknowledge] The first method, based upon foreknowledge of the seller, will suppose that the seller knows what the airfares will be at the time of maturity. This thus implies that the option writer can look into the future, and is merely a hypothetical scenario. As stated in the previous chapter, this setting is not possible in a realistic world, but does offer some insights into the possibilities of supplying airfare~lock-in products. For example, using this forecasting method in combination with the seller's property \emph{all knowing} (see \todo{ref}) will yield the maximum profit a seller can possibly make in settings defined by the configuration of customer's parameter. This technique will thus supply a `steady' base case to compare the other two methods to. The maximum Willingness To Accept for the seller for a specific ticket can thus be defined as the maximum of 0 or the price at maturity minus the current price:
+
+$$
+\max(0, p_{t+m} - p_t)
+$$
+
+
+\item[Random price jumps] The second method of forecasting will assume non-predictability and random price jumps. In this scenario the seller believes it is not possible to predict future prices, and will thus estimate the future price of a ticket using historical volatility data. This method is thus the first of the two practically feasible methods that an airfare~lock-in seller in the realistic world can apply. This research will use the historical volatility as seen in the acquired training dataset to make forecasts of future price changes.
+
+\item[Emperical distribution] The third possible forecasting technique, and other practically feasible method, is based upon the assumption that the price changes can be predicted using historical data. This thesis will use a Monte~Carlo simulation upon the empirical data as acquired in the training dataset to determine the best option price for that historical data. The same price will then be used for the airfare~lock-in product offered to the customer.
+\end{description}
+
+\paragraph{Seller's information transparency}
+In the simulation model there are several parameters that are engaged with information transparency --- or information sharing --- between the customer and the seller. To limit the total number of possible scenarios, some of these parameters have been fixated.
+
+Firstly, this research assumes that the seller always knows the exact level of a customer's likelihood of travelling, $P^f$. This might not always be the case in a real world setting, but it might be possible to let the customer give away this information. As an example implementation of this see \todo{article Courty} and \todo[ref]{Further research}.
+
+Next, it is also assumed that the seller knows the customer's Willingness To Pay, and will thus always offer an option at the maximum possible price (i.e., at the customer's \emph{WTP}).
+
+This research, however, does make a distinction between two different cases of information transparency of the customer's actual decision of flying. The first case, in which there is an \emph{all knowing} seller, assumes that the seller knows whether a customer is going to fly on the date of maturity. It is not possible for a seller to know this kind of information in the real world, even before the actual passenger knows this. However, this specific case is usefull in combination with the \emph{foreknowledge} forecasting technique. That specific setting will give insights in the maximum possible profits a seller gains in a situation in which it has all information.
+
+The other case that is considered does assume the Seller does not have this kind of information, and will thus be applied in combination with the other two forecasting techniques.
 
 \paragraph{Simulation's number of trials}
-Because pseudorandom generation of numbers and probabilities are used in this model, there is a possibility to generate outliers. To prevent such scenario's from happening, every simulation is run a vast amount of times. The data acquired from these multiple trials is then averaged to get the \todo{something}. This concept is seen in 
+Because pseudo random generation of numbers and probabilities are used in this model, there is a possibility of generating outliers in only a single run. To prevent such scenarios from happening, every simulation is run a vast amount of times. The acquired data from these multiple trials is then averaged to get the converged mean.
 
-Converges to a steady value after about 500~trials.
+The convergence plot of three example flights is shown in \autoref{fig:ConvergencePlotMultiple}. As can be seen in the figure, the mean seems to stabilize at around 2,500~trials. This research will therefore use the average of 2,500~trials for every simulation.
 
-\todo[Chart]{convergence chart}
+\begin{figure*}
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ConvergencePlot_multiple}
+\caption{Convergence plot}
+\label{fig:ConvergencePlotMultiple}
+\end{figure*}
 
+
+\subsection{Configurations}
+<describe different parameter configurations>
 
 
 
