@@ -71,6 +71,40 @@ def run_singleSimulation(flyFrom, flyTo, sellerWTA_f, custWTP_f, p_fRange=None, 
     
     return priceTable
 
-#all knowing
-#get_sellerWTA_foreknowledge
-#get_customerWTP(hp, cp, r=10, m=m, p_f=p_f)
+
+# all knowing with foreknowledge
+run_singleSimulation(get_sellerWTA_foreknowledge, get_customerWTP, allKnowing=True)
+#run_allSimulation(get_sellerWTA_foreknowledge, get_customerWTP, allKnowing=True)
+
+
+# Black Scholes
+def d1(S0, K, r, sigma, T):
+    return (np.log(S0/K) + (r + sigma**2 / 2) * T)/(sigma * np.sqrt(T))
+ 
+def d2(S0, K, r, sigma, T):
+    return (np.log(S0/K) + (r - sigma**2 / 2) * T)/(sigma * np.sqrt(T))
+ 
+def BlackScholes(hp, S0, T, r=0.01, call=True):
+    """
+    hp: historical prices
+    S0: airfare at time 0
+    T: maturity in days
+    r: risk-free interest rate
+    call: call (True) or put (False)
+    """
+    #volatility
+    hpLN = np.log(hp)
+    dRet = (hpLN.T.shift(1).T - hpLN)
+    dRetMean = dRet.mean().mean()
+    sigmaDaily = np.sqrt(((dRet - dRetMean)**2).mean().mean())
+    sigma = sigmaDaily*np.sqrt(365)
+    
+    K = S0  # strike price == S0
+    if call:
+        return S0 * ss.norm.cdf(d1(S0, K, r, sigma, T)) - K * np.exp(-r * T) * ss.norm.cdf(d2(S0, K, r, sigma, T))
+    return K * np.exp(-r * T) * ss.norm.cdf(-d2(S0, K, r, sigma, T)) - S0 * ss.norm.cdf(-d1(S0, K, r, sigma, T))
+
+run_singleSimulation(BlackScholes, get_customerWTP, allKnowing=False)
+#run_allSimulation(BlackScholes, get_customerWTP, allKnowing=False)
+
+# Monte Carlo
