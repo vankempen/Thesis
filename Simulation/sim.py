@@ -123,9 +123,9 @@ def MonteCarlo(hp, cp, m, N=1000000):
     expIncr = np.zeros(hp.size[1])
     
     for dbb in xrange(m-1, hp.size[1]):
-        simRet = np.ones(hp.size[0])
+        simRet = np.ones(N)
         for i in range(m):
-            simRet *= np.random.choice(hp[dbb - i], N)
+            simRet *= np.random.choice(hp[:, dbb - i], N)
         expIncr[dbb] = simRet.mean()
 
     return expIncr
