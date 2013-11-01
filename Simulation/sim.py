@@ -107,4 +107,28 @@ def BlackScholes(hp, S0, T, r=0.01, call=True):
 run_singleSimulation(BlackScholes, get_customerWTP, allKnowing=False)
 #run_allSimulation(BlackScholes, get_customerWTP, allKnowing=False)
 
+
 # Monte Carlo
+def MonteCarlo(hp, cp, m, N=1000000):
+    """
+    return Monte Carlo estimation
+    
+    hp: historical prices
+    cp: current prices (not used)
+    m: maturity
+    N: number of trials
+    """
+    dRet = hp.T.shift(1).T/hp
+    
+    expIncr = np.zeros(hp.size[1])
+    
+    for dbb in xrange(m-1, hp.size[1]):
+        simRet = np.ones(hp.size[0])
+        for i in range(m):
+            simRet *= np.random.choice(hp[dbb - i], N)
+        expIncr[dbb] = simRet.mean()
+
+    return expIncr
+
+run_singleSimulation(MonteCarlo, get_customerWTP, allKnowing=False)
+#run_allSimulation(MonteCarlo, get_customerWTP, allKnowing=False)
