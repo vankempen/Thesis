@@ -202,10 +202,10 @@ As seen in the process description of the simulation (see \todo{ref}), the model
 
 For each specific route with $n$ flights, the simulation will therefore generate $(42 - m) \times n$ passengers.
 
-\parameter{number of trials \hfill (N=100)}
+\parameter{number of trials \hfill (N=150)}
 Because pseudo random generation of numbers and probabilities are used in this model, there is a possibility of generating outliers in only a single run. To prevent such scenarios from happening, every simulation is run a vast amount of times. The acquired data from these multiple trials is then averaged to get the converged mean.
 
-The convergence plot of three example flights is shown in \autoref{fig:ConvergencePlotMultiple}. As can be seen in the figure, the mean seems to stabilize at around 2,500~trials. This research will therefore use the average of 2,500~trials for every simulation.
+The convergence plot of three example flights is shown in \autoref{fig:ConvergencePlotMultiple}. As can be seen in the figure, the mean seems to stabilize at around 150~trials. This research will therefore use the average of 150~trials for every simulation.
 
 \begin{figure*}
 \centering
