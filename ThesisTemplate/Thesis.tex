@@ -83,6 +83,21 @@
 \newcommand{\todo}[2][here]{{\color{red} #1\marginnote{#2}}}
 
 
+%  for assumptions
+\newcounter{assumptions}
+\newcommand{\assumption}[1]{%
+    \stepcounter{assumptions}%
+    \begin{quote}\emph{Assumption \theassumptions: #1}\end{quote}%
+}
+
+%  for parameters
+\newcounter{parameters}
+\newcommand{\parameter}[1]{%
+    \stepcounter{parameters}%
+    \begin{quote}\emph{Parameter \theparameters: #1}\end{quote}%
+}
+
+
 %
 % PDF settings
 %
@@ -116,7 +131,8 @@
 %\input{chapters/02_LiteratureReview}
 %\input{chapters/03_ResearchQuestions}
 \input{chapters/04_Methodology}
-\input{chapters/05_DataAnalysis}
+\input{chapters/05_ModelDevelopment}
+\input{chapters/06_DataAnalysis}
 
 %%  Backmatter
 \input{misc/Appendices} %  before backmatter, because of chapter numbering
