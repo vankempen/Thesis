@@ -54,6 +54,86 @@ $$
 
 
 \section{Exploratory data analysis}
+In this section the exploratory data analysis is performed on the dataset after cleansing.
+
+\todo[freq, desc, tests]{desc what kinds}
+
+Throughout this research, a distinction is made between the datasets; training and test. The \emph{training} dataset will be used as historical airfare information on which the customer bases its forecasts. Furthermore, the training dataset is also used by the seller in the Black--Scholes and Monte~Carlo models to compute his Willingness To Accept. The \emph{test} dataset is used to evaluate the option pricing models.
+
+\subsection{Frequency analysis}
+
+\begin{center}
+\footnotesize
+\begin{tabular}{c c | c c c | c | c c}
+\toprule
+\multicolumn{8}{c}{\normalsize Test dataset} \\
+\midrule
+\multicolumn{2}{c|}{Airport}  & \multicolumn{3}{c|}{Flights} & Fare & \multicolumn{2}{c}{Sell outs} \\[.4ex]
+from &  to  & \# total  & \# valid  & \% valid  &  \# obs  &  \#  &  \% \\
+\midrule
+AMS  &  CDG  &  4,630  &  3,936  &  85.0\%  &  164,706  &  814  &  17.6\% \\
+~  &  DXB  &  14  &  14  &  100.0\%  &  588  &  0  &  0.0\% \\
+~  &  JFK  &  252  &  252  &  100.0\%  &  10,572  &  0  &  0.0\% \\
+~  &  LHR  &  2,834  &  2,558  &  90.3\%  &  106,611  &  377  &  13.3\% \\[.5ex]
+ATL  &  LAX  &  1,776  &  1,421  &  80.0\%  &  59,225  &  358  &  20.2\% \\
+~  &  MCO  &  4,727  &  3,757  &  79.5\%  &  156,488  &  984  &  20.8\% \\[.5ex]
+CDG  &  AMS  &  4,149  &  3,936  &  94.9\%  &  165,125  &  234  &  5.6\% \\
+~  &  LHR  &  1,264  &  1,250  &  98.9\%  &  52,437  &  28  &  2.2\% \\[.5ex]
+DEN  &  FLL  &  21  &  21  &  100.0\%  &  865  &  5  &  23.8\% \\
+~  &  PHX  &  1,541  &  1,453  &  94.3\%  &  60,847  &  115  &  7.5\% \\[.5ex]
+DFW  &  LAX  &  11,157  &  8,872  &  79.5\%  &  368,838  &  2,644  &  23.7\% \\
+~  &  SFO  &  5,272  &  4,503  &  85.4\%  &  182,895  &  1,305  &  24.8\% \\[.5ex]
+JFK  &  CDG  &  2,569  &  1,782  &  69.4\%  &  73,119  &  889  &  34.6\% \\
+~  &  LHR  &  10,824  &  7,918  &  73.2\%  &  331,646  &  3,091  &  28.6\% \\[.5ex]
+LAX  &  LAS  &  7,642  &  5,334  &  69.8\%  &  208,889  &  2,795  &  36.6\% \\
+~  &  SFO  &  32,367  &  16,161  &  49.9\%  &  653,809  &  17,188  &  53.1\% \\[.5ex]
+LHR  &  AMS  &  2,788  &  2,567  &  92.1\%  &  107,431  &  273  &  9.8\% \\
+~  &  JFK  &  9,981  &  7,690  &  77.0\%  &  322,109  &  2,374  &  23.8\% \\
+~  &  LAX  &  1,581  &  837  &  52.9\%  &  34,580  &  763  &  48.3\% \\
+~  &  MAD  &  4,758  &  4,732  &  99.5\%  &  198,705  &  39  &  0.8\% \\[.5ex]
+ORD  &  BOS  &  9,037  &  7,204  &  79.7\%  &  287,993  &  2,938  &  32.5\% \\
+~  &  LGA  &  21,933  &  12,718  &  58.0\%  &  517,459  &  10,284  &  46.9\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{center}
+\footnotesize
+\begin{tabular}{c c | c c c | c | c c}
+\toprule
+\multicolumn{8}{c}{\normalsize Training dataset} \\
+\midrule
+\multicolumn{2}{c|}{Airport}  & \multicolumn{3}{c|}{Flights} & Fare & \multicolumn{2}{c}{Sell outs} \\[.4ex]
+from &  to  & \# total  & \# valid  & \% valid  &  \# obs  &  \#  &  \% \\
+\midrule
+AMS  &  CDG  &  8,389  &  7,871  &  93.8\%  &  329,235  &  752  &  9.0\% \\
+~  &  DXB  &  35  &  28  &  80.0\%  &  1,176  &  7  &  20.0\% \\
+~  &  JFK  &  639  &  638  &  99.8\%  &  26,796  &  1  &  0.2\% \\
+~  &  LHR  &  5,380  &  4,891  &  90.9\%  &  204,906  &  606  &  11.3\% \\[.5ex]
+ATL  &  LAX  &  3,613  &  3,203  &  88.7\%  &  133,976  &  422  &  11.7\% \\
+~  &  MCO  &  8,554  &  7,602  &  88.9\%  &  317,860  &  979  &  11.4\% \\[.5ex]
+CDG  &  AMS  &  8,186  &  7,874  &  96.2\%  &  329,613  &  414  &  5.1\% \\
+~  &  LHR  &  2,577  &  2,529  &  98.1\%  &  106,218  &  48  &  1.9\% \\[.5ex]
+DEN  &  FLL  &  58  &  45  &  77.6\%  &  1,792  &  17  &  29.3\% \\
+~  &  PHX  &  2,433  &  2,426  &  99.7\%  &  101,656  &  63  &  2.6\% \\[.5ex]
+DFW  &  LAX  &  36,579  &  14,845  &  40.6\%  &  559,879  &  21,955  &  60.0\% \\
+~  &  SFO  &  16,117  &  7,436  &  46.1\%  &  279,339  &  8,929  &  55.4\% \\[.5ex]
+JFK  &  CDG  &  4,947  &  3,238  &  65.5\%  &  132,385  &  2,022  &  40.9\% \\
+~  &  LHR  &  23,440  &  14,825  &  63.2\%  &  610,280  &  9,851  &  42.0\% \\[.5ex]
+LAX  &  LAS  &  16,261  &  9,782  &  60.2\%  &  385,907  &  6,766  &  41.6\% \\
+~  &  SFO  &  68,886  &  24,929  &  36.2\%  &  988,534  &  45,774  &  66.4\% \\[.5ex]
+LHR  &  AMS  &  5,230  &  4,904  &  93.8\%  &  204,973  &  467  &  8.9\% \\
+~  &  JFK  &  22,540  &  14,711  &  65.3\%  &  606,489  &  8,801  &  39.0\% \\
+~  &  LAX  &  3,513  &  1,597  &  45.5\%  &  64,877  &  2,126  &  60.5\% \\
+~  &  MAD  &  9,464  &  9,438  &  99.7\%  &  395,966  &  68  &  0.7\% \\[.5ex]
+ORD  &  BOS  &  24,145  &  12,904  &  53.4\%  &  493,077  &  12,829  &  53.1\% \\
+~  &  LGA  &  50,559  &  23,717  &  46.9\%  &  940,407  &  28,077  &  55.5\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+
 A further analysis of these datasets, including more specific statistical numbers on the 22~routes, can be found in \todo{table ref}
 
 \todo[Table]{table with analysis of sets}
