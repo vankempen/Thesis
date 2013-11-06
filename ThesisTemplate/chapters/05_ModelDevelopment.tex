@@ -42,12 +42,13 @@ Like in \typenameref{sec:Entities}, this model will categorize the parameters an
 \end{inparaenum} Each of these entities has its own set of characteristics, which will be defined below.
 
 \subsubsection{Characteristics of the flight ticket}
+\label{sub:CharacteristicsOfTheFlightTicket}
 The first entity represents the flight~ticket. A ticket gives its holder the right to take a seat on a particular underlying flight. In this thesis, a specific set of flights is being used:
 
 \begin{itemize}
 \item each flight is for a specific route between outbound and inbound airport;
 \item only single-legged (direct) flights are being considered;
-\item only return flights are being considered;
+\item only round trip flights are being considered;
 \item each flight has a specific departure date;
 \item the return date of the flight is always 1~week after the departure date.
 \end{itemize}
@@ -213,6 +214,3 @@ The convergence plot of three example flights is shown in \autoref{fig:Convergen
 \caption{Convergence plot}
 \label{fig:ConvergencePlotMultiple}
 \end{figure*}
-
-% parameters of simulation model itself: arrival rate of passenger, number of trials
-
