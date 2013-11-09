@@ -1,5 +1,7 @@
 \chapter{Data analysis}
 \label{chap:DataAnalysis}
+This chapter will engage in the analysis of the acquired flight data from Google Flights. The first part will describe the obtained data. Furthermore, it will describe the cleaning process of the observations, as well as the oulier analysis. The second part will focus on the descriptive analysis of the datasets.
+
 \section{Data description and cleansing}
 Flight ticket prices were collected for a period of 42~days ranging from the $9^{th}$ of July till the $29^{th}$ of September. During this data collection phase, airfares on the 22~routes described in \autoref{app:SelectedRoutes} were gathered on flights departing from the $20^{th}$ of August till the $30^{th}$ of September. In these 12~weeks, 158,410~files were requested from Google~Flights' RPC-servers, which resulted in a set of almost 18~gigabytes of JSON~data. Fifteen of these requests failed at the first try, and had to be downloaded again one quarter of an hour later. Of these retries, the automated script also failed to download 2~files at the second request. These failures were the request made on the $20^{th}$ of September at 00:00 GMT+2 for flights departing from JFK to LHR on the $25^{th}$ of September and the request made on the $26^{th}$ of July at 00:00 GMT+2 for flights departing from LHR to LAX on the $1^{st}$ of July. Due to the methodology applied by this research, in which 4~daily time windows are aggregated into a single value, these 2~failures did not create any gaps of missing values in the final data matrix.
 
@@ -62,8 +64,6 @@ A quick analysis of these figures shows that there are many theoretical outliers
 
 Furthermore, as will be demonstrated in \autoref{subsec:DescriptiveAnalysisOfFareChanges}, the strong tendency of the data towards `no price change' could have lead to a underestimated standard deviation. Therefore, the box~plots might label some observations as outliers, while this is actually not the case.
 
-\todo[number of outliers expected in dataset vs actual?]{here}
-
 Because of these reasons, I have decided to not exclude these observed outliers from the dataset.
 
 
@@ -76,9 +76,7 @@ Because of these reasons, I have decided to not exclude these observed outliers 
 
 
 \section{Exploratory data analysis}
-In this section the exploratory data analysis is performed on the dataset after cleansing.
-
-\todo[freq, desc, tests]{desc what kinds}
+In this section the exploratory data analysis is performed on the dataset after cleansing. First, a descriptive analysis is performed on the number of flights, observations and sold outs of both datasets. Next an analysis is performed on the ticket prices and daily price fluctuations. This analysis also includes a test of normality to see whether the distribution follows a log-normal distribution. Lastly, a comparison between the training and the test dataset is made to see whether they differ significantly.
 
 Throughout this research, a distinction is made between two databases, namely: the training and the test dataset. The \emph{training} dataset will be used as historical airfare information on which the customer bases its forecasts. Furthermore, the training dataset is also used by the seller in the Black--Scholes and Monte~Carlo models to compute his Willingness To Accept. The \emph{test} set is used to evaluate the option pricing models.
 
@@ -284,16 +282,66 @@ Analysis of the lag~plot in the same figure also results in the conclusion that 
 
 The lag~plot also shows some outliers. However, as explained in \typenameref{subsec:outlierAnalysis}, these extreme values will be left included in the simulation models and data analysis. This is because these observations are valid empirical price changes, and could thereby happen in a real world setting.
 
-The last visual confirmation that the data containing airfare fluctuations in not normally distributed can be found in the normal probability plot. This figure evidently shows that the data does not follow a straight line as a normal dataset would. 
+The last visual confirmation that the data containing airfare fluctuations in not normally distributed can be found in the normal probability plot. This figure evidently shows that the data do not follow a straight line as a normal dataset would. 
 
-\todo[test of normality]{here}
+The analysis of the 4~plot thus shows that the daily price fluctuations are not normally distributed. This is also confirmed by other normality tests. \autoref{tbl:NormalityTests} shows the results of the Shapiro--Wilk and Kolmogorov--Smirnov test for normality. Furthermore, it also displays the outcome of SciPy's implementation of \emph{normaltest}, which is based upon D'Agostino's K-squared and Pearon's chi-squared test.
 
-
-
-
+All these statistical formula's test the null hypothesis, $H_0$, that the supplied sample came form a normally distributed population. As the outcomes of these tests show in the table, all of the tests lead to rejection of the null hypothesis. It can therefore be concluded that the daily price fluctuations do not follow a normally distributed curve.
 
 
-%Future research
-%passenger arrival rate to de Boer and Wetherford
+\begin{table}
+\centering
+\begin{tabular}{l c c c}
+\toprule
+~  &  Test statistic  &  p-value  &  Reject $H_0$  \\
+\midrule
+Shapiro--Wilk test  &  0.66  &  $< 0.001$  & yes \\
+Kolmogorov--Smirnov test  & 0.42  &  $< 0.001$  & yes \\
+Normal test  & $6.34 \e{6}$  & $< 0.001$  & yes \\
+\bottomrule
+\end{tabular}
+\caption{Tests for normality of daily returned values}
+\label{tbl:NormalitTests}
+\end{table}
 
-%is it really bad? => surplus
+
+The non-normality of the data implies that the changes in ticket prices are not completely random, and can therefore be predicted to some extend. Furthermore, because the daily changes are not (log-)normally distributed, the simulation model based upon Black--Scholes is not expected to perform well. This is due to one of the base assumptions of the Black-Scholes model which state that the underlying asset's returns follow a log-normal distribution. The optimal option price predictions according to this model are therefore likely to be far off of the optimal, which will lead to lower profits.
+
+\subsection{Comparison of the training and test dataset}
+This section compares the two different datasets with each other. As stated before, the first 4~weeks of data collected are assigned to the training (i.e., historical) dataset, and the last 2~weeks of the collection period to the test dataset. The two practically feasible option valuation methods in this research both use the historical set to make predictions of the price fluctuations in the test set. The Black--Scholes model uses the training dataset to determine the expected volatility of the ticket prices. The Monte~Carlo model bases its forecasts of airfares upon the empirical distribution seen in the same historical dataset. For these reasons, when the datasets differ from each other, the predictions of the models are likely to have a bigger error. The forecasts of the ticket prices then thus lie further from the actual observed values, which would lead to suboptimal option prices.
+
+To compare the two distinct sets with each other, two statistical tests have been performed on the price fluctuations. The independent samples t-test assumes normally distributed samples, and could yield non-robust results if this is not the case. Because the daily price changes in this research do not seem to be normally distributed, I have chose to use the Kolmogorov--Smirnov two sample, and Mann Whitney U tests. Both methods test the null hypothesis, $H_0$, that the supplied samples came from the same distribution.  The outcomes of both statistical methods can be found in \autoref{tbl:ComparisionOfDatasets}.
+
+
+\begin{table}
+\centering
+\begin{tabular}{l c c c}
+\toprule
+~  &  Test statistic  &  p-value  &  Reject $H_0$  \\
+\midrule
+Kolmogorov--Smirnov test  & 0.04  &  $< 0.001$  & yes \\
+Mann-Whitney U test  &  $7.47 \e{12}$ &  $< 0.001$  & yes \\
+\bottomrule
+\end{tabular}
+\caption{Comparison of training and test dataset}
+\label{tbl:ComparisionOfDatasets}
+\end{table}
+
+
+The results clearly show that it is very unlikely that both sets are from the same population distribution. Both tests state that the null hypothesis can be rejected at an $\alpha$ of 0.001. While it was not expected that daily price fluctuations of the training and test set would differ, a explanation can be found in the data selection for both datasets. In this research, the flights for both sets were not randomly sampled, but rather selected based upon the departure date of the plane. This manner of data selection is chosen because it represents a valid real world case. When one would apply random sampling to establish two sets, a single set would consist of historical as well as `future' flights. Practically, however, this is not feasible, and an option selling company will only be able to collect historical prices and base its forecast on this set. The same logic is applied to this research, in which there is made a clear distinction between the two sets.
+
+The possible explanation for the difference amongst the sets can thus be related to the fact that distinction is based upon a feature of the flight (i.e., departure date). It is therefore likely that the two datasets are dissimilar due to seasonality. A collection of more data over a longer period of time might void these problems.
+
+While the statistical tests clearly show that the training and test dataset differ from each other, one might conclude otherwise after a visual inspection. \autoref{fig:DailyPriceChangesBothSets} shows the average daily price changes relative to their number of days before departure for each set. Both lines seem to be overlapping. A possible explanation for this could be that the statistical tests look more closely at each single case. However, this research will mostly use the averages of the fluctuations to make its predictions.
+
+
+\begin{figure*}
+\centering
+\includegraphics[width=.8\textwidth]{figures/Train-Test_DailyReturns}
+\caption{Daily price changes of both datasets}
+\label{fig:DailyPriceChangesBothSets}
+\end{figure*}
+
+
+As stated before, the difference amongst the two datasets is expected to cause high forecasting errors in the practically implementable simulation models. However, the means of the daily price fluctuations seem to overlap as shown in the graph. Because this research is more based upon the means of a lot of observations rather than every single flight, the statistical difference of the two samples could have minimal impact on the final results.
+
