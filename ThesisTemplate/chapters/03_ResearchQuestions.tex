@@ -4,37 +4,30 @@ In this paper, I would like to theoretically and empirically analyse whether it 
 
 \begin{quote}\emph{Is it sustainable for an external company without capacity information or seat reservation capabilities to set the price of airfare~lock-in~products at a level that the customer accepts?}\end{quote}
 
-The maximum price a passenger is willing to pay depends upon many internal factors. For the second research question I therefore want to consider the influence of some of these variables on the customer's \emph{WTP} and the relation with the option seller's \emph{WTA}. The three variables that will be considered are
+The maximum price a passenger is willing to pay depends upon many internal factors. For the second research question I therefore want to consider the influence of some of these variables on the customer's \emph{WTP} and the relation with the option's realized profits. The three variables that will be considered are
 \begin{compactdesc}
 \item[Risk-utility] This is the customer's preference of risk. A customer can be categorized as \begin{inparaenum}[\itshape (i)\upshape]
-\item risk-averse,
-\item risk-neutral, or
-\item risk-seeking.
-\end{inparaenum} In the setting of airfare~lock-in products, customers that can be labeled as risk-averse are more likely to buy this kind of option, as they are inclined to pay higher prices to cover their uncertainty;
-\item[Forecasting technique] This variable represents the techniques a customer applies to make its own forecast. In my models I will consider three types of techniques, namely predictions based upon: \begin{inparaenum}[\itshape (i)\upshape]
-\item a log-normal distribution with historical volatility,
-\item an empirical distribution acquired from historical data, or
-\item the actual future price (i.e., foreknowledge);
-\end{inparaenum}
+\item risk~averse,
+\item risk~neutral, or
+\item risk~seeking.
+\end{inparaenum} In the setting of airfare~lock-in products, customers that can be labelled as risk~averse are more likely to buy this kind of option, as they are inclined to pay higher prices to cover their uncertainty;
+\item[Forecasting accuracy] This variable represents the accuracy of the customer's forecasts compared to the actual observed value. To evaluate the influence of this parameter I will calculate the mean absolute percentage error per route, and compare this to the relative realized option profits.
 \item[Likelihood of travelling] This factor represents the probability $P^f$ that a customer actually wants to make use of the flight. The allowed values are $0 \le P^f \le 1$ where $0$~represents the state `\emph{certainly not flying}' and $1$ the case  `\emph{certainly flying}'.
 \vspace{1em}
 \end{compactdesc}
 
-\noindent
-My second research question can thus be defined as
-\begin{quote}\emph{What is the influence of the variables risk-utility, accuracy of forecast, and likelihood of travelling on the gap between the option buyer's WTP and the option writer's WTA?}\end{quote}
-
-The accuracy of forecasts depends heavily on the underlying mechanism. In this study I will compare two different valuation strategies empirically, and test which meth\-od ap\-prox\-i\-mates the optimal model most. The first method uses a theoretical approach and evaluates the options using the \emph{Black--Scholes} model. The second method uses numerical approximation to determine the best option price. This method makes use of \emph{Monte~Carlo} simulation.
-
-Both methods will base their forecasts upon aggregated data. The different categories upon which the flights will be divided are \begin{inparaenum}[\itshape (i)\upshape]
-\item per \emph{specific departure airport} (e.g., AMS),
-\item per \emph{specific arrival airport} (e.g., JFK),
-\item per \emph{operating carrier} (e.g., American Airlines), or
-\item a combination of these.
-\end{inparaenum} The model will therefore make predictions on a set of flights that share the same properties, rather than for each individual flight separately. This will not only make the models easier to implement on smaller datasets, but might also prevent the customer from \textit{gaming the system}. For example, when a customer sees that an option for a specific flight is more expensive than other options for the same route, he can conclude that the prices are likely to go up and act accordingly. Making prediction on aggregated data will make this gaming more difficult because the option pricing data will not disclose information on expectations for individual flights.
+Next to these characteristics of a passenger, this research will also take a closer look on the option's number of days to maturity and its relation to the model's performance.
 
 \noindent
-The third research question in this study is defined as
+My second research question can thus be defined as:
+\begin{quote}\emph{What is the influence of the variables risk-utility, accuracy of forecast, likelihood of travelling, and the option's number of days to maturity on the relative realized option profits?}\end{quote}
+
+The accuracy of forecasts of the seller depends heavily on the underlying mechanism. In this study I will compare two different valuation strategies empirically, and test which meth\-od ap\-prox\-i\-mates the optimal model most. The first method uses a theoretical approach and evaluates the options using the \emph{Black--Scholes} model. The second method uses numerical approximation to determine the best option price. This method makes use of \emph{Monte~Carlo} simulation.
+
+Both methods make use of historical data to make its predictions, and make their predictions per route and/or relative to the number of days before departure of the flight. The models will therefore make predictions on a set of flights that share the same properties, rather than for each individual flight separately. This will not only make the models easier to implement on smaller datasets, but might also prevent the customer from \textit{gaming the system}. For example, when a customer sees that an option for a specific flight is more expensive than other options for the same route, he can conclude that the prices are likely to go up and act accordingly. Making prediction on aggregated data will make this gaming more difficult because the option pricing data will not disclose information on expectations for individual flights.
+
+\noindent
+The third research question in this study is defined as:
 
 \begin{quote}\emph{What feasible underlying option valuation strategy --- theoretical or numerical --- approaches the optimal model in option prices best?}\end{quote}
 

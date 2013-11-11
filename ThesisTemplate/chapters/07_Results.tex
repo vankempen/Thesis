@@ -55,13 +55,13 @@ As is shown in the table, the option prices range on average from about 2~percen
 
 The difference of relative options prices between routes can not directly be explained by the results found in the table. This could have been caused by the forecasting accuracy of the passenger, because most of the other factors were static amongst the different routes. To test this, first the forecasting accuracy of the customer per route had to be quantified. In this research I have chosen to use the mean absolute percentage error ($\mbox{MAPE}$), which is defined as:
 
-$$\mbox{MAPE} = \frac{1}{42}\sum_{t=1}^{42} \left| \frac{p_{t+1}-p_t}{p_{t+1}}\right|$$
+$$\mbox{MAPE} = \frac{1}{42-m}\sum_{t=1}^{42 - m} \left| \frac{A_{t}-F_t}{A_{t}}\right|$$
 
-Next, Pearson's correlation, $\rho$, of the route-specific $\mbox{MAPE}$s and relative option prices was computed. The result of this test can be found in \autoref{tbl:pearsonPricesMAPE}. The statistical test clearly shows a positive and significant correlation between both variables. The combinations of the observed relative option prices and passenger's $\mbox{MAPE}$ have been plotted in \autoref{fig:optionPricesMAPE}. This figure also shows the OLS-regression line.
+In which $F_t$ is the customer's airfare prediction for time $t$, and $A_t$ is the actual observed value for a ticket at that time.
+
+Next, Pearson's correlation, $\rho$, of the route-specific $\mbox{MAPE}$s and relative option prices was computed. The result of this test can be found in \autoref{tbl:pearsonPricesMAPE}. The statistical test clearly shows a positive and significant correlation between both variables. The combinations of the observed relative option prices and passenger's $\mbox{MAPE}$ have been plotted in \autoref{fig:optionPricesMAPE}. This figure also shows the OLS-regression line that follows the equation $\mbox{MAPE} = 0.059 + 0.8236x$. For every 1~percent change in $\mbox{MAPE}$, the model thus is able to ask 1.214~percentage extra on the option price.
 
 Both analyses show a positive relation between the passenger's forecasting error, and the relative option prices. This thus implies that when there are more uncertainties in the price, a seller can likely gain from the situation. This, however, was to be expected from the assumption in this simulation model in which the seller knows the customer's maximum Willingness To Pay. A higher $\mbox{MAPE}$ would therefore automatically result in either much to low predictions, or much to high forecasts of ticket prices. The first case would result in a lower number of options sold, as the seller's Willingness To Accept would probably be higher than the customer's WTP. The second case would result in higher relative option prices, as the WTP is likely much higher than the seller's WTA. This also seems to be the case in this simulation.
-
-\todo[implications for real world setting?]{here}
 
 
 \begin{table}
@@ -243,29 +243,32 @@ While it is a theoretical model with many simplifications and assumptions of a r
 
 However, some assumptions and parameters of the model are unlikely to occur in a realistic setting. For example, a forecasting system which predicts flight ticket movements with a 100~percent accuracy is close to impossible. Therefore, this research will focus on two more option valuation methods: the Black--Scholes model which assumes random price fluctuations, and the Monte~Carlo simulation which uses empirically obtained data to make its predictions. The next two sections will analyse the results gained in these models.
 
+The simulation also showed a significant and positive correlation between $\mbox{MAPE}$, and the relative option price. Results from the analysis show that for every 1~percent increase in the passenger's prediction error a 1.214~percentage change in relative option price occurred. This provides a partial answer to the second research question of this thesis:
+\begin{quote}\emph{What is the influence of the variables risk-utility, accuracy of forecast, likelihood of travelling, and the option's number of days to maturity on the relative realized option profits?}\end{quote}
 
-\todo{RQ 2}
+The correlation between the two variables thus implies a positive effect of a passenger's prediction error on the option seller's profits. While this was expected due to the definition of the simulation's assumptions, this result could be helpful to an option valuation seller in a real world setting. For example, by better understanding of a passenger's $\mbox{MAPE}$, the airfare~lock-in seller will be able to improve its price setting abilities and thereby approach the optimal option price.
+
+\todo[The sensitivity analysis provides answers to the influence of the other parameters in research question number two. The passenger's risk utility seemed to be strongly correlated with the option's gains. (other parameters \ldots)]{rewrite / extend}
+
 
 \section{Simulation 2: based upon Black--Scholes}
 The second simulation model used in this research is based upon the Black--Scholes model. This model is the first of the two models which are practically implementable in a real world setting. By analyzing the results acquired from running this simulation, one can conclude whether it might be possible for an external seller to sell airfare~lock-in products in a sustainable way.
 
 The Black--Scholes model makes the assumption that the returns or fluctuations of the underlying asset are log-normally distributed. When fluctuations of ticket prices are totally random and unpredictable, this model thus should be the most optimal option price setter possible. However, as shown in \autoref{subsec:DescriptiveAnalysisOfFareChanges}, it does not seem that the price fluctuations of flight tickets follow such a distribution. Therefore it is not expected that this model will perform very well.
 
-This model thus makes its predictions based on the Black--Scholes equation found in \autoref{app:AdaptedBlackScholesFormula}. This formula uses the volatility of the stock to create its forecasts. This volatility is calculated on the historical price changes as seen in the training dataset. The equation used for the computation of the volatility is defined as:
+The option seller in this simulation makes his predictions based on the Black--Scholes equation found in \autoref{app:AdaptedBlackScholesFormula}. This formula uses the volatility of the stock to supply forecasts on the ticket price changes. This volatility is calculated using the historical logarithmic price changes as seen in the training dataset (represented by $x_i$). The equation used for the computation of the volatility is defined as:
 $$\sigma_d = \sqrt{\frac{i}{N-1}\sum_{i=1}^N(x_i - \bar{x})^2} $$
 
 This calculates the daily volatility of the price changes. To calculate the annual volatility of the fares, the following equation is used:
 $$\sigma_a = \sigma_d \times \sqrt{365} $$
 
-Next to this volatility, $\sigma_a$, the Black--Scholes equation also makes use of a risk free rate. In this research the value of the 10~year United States Governmental Bonds has been used to represent this value. This value is 2.57\,\% at the time of writing.
+Next to this volatility, $\sigma_a$, the Black--Scholes equation also makes use of a risk free rate. In this research the value of the 10~year United States Governmental Bonds has been used to represent this value. This value is 2.75\,\% at the time of writing.
 
-This simulation model is based upon the first simulation which represented the all knowing seller. A few modifications have been made to the parameters and assumptions to align with the theory behind this simulation model.
+This simulation model is based upon the first simulation which represented the all knowing seller. A few modifications have been made to the parameters and assumptions to align with the theory behind this model.
 
 First, the seller's forecasting technique is no longer based upon foreknowledge, but uses the training set as its historical input for creating forecasts. By doing so, this model will practically implementable in a real world setting.
 
-Second, the likelihood of flying has been altered to represent the value that was yielded from the sensitivity analysis. The parameter $P^f$ is thus set at the level of 0.85.
-
-The rest of the parameters have been left similar to the configuration of the model for the all knowing seller. A summary can be found in \autoref{tbl:ParameterConfigBlackScholes}.
+Second, the likelihood of flying has been altered to represent the value that was yielded from the sensitivity analysis. The parameter $P^f$ is thus set at the level of 0.85. The rest of the parameters have been left similar to the configuration of the model for the all knowing seller. A summary can be found in \autoref{tbl:ParameterConfigBlackScholes}.
 
 
 \begin{table}
@@ -290,7 +293,7 @@ The rest of the parameters have been left similar to the configuration of the mo
 \end{table}
 
 
-In the simulation with the all knowing seller with foresight, three assumptions were made. One of this assumptions has been released. This assumption involves the knowledge of the seller regarding whether the passenger will exercise its option (i.e., assumption number 2). In this simulation model, the seller thus no longer has the ability to know whether the customer will exercise his option at the date of maturity. Therefore, the writer now has to estimate his minimum Willingness To Accept upon the passenger's likelihood of flying, $P^f$. The other two assumptions are still applicable to this model:
+For the simulation representing the all knowing seller with foresight, three assumptions were made. One of this assumptions has been released and is no longer used in model. This assumption involves the knowledge of the seller regarding whether the passenger will exercise his option (i.e., assumption number 2). In this simulation model, the seller thus no longer has the ability to know whether the customer will exercise his option at the date of maturity. Therefore, the writer now has to estimate his minimum Willingness To Accept upon the passenger's likelihood of travelling, $P^f$. The other two assumptions are still applicable to this model:
 \begin{compactenum}
 \item the option's maximum price shall not exceed 15~percent of the current ticket price;
 \item the seller knows the exact level of the customer's Willingness to Pay.
