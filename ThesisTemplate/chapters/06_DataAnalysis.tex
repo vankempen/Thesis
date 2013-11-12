@@ -309,17 +309,19 @@ The non-normality of the data implies that the changes in ticket prices are not 
 \subsection{Comparison of the training and test dataset}
 This section compares the two different datasets with each other. As stated before, the first 4~weeks of data collected are assigned to the training (i.e., historical) dataset, and the last 2~weeks of the collection period to the test dataset. The two practically feasible option valuation methods in this research both use the historical set to make predictions of the price fluctuations in the test set. The Black--Scholes model uses the training dataset to determine the expected volatility of the ticket prices. The Monte~Carlo model bases its forecasts of airfares upon the empirical distribution seen in the same historical dataset. For these reasons, when the datasets differ from each other, the predictions of the models are likely to have a bigger error. The forecasts of the ticket prices then thus lie further from the actual observed values, which would lead to suboptimal option prices.
 
-To compare the two distinct sets with each other, two statistical tests have been performed on the price fluctuations. The independent samples t-test assumes normally distributed samples, and could yield non-robust results if this is not the case. Because the daily price changes in this research do not seem to be normally distributed, I have chose to use the Kolmogorov--Smirnov two sample, and Mann Whitney U tests. Both methods test the null hypothesis, $H_0$, that the supplied samples came from the same distribution.  The outcomes of both statistical methods can be found in \autoref{tbl:ComparisionOfDatasets}.
+To compare the two distinct sets with each other, two statistical tests have been performed on the price fluctuations. The independent samples t-test assumes normally distributed samples, and could yield non-robust results if this is not the case. Because the daily price changes in this research do not seem to be normally distributed, I have chose to use the Kolmogorov--Smirnov two sample, and Mann--Whitney U tests. Both methods test the null hypothesis, $H_0$, that the supplied samples came from the same distribution.  The outcomes of both statistical methods can be found in \autoref{tbl:ComparisionOfDatasets}. A distinction is made between \emph{Individual} and \emph{Mean} observations. In the first category all the price observations were included in the dataset. For the latter case, the means of these price fluctuations were computed per day before departure and inserted into the set.
 
 
 \begin{table}
 \centering
-\begin{tabular}{l c c c}
+\begin{tabular}{l l l r}
 \toprule
-~  &  Test statistic  &  p-value  &  Reject $H_0$  \\
+~  &  ~  &  Test statistic  &  p-value  \\
 \midrule
-Kolmogorov--Smirnov test  & 0.04  &  $< 0.001$  & yes \\
-Mann-Whitney U test  &  $7.47 \e{12}$ &  $< 0.001$  & yes \\
+Individual  &   Kolmogorov--Smirnov test  & $0.04$  &  $< 0.001$  \\
+~           &   Mann--Whitney U test  &  $7.47 \e{12}$ &  $< 0.001$ \\
+Mean        &   Kolmogorov--Smirnov test  & $0.22$  &  $0.24$  \\
+~           &   Mann--Whitney U test  &  $771$  &  $0.26$ \\
 \bottomrule
 \end{tabular}
 \caption{Comparison of training and test dataset}
@@ -327,11 +329,11 @@ Mann-Whitney U test  &  $7.47 \e{12}$ &  $< 0.001$  & yes \\
 \end{table}
 
 
-The results clearly show that it is very unlikely that both sets are from the same population distribution. Both tests state that the null hypothesis can be rejected at an $\alpha$ of 0.001. While it was not expected that daily price fluctuations of the training and test set would differ, a explanation can be found in the data selection for both datasets. In this research, the flights for both sets were not randomly sampled, but rather selected based upon the departure date of the plane. This manner of data selection is chosen because it represents a valid real world case. When one would apply random sampling to establish two sets, a single set would consist of historical as well as `future' flights. Practically, however, this is not feasible, and an option selling company will only be able to collect historical prices and base its forecast on this set. The same logic is applied to this research, in which there is made a clear distinction between the two sets.
+The results in the \emph{Individual} rows clearly show that it is very unlikely that both sets of single price changes are from the same population distribution. Both tests state that the null hypothesis can be rejected at an $\alpha$ of 0.001. While it was not expected that daily price fluctuations of the training and test set would differ, a explanation can be found in the data selection for both datasets. In this research, the flights for both sets were not randomly sampled, but rather selected based upon the departure date of the plane. This manner of data selection is chosen because it represents a valid real world case. When one would apply random sampling to establish two sets, a single set would consist of historical as well as `future' flights. Practically, however, this is not feasible, and an option selling company will only be able to collect historical prices and base its forecast on this set. The same logic is applied to this research, in which there is made a clear distinction between the two sets.
 
 The possible explanation for the difference amongst the sets can thus be related to the fact that distinction is based upon a feature of the flight (i.e., departure date). It is therefore likely that the two datasets are dissimilar due to seasonality. A collection of more data over a longer period of time might void these problems.
 
-While the statistical tests clearly show that the training and test dataset differ from each other, one might conclude otherwise after a visual inspection. \autoref{fig:DailyPriceChangesBothSets} shows the average daily price changes relative to their number of days before departure for each set. Both lines seem to be overlapping. A possible explanation for this could be that the statistical tests look more closely at each single case. However, this research will mostly use the averages of the fluctuations to make its predictions.
+While the statistical tests clearly show that the training and test dataset on individual price fluctuations differ from each other, the sets with means per day before departure show a significant similarity when $\alpha = 0.05$. A visual inspection also might lead to this conclusion. \autoref{fig:DailyPriceChangesBothSets} shows the average daily price changes relative to their number of days before departure for each set. Both lines seem to be overlapping.
 
 
 \begin{figure*}
@@ -342,5 +344,8 @@ While the statistical tests clearly show that the training and test dataset diff
 \end{figure*}
 
 
-As stated before, the difference amongst the two datasets is expected to cause high forecasting errors in the practically implementable simulation models. However, the means of the daily price fluctuations seem to overlap as shown in the graph. Because this research is more based upon the means of a lot of observations rather than every single flight, the statistical difference of the two samples could have minimal impact on the final results.
+Because this research will use the averages of the fluctuations to make its predictions in the empirical models, it is not expected that the difference amongst the sets in the individual cases will have a negative impact on the forecasting accuracy of the simulations. The similarities between the sets on an average level, however, are expected to have a positive impact on the results of the simulation models.
+
+\autoref{tbl:StatisicalComparison} in \autoref{app:StatisticalComparisonDatasets} shows the same tests on a route level. Most of the routes show that both the price fluctuations in the training and test set come from the same distribution with a high probability. These flights are expected to perform well in the practical simulation models, as these make their forecasts of the test data by using the data in the training set. For some routes, however, there seems to be a significant difference amongst both sets. These routes include DFW to SFO, JFK to LHR, LAX to LAS, LAX to SFO, LHR to JFK, and LHR to LAX. These routes are expected to perform less in the simulation models based upon Black--Scholes and Monte-Carlo, as their historical input data does not align the observed price fluctuations.
+
 
