@@ -4,7 +4,13 @@ This chapter will discuss the simulation model used for the evaluation of the op
 
 \section{Simulation model}
 \label{sec:SimulationModel}
-In this paper a series of simulations will be run to determine the performance of the proposed option valuation models. The simulation model will calculate the expected profits or losses of each of these models. To do so, it will run through a number of steps, namely:
+In this thesis, a series of simulations will be run to determine the performance of different option valuation models. These pricing models range from theoretical optimal --- the all knowing seller --- up till the practically implementable --- based upon historical prices and Monte~Carlo simulation.
+
+The first simulation run will determine the maximum possible profits an option seller could ever realize. The results will be acquired by assuming an option writer that has perfect information and acts accordingly. Because this model yields the absolute maximum a seller could never gain more from offering lock-in product, the observations of this run will also be used as the base case to compare the performance of other option models with.
+
+The runs after the optimal case will drop some of the assumptions made about the all knowing seller, and determine the influences of those assumptions on the results. The final case will be a practically implementable option valuation model based upon historical prices.
+
+All the model will calculate the expected outcomes of each of these models. To do so, it will run through a number of steps, namely:
 
 \begin{description}
 \item[Generate passengers] the simulation model will generate a single passenger for each day prior to departure of a specific flight. Because data have been collected on flights up till 42~days before departure, each ticket will receive this same number of passengers with option requests. However, because when selling options with a specific number of days to maturity $m$ it is not possible to buy options fewer that $m$ days to departure, these customers get excluded from the model. As an example, the test dataset containing airfares of tickets from LHR to JFK includes 7,690 unique flights after cleansing. When simulating this model for options with a maturity of 3 days a total of $(42 - 3) \times 7,690 = 299,910$ passengers will be generated.
@@ -18,8 +24,8 @@ In this paper a series of simulations will be run to determine the performance o
     \item information transparency.
     \end{inparaenum} These parameters will be described in detail in \todo{ref}.
 \item[Compare the WTP with the WTA] by comparing the customer's WTP and the seller's WTA, the model can determine whether the customer will buy the offered option. This is the case when the Willingness To Pay of the customer for a certain flight is higher than the Willingness To Accept of the seller (i.e., $\text{WTP} \ge \text{WTA}$).
-\item[Sell the option] when the customer will buy the option, the simulation will ``sell'' the option at the specified price.
-\item[Calculate generated profits] when an option is sold to a passenger, the model first checks whether the customer actually wants to exercise its right on the day of maturity. A customer will only exercise its right when he is actually flying, and the airfare on the date of maturity is higher than the strike price $p_s$. When this is the case, the simulation will compare the airfare at maturity with the strike price, and calculate the profits or losses resulted from the sale of the product. In this paper the strike price of the option is equal to the airfare at the moment of offering the airfare~lock-in product.
+\item[Sell the option] when the customer will buy the option, the simulation will sell the option at the specified price.
+\item[Calculate generated outcomes] when an option is sold to a passenger, the model first checks whether the customer actually wants to exercise its right on the day of maturity. A customer will only exercise its right when he is actually flying, and the airfare on the date of maturity is higher than the strike price, $p_S$. When this is the case, the simulation will compare the airfare at maturity with the strike price, and calculate the profits or losses resulted from the sale of the product. In this paper the strike price of the option is equal to the airfare at the moment of offering the airfare~lock-in product (i.e., $p_I = p_S$).
 \end{description}
 
 \noindent
@@ -27,13 +33,37 @@ This whole process of the simulation model is summarized in \todo{ref}.
 
 \todo[illustration]{Illustration of process}
 
-Using the method described above, the simulation will be used to compare the performance of the proposed option valuation models amongst each other. The same procedure will also be used to test the influence of a particular configuration of parameters within a single option valuation model.
+Using the method described above, the simulation will be used to compare the performance of the proposed option valuation models. The same procedure will also be used to test the influence of a particular configuration of parameters within a single option valuation model.
 
 
-\todo{descr the first case in words: allknowing foreknowledge..}
+\subsection{The option seller with perfect information}
+As stated previously, the first simulation model built for this research is assuming an option seller with perfect information. This theoretical case will provide insights into the maximum possible profits a writer can achieve. Furthermore, this model is also valuable as base case to compare other option models with.
 
-\subsection{Parameters and assumptions of the simulation model}
-For this simulation, a number of parameters have been defined and some assumptions have been made. The next section will describe the base case which is being used for the initial simulation. In this portion, the exact configurations of the parameters and assumptions will be described. Later sections (e.g., \todo{ref}) will loosen the specified parameters to see its effects on the performance of the parameters itself.
+To the seller with perfect information, a number of assumptions apply:
+
+\assumption{the seller knows the exact price movements of tickets}
+The first assumption states that the seller knows the exact fare fluctuations of the underlying flight ticket. He thus has foreknowledge which enables him to make 100~percent accurate forecasts. By doing so, the writer will be able to set a minimum option price which ensures no losses when the option is exercised.
+
+This characteristic thus supports the seller in setting a minimum option price. When this amount would be used, the seller would not make any profits when the passenger decides to exercise the product. The maximum price an option seller can set is determined by the customer's Wilingness To Pay. The next 
+
+
+\assumption{the seller knows the exact level of a customer's Willingness To Pay}
+
+
+
+\assumption{the seller knows whether the customer will exercise its option at maturity}
+
+
+
+
+\subsection{Parameters, assumptions and constants of the simulation model}
+For this simulation, a number of parameters and constants have been defined and some assumptions have been made. The next section will describe the base case which is being used for the initial simulation. In this portion, the exact configurations of the parameters and assumptions will be described. Later sections (e.g., \todo{ref}) will loosen the specified parameters to see its effects on the performance of the parameters itself.
+
+In this research, a parameter is defined as a variable of the underlying object which can be altered to represent different values. For example, the number of days till maturity of an airfare~lock-in product can hold the values 3, 7, 14, or 21~days for different simulation runs.
+
+An assumption, on the other hand, is described as a characteristic of the entity which either holds true or false. The seller's knowledge on the exact level of a customer's WTP in some of the models is an example of an assumption. This characteristic is either true --- in which the seller \emph{does} knows the exact customer's WTP ---, or false --- in which the seller does \emph{not} know this precise level.
+
+Lastly, this thesis also makes use of constants in the simulations. These are values or expressions which hold throughout every simulation run. An example of a constant is the number of trials a simulation is run before obtaining the results.
 
 Like in \typenameref{sec:Entities}, this model will categorize the parameters and assumptions according to their underlying entities. These four sections are \begin{inparaenum}[\itshape (i)\upshape]
 \item the flight~ticket,
@@ -44,17 +74,17 @@ Like in \typenameref{sec:Entities}, this model will categorize the parameters an
 
 \subsubsection{Characteristics of the flight ticket}
 \label{sub:CharacteristicsOfTheFlightTicket}
-The first entity represents the flight~ticket. A ticket gives its holder the right to take a seat on a particular underlying flight. In this thesis, a specific set of flights is being used:
+The first entity represents the ticket for a flight. A ticket gives its holder the right to take a seat on a particular underlying flight. In this thesis, a specific set of flights is being used:
 
-\begin{itemize}
+\begin{compactitem}
 \item each flight is for a specific route between outbound and inbound airport;
 \item only single-legged (direct) flights are being considered;
 \item only round trip flights are being considered;
 \item each flight has a specific departure date;
 \item the return date of the flight is always 1~week after the departure date.
-\end{itemize}
+\end{compactitem}
 
-Each ticket also has a certain price. This price can differ depending on the lookup~time of the ticket. In this research, airfare changes have been monitored up to six~weeks prior to departure. A certain price of a ticket can thus be defined in the number of \emph{days before departure}, or \emph{dbb}.
+Each ticket also has a certain price. This price can differ depending on the lookup~time of the ticket. In this research, airfare changes have been monitored up to six~weeks (i.e., 42~days) prior to departure. A certain price of a ticket can thus be defined in the number of \emph{days before departure}, or \emph{dbb}.
 
 This thesis has collected airfares on flight tickets for 22~different routes during a period of 12~weeks. The empirical data acquired in this stage are being used in the simulation model. The complete analysis on these airfares is given in \autoref{chap:DataAnalysis}.
 
@@ -66,7 +96,7 @@ The first parameter of the airfare~lock-in products is its number of days till m
 
 In the base case for the simulation, a maturity of 3~days is being considered. When a passenger thus purchases the option, he will decide whether to exercise the option 3~days after the acquisition of the lock-in product.
 
-\parameter{the option's strike price \hfill ($p_S = p_I$)}
+\constant{the option's strike price \hfill ($p_S = p_I$)}
 The second parameter is the strike price of the airfare~lock-in product. This price, denoted by $p_S$, is the cost at which the passenger is able to buy the underlying flight ticket when he exercises the option.
 
 This research will consider a strike price of the airfare~lock-in product that is equal to the initial airfare of the underlying flight at purchase of the option.
@@ -76,13 +106,6 @@ $$p_S = p_I$$
 For example, when the current ticket price $p_I$ is equal to \$\,100 and the customer decides to buy the option, he has the opportunity to buy the ticket for \$\,100 at the date of maturity.  
 
 Next to these configurable parameters, an airfare~lock-in product also has a certain price at which the option is offered to the customer. The theoretical level of this option price is described in \typenameref{subsec:PassengersWTP}. In this research, however, three different option valuation techniques are being considered. These pricing models are characterized by different configurations of the parameters of this simulation model, and will be described in \typenameref{chap:DataAnalysis}.
-
-\assumption{the option's maximum price \hfill ($p_O \le 0.15 \times p_I$)}
-An assumption made about the simulation model in this thesis, is that option prices will not exceed 15~percent of the initial airfare:
-
-$$p_O \le 0.15 \times p_I$$
-
-This assumption is made to exclude the possibility of exceptionally high option prices due to inaccurate forecasts of the passenger. During test~runs of the simulation model, option prices sometimes appeared to be as high as 50~percent of the current ticket price. This seems to be a to high estimation, and these outliers have to be re-evaluated. The 15~percent level as a maximum seems like a realistic maximum for option prices in a real setting.
 
 
 \subsubsection{Characteristics of the options seller}

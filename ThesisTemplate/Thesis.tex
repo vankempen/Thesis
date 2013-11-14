@@ -101,6 +101,12 @@
     \begin{quote}\emph{Parameter \theparameters: #1}\end{quote}%
 }
 
+%  for constants
+\newcounter{constants}
+\newcommand{\constant}[1]{%
+    \stepcounter{constants}%
+    \begin{quote}\emph{Constant \theconstants: #1}\end{quote}%
+}
 
 %  scientific notation
 \providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
@@ -139,8 +145,8 @@
 %\input{chapters/02_LiteratureReview}
 %\input{chapters/03_ResearchQuestions}
 %\input{chapters/04_Methodology}
-%\input{chapters/05_ModelDevelopment}
-\input{chapters/06_DataAnalysis}
+\input{chapters/05_ModelDevelopment}
+%\input{chapters/06_DataAnalysis}
 %\input{chapters/07_Results}
 
 %%  Backmatter
