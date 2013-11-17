@@ -1,0 +1,40 @@
+\tikzstyle{every node}=[font=\footnotesize]
+
+\tikzstyle{block} = [draw, rectangle, minimum height=2.4em, minimum width=5em]
+\tikzstyle{point} = [draw, circle, node distance=2cm, inner sep=.2ex, fill]
+%\tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
+
+\begin{tikzpicture}[auto, node distance=1cm,>=latex']
+    % the line
+    \node [point] (arrival) {};
+    \node [point, right of=arrival] (calcWTP) {};
+    \node [point, right of=calcWTP, node distance=.5cm] (calcWTA) {};
+    \node [point, right of=calcWTA] (calcPO) {};
+    \node [point, right of=calcPO, node distance=.5cm] (acceptOffer) {};
+    \node [right of=acceptOffer, node distance=1.2cm] (maturity) {$m$ days};
+    \node [point, right of=maturity, node distance=1.2cm] (exerciseOption) {};
+    \node [point, right of=exerciseOption, node distance=.5cm] (profits) {};
+
+    % the boxes
+    \node [block, above of=arrival, align=center] (arrivalT) {Arrival}; 
+    \node [block, above of=calcWTP, align=center] (calcWTPT) {Calculate \\ WTP}; 
+    \node [block, below of=calcWTA, align=center] (calcWTAT) {Calculate \\ WTA}; 
+    \node [block, below of=calcPO, align=center] (calcPOT) {Calculate \\ $p_O$}; 
+    \node [block, above of=acceptOffer, align=center] (acceptOfferT) {Accept \\ offer?}; 
+    \node [block, above of=exerciseOption, align=center] (exerciseOptionT) {Exercise \\ option?}; 
+    \node [block, below of=profits, align=center] (profitsT) {Calculate \\ outcomes}; 
+    
+    \draw (arrival) -- (acceptOffer);
+    \draw [dotted] (acceptOffer) -- (maturity);
+    \draw [dotted] (maturity) -- (exerciseOption);
+    \draw (exerciseOption) -- (profits);
+    \draw [->] (arrivalT) -- (arrival);
+    \draw [->] (calcWTPT) -- (calcWTP);
+    \draw [->] (calcWTAT) -- (calcWTA);
+    \draw [->] (calcPOT) -- (calcPO);
+    \draw [->] (acceptOfferT) -- (acceptOffer);
+    \draw [->] (exerciseOptionT) -- (exerciseOption);
+    \draw [->] (profitsT) -- (profits);
+
+    \draw [->] (exerciseOption) -- (profits);
+\end{tikzpicture}
