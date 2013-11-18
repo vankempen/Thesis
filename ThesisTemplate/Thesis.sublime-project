@@ -1,0 +1,14 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "/home/patrick/Thesis/ThesisTemplate"
+		}
+	],
+	"options":
+	{
+		"pdf": "PNvanKempen_AirfareLockInProducts",
+		"root": "Thesis.tex"
+	}
+}

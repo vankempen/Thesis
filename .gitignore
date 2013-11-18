@@ -31,7 +31,10 @@
 *.vrb
 *.xdy
 *.tdo
-ThesisTemplate/output/*
+ThesisTemplate/Output/*
+ThesisTemplate/*.pdf
+ThesisTemplate/*.synctex.gz
+ThesisTemplate/*.ptex
 
 *.swp
 *.bib.bak
