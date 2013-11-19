@@ -1,7 +1,7 @@
-output/Thesis.pdf : Thesis.tex output/Thesis.bbl
-	pdflatex -output-directory output Thesis
-	pdflatex -output-directory output Thesis
-output/Thesis.bbl : Thesis.tex output/Thesis.aux ThesisBiblio.bib
-	bibtex output/Thesis.aux
-output/Thesis.aux : Thesis.tex
-	pdflatex -output-directory output Thesis
+Output/Thesis.pdf : Thesis.tex Output/Thesis.bbl
+	pdflatex -output-directory Output Thesis
+	pdflatex -output-directory Output Thesis
+Output/Thesis.bbl : Thesis.tex Output/Thesis.aux ThesisBiblio.bib
+	bibtex Output/Thesis.aux
+Output/Thesis.aux : Thesis.tex
+	pdflatex -output-directory Output Thesis
