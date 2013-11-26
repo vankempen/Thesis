@@ -38,3 +38,7 @@ ThesisTemplate/*.ptex
 
 *.swp
 *.bib.bak
+
+
+*.sublime-project
+*.sublime-workspace

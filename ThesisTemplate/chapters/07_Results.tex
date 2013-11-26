@@ -47,9 +47,9 @@ This first simulation model will create an understanding on these maximum profit
 \subsection{Profitability of the model}
 \label{subsec:ProfitabilityOfModel}
 During the simulation, statistics on several properties will be collected. These properties allow the reader to get insight into the performance of the models. However, due to differences amongst the routes in terms of number of collected flights and height of ticket prices, comparison of performance between different outbound/inbound pairs is more difficult. Therefore, a ratio is introduced in this research, which enables better analysis between models and flight. The value is computed by multiplying the mean relative profits per option by the total percentage accepted, or:
-$$\Pi_M = \Pi_O \times q$$
+$$\Pi_R = \Pi_O \times q$$
 
-Where $\Pi_M$ is the profitability of the model, $\Pi_O$ denotes the profitability of an option, and $q$ represents the total number of options accepted by the passengers. The former two of these variables are in percentages relative to the mean ticket price, $\mu_{p_t}$, while the number of options accepted is the percentage of total generated customers.
+Where $\Pi_R$ is the profitability of the model, $\Pi_O$ denotes the profitability of an option, and $q$ represents the total number of options accepted by the passengers. The former two of these variables are in percentages relative to the mean ticket price, $\mu_{p_t}$, while the number of options accepted is the percentage of total generated customers.
 
 This metric thus shows the expected profits as a percentage of the ticket price for every customer that requests an offer for an option. For example, consider a simulation model with 10,000 generated passengers. Of these customer's, 5,000 retrieve an offer at a level that they accept. After completion of the run, the model calculates that on average an accepted option yields 2\,\% of the ticket price as a profit. The profitability of the model thus is $0.02 \times 0.50 = 1\,\%$ profits per incoming customer. One can interpreted this as that for every possible customer that arrives in the model, the option seller is expected to gain 1\,\% of the ticket price in profits.
 
@@ -65,7 +65,7 @@ The simulation was first run on all the different routes using the parameters de
 \begin{center}
 \begin{tabular}{c c | c c | c | c }
 \toprule
-    \multicolumn{2}{c|}{$\mu_{p_O}$} & \multicolumn{2}{c|}{$\Pi_O$}  &  $q$  & $\Pi_M$ \\[.4ex]
+    \multicolumn{2}{c|}{$\mu_{p_O}$} & \multicolumn{2}{c|}{$\Pi_O$}  &  $q$  & $\Pi_R$ \\[.4ex]
     \$  & \%  &  \$  & \%  & \%  & \% \\
     \midrule
 16.50  &    3.28  &   16.50   &    3.28  &   100  &   3.28 \\
@@ -77,7 +77,7 @@ The simulation was first run on all the different routes using the parameters de
 \end{table}
 
 
-The columns labelled with $\mu_{p_O}$ contain the mean price of the option. The first column denoted the numeric value, while the second one gives the number in percentages relative to the mean ticket price. $\Pi_O$ denotes the profits gained per accepted option, and $q$ the percentage of options accepted. Lastly, $\Pi_M$ is the profitability of the model as described in \autoref{subsec:ProfitabilityOfModel}.
+The columns labelled with $\mu_{p_O}$ contain the mean price of the option. The first column denoted the numeric value, while the second one gives the number in percentages relative to the mean ticket price. $\Pi_O$ denotes the profits gained per accepted option, and $q$ the percentage of options accepted. Lastly, $\Pi_R$ is the average profitability of the route as described in \autoref{subsec:ProfitabilityOfModel}.
 
 The outcomes of the model are in alignment with the expectations. The optimal option price on average is 3.28\,\% of the current ticket price, which is exactly half of the expected increase according to the passenger (6.55\,\%). This can be explained by the fact that the customer is willing to pay this expected increase multiplied by his likelihood of flying, $P^f$. Because the probability of flying is randomly drawn from an uniform distribution, the average of $P^f$ is $0.5$. Hence the average option price of 3.38\,\%. This was the case for every individual route in the simulation.
 
@@ -99,7 +99,7 @@ After the first simulation, a sensitivity analysis was performed. The influence 
 
 The results of the effect of changes in the parameters were as could be theoretically expected. When a customer overestimated the expected increase in airfare by a single percent point, his Willingness To Pay increased with half a percent point. When the $\mbox{OEF}$ of a passenger decreased by a certain amount, the WTP would also decrease by half of that amount. 
 
-$$ \Delta{\mbox{OEF}} = 0.5 \times \Delta{\mbox{WTP}} $$
+$$ \Delta{\mbox{OEF}} = 0.5 \times \Delta{\mbox{WTP}} = 0.5 \times \Delta{\Pi_R} $$
 
 This linear relation is easily explained by the fact that the customer's Willingness To Pay is closely related to his $P^f$. Because the average probability of flying is 0.5, every percentage increase results in a half percent increase of the WTP. Because in this first simulation it is assumed that the seller knows the exact level of the customer's WTP, the selling price of the airfare~lock-in product will automatically increase.
 
@@ -120,7 +120,7 @@ As can be observed from the figure, the option seller will only offer an option 
 \begin{center}
 \begin{tabular}{c c | c c | c c | c | c }
 \toprule
-\multicolumn{2}{c|}{Airport}  &  \multicolumn{2}{c|}{$\mu_{p_O}$} & \multicolumn{2}{c|}{$\Pi_O$}  &  $q$  & $\Pi_M$ \\[.4ex]
+\multicolumn{2}{c|}{Airport}  &  \multicolumn{2}{c|}{$\mu_{p_O}$} & \multicolumn{2}{c|}{$\Pi_O$}  &  $q$  & $\Pi_R$ \\[.4ex]
 from  &  to  &  \$  & \%  &  \$  & \%  & \%  & \% \\
     \midrule
 AMS  &  CDG  &    6.48  &  2.97  &    6.16  &  2.83  &  76.59  &  2.17 \\
@@ -149,9 +149,220 @@ ORD  &  BOS  &    7.46  &  3.06  &    6.80  &  2.77  &  79.90  &  2.22 \\
 Means &  ~   &   16.18  &  3.08  &   15.19  &  2.87  &  82.65  &  2.38 \\
     \bottomrule
 \end{tabular}
-\caption{Simulation results of all knowing seller without advance purchasing}
+\caption{Simulation results of foreknowledge without advance purchasing}
 \label{tbl:resultsSecond}
 \end{center}
 \end{table}
 
 
+
+\begin{table}
+\begin{center}
+\begin{tabular}{c c | c c | c c | c | c }
+\toprule
+\multicolumn{2}{c|}{Airport}  &  \multicolumn{2}{c|}{$\mu_{p_O}$} & \multicolumn{2}{c|}{$\Pi_O$}  &  $q$  & $\Pi_R$ \\[.4ex]
+from  &  to  &  \$  & \%  &  \$  & \%  & \%  & \% \\
+    \midrule
+AMS  &  CDG  &    7.47  &  3.41  &    6.98  &  3.20  &  51.08  &  1.64 \\
+~    &  DXB  &   19.20  &  3.29  &   19.04  &  3.27  &  80.19  &  2.62 \\
+~    &  JFK  &   28.79  &  3.48  &   26.40  &  3.17  &  63.95  &  2.03 \\
+~    &  LHR  &    9.09  &  3.48  &    8.29  &  3.17  &  58.41  &  1.85 \\[.5ex]
+ATL  &  LAX  &   13.43  &  3.55  &   11.98  &  3.15  &  55.57  &  1.75 \\
+~    &  MCO  &    8.46  &  3.45  &    7.80  &  3.19  &  49.23  &  1.57 \\[.5ex]
+CDG  &  AMS  &    7.87  &  3.40  &    7.40  &  3.21  &  53.21  &  1.71 \\
+~    &  LHR  &    7.52  &  3.45  &    6.96  &  3.19  &  61.03  &  1.95 \\[.5ex]
+DEN  &  FLL  &    6.15  &  3.42  &    5.73  &  3.22  &  66.56  &  2.14 \\
+~    &  PHX  &    6.30  &  3.52  &    5.66  &  3.16  &  58.44  &  1.85 \\[.5ex]
+DFW  &  LAX  &    9.73  &  3.47  &    8.96  &  3.20  &  56.28  &  1.80 \\
+~    &  SFO  &   13.13  &  3.49  &   12.05  &  3.19  &  53.90  &  1.72 \\[.5ex]
+JFK  &  CDG  &  103.71  &  3.45  &   99.31  &  3.21  &  72.08  &  2.31 \\
+~    &  LHR  &   33.83  &  3.53  &   31.00  &  3.18  &  70.27  &  2.23 \\[.5ex]
+LAX  &  LAS  &    7.38  &  3.46  &    6.85  &  3.19  &  61.63  &  1.97 \\
+~    &  SFO  &    8.13  &  3.46  &    7.54  &  3.20  &  55.59  &  1.78 \\[.5ex]
+LHR  &  AMS  &    8.53  &  3.53  &    7.66  &  3.17  &  56.17  &  1.78 \\
+~    &  JFK  &   30.72  &  3.54  &   28.03  &  3.18  &  77.68  &  2.47 \\
+~    &  LAX  &   46.74  &  3.56  &   42.67  &  3.17  &  74.81  &  2.37 \\
+~    &  MAD  &    9.41  &  3.47  &    8.67  &  3.20  &  60.43  &  1.94 \\[.5ex]
+ORD  &  BOS  &    8.69  &  3.56  &    7.74  &  3.14  &  55.03  &  1.73 \\
+~    &  LGA  &    9.33  &  3.49  &    8.54  &  3.18  &  64.22  &  2.04 \\
+\midrule
+Means &  ~   &   18.35  &  3.48  &   17.06  &  3.19  &  61.63  &  1.97 \\
+    \bottomrule
+\end{tabular}
+\caption{Simulation results of foreknowledge without exercise information}
+\label{tbl:resultsSecond}
+\end{center}
+\end{table}
+
+
+
+
+\begin{table}
+\begin{center}
+\begin{tabular}{c c | c c | c c | c | c }
+\toprule
+\multicolumn{2}{c|}{Airport}  &  \multicolumn{2}{c|}{$\mu_{p_O}$} & \multicolumn{2}{c|}{$\Pi_O$}  &  $q$  & $\Pi_R$ \\[.4ex]
+from  &  to  &  \$  & \%  &  \$  & \%  & \%  & \% \\
+    \midrule
+AMS  &  CDG  &    0.63  &  0.27  &    0.14  &  0.06  &  51.10  &  0.03 \\
+~    &  DXB  &    0.22  &  0.04  &    0.06  &  0.01  &  80.21  &  0.01 \\
+~    &  JFK  &    3.22  &  0.41  &    0.83  &  0.10  &  63.88  &  0.07 \\
+~    &  LHR  &    1.07  &  0.42  &    0.27  &  0.11  &  58.39  &  0.06 \\[.5ex]
+ATL  &  LAX  &    2.00  &  0.55  &    0.54  &  0.15  &  55.61  &  0.08 \\
+~    &  MCO  &    0.88  &  0.35  &    0.23  &  0.09  &  49.21  &  0.04 \\[.5ex]
+CDG  &  AMS  &    0.61  &  0.25  &    0.14  &  0.06  &  53.21  &  0.03 \\
+~    &  LHR  &    0.77  &  0.36  &    0.21  &  0.10  &  61.01  &  0.06 \\[.5ex]
+DEN  &  FLL  &    0.58  &  0.28  &    0.17  &  0.09  &  66.63  &  0.06 \\
+~    &  PHX  &    0.88  &  0.49  &    0.23  &  0.13  &  58.41  &  0.08 \\[.5ex]
+DFW  &  LAX  &    1.11  &  0.39  &    0.33  &  0.12  &  56.28  &  0.07 \\
+~    &  SFO  &    1.51  &  0.42  &    0.44  &  0.12  &  53.90  &  0.07 \\[.5ex]
+JFK  &  CDG  &    6.72  &  0.35  &    2.34  &  0.11  &  72.05  &  0.08 \\
+~    &  LHR  &    4.15  &  0.50  &    1.31  &  0.16  &  70.25  &  0.11 \\[.5ex]
+LAX  &  LAS  &    0.74  &  0.38  &    0.21  &  0.11  &  61.63  &  0.07 \\
+~    &  SFO  &    0.84  &  0.38  &    0.25  &  0.11  &  55.59  &  0.06 \\[.5ex]
+LHR  &  AMS  &    1.21  &  0.50  &    0.34  &  0.14  &  56.16  &  0.08 \\
+~    &  JFK  &    4.04  &  0.52  &    1.34  &  0.17  &  77.68  &  0.13 \\
+~    &  LAX  &    6.07  &  0.56  &    2.01  &  0.18  &  74.76  &  0.13 \\
+~    &  MAD  &    1.07  &  0.39  &    0.33  &  0.12  &  60.43  &  0.08 \\[.5ex]
+ORD  &  BOS  &    1.28  &  0.57  &    0.33  &  0.15  &  55.01  &  0.08 \\
+~    &  LGA  &    1.10  &  0.43  &    0.30  &  0.12  &  64.21  &  0.08 \\
+\midrule
+Means &  ~   &    1.85  &  0.40  &    0.56  &  0.11  &  61.62  &  0.07 \\
+    \bottomrule
+\end{tabular}
+\caption{Simulation results of foreknowledge where $p_O = \mbox{WTA}$}
+\label{tbl:resultsSecond}
+\end{center}
+\end{table}
+
+
+\begin{table}
+\begin{center}
+\begin{tabular}{c c | c c | c c | c | c }
+\toprule
+\multicolumn{2}{c|}{Airport}  &  \multicolumn{2}{c|}{$\mu_{p_O}$} & \multicolumn{2}{c|}{$\Pi_O$}  &  $q$  & $\Pi_R$ \\[.4ex]
+from  &  to  &  \$  & \%  &  \$  & \%  & \%  & \% \\
+    \midrule
+AMS  &  CDG  &    5.38  &  2.93  &   -1.62  &  -1.25  &  23.50  &  -0.29 \\
+~    &  DXB  &    6.24  &  1.09  &   -0.70  &  -0.15  &  71.51  &  -0.11 \\
+~    &  JFK  &   14.68  &  1.82  &   -8.92  &  -1.03  &  59.37  &  -0.61 \\
+~    &  LHR  &    6.69  &  2.74  &    0.19  &  -0.05  &  42.36  &  -0.02 \\[.5ex]
+ATL  &  LAX  &    7.77  &  2.07  &   -0.21  &  -0.21  &  44.45  &  -0.09 \\
+~    &  MCO  &    5.47  &  2.42  &   -1.80  &  -1.05  &  26.25  &  -0.28 \\[.5ex]
+CDG  &  AMS  &    5.19  &  2.64  &   -0.75  &  -0.64  &  27.41  &  -0.17 \\
+~    &  LHR  &    5.86  &  2.75  &   -2.99  &  -1.65  &  44.39  &  -0.73 \\[.5ex]
+DEN  &  FLL  &    2.72  &  1.58  &   -1.10  &  -0.58  &  54.14  &  -0.31 \\
+~    &  PHX  &    3.12  &  1.86  &   -0.79  &  -0.49  &  46.24  &  -0.23 \\[.5ex]
+DFW  &  LAX  &    3.29  &  1.23  &   -1.29  &  -0.46  &  53.70  &  -0.25 \\
+~    &  SFO  &    5.05  &  1.51  &   -7.77  &  -2.14  &  50.01  &  -1.07 \\[.5ex]
+JFK  &  CDG  &   47.67  &  1.87  &   12.72  &  -0.24  &  45.73  &  -0.11 \\
+~    &  LHR  &   23.47  &  2.68  &   14.89  &  1.63  &  14.91  &  0.24 \\[.5ex]
+LAX  &  LAS  &    2.35  &  1.21  &   -3.69  &  -2.14  &  60.03  &  -1.29 \\
+~    &  SFO  &    1.82  &  1.12  &   -8.20  &  -5.54  &  43.14  &  -2.39 \\[.5ex]
+LHR  &  AMS  &    6.42  &  2.88  &    0.61  &  0.08  &  39.67  &  0.03 \\
+~    &  JFK  &   23.65  &  2.93  &   15.64  &  1.82  &  20.01  &  0.36 \\
+~    &  LAX  &   32.81  &  2.76  &   17.12  &  1.33  &  23.20  &  0.31 \\
+~    &  MAD  &    5.60  &  2.11  &   -2.14  &  -0.89  &  56.56  &  -0.50 \\[.5ex]
+ORD  &  BOS  &    3.67  &  1.67  &   -1.64  &  -0.81  &  50.02  &  -0.41 \\
+~    &  LGA  &    3.99  &  1.60  &   -1.28  &  -0.68  &  48.63  &  -0.33 \\
+\midrule
+Means &  ~   &   10.13  &  2.07  &    0.74  &  -0.69  &  42.97  &  -0.37 \\
+    \bottomrule
+\end{tabular}
+\caption{Simulation results of Monte Carlo where $p_O = \mbox{WTA}$}
+\label{tbl:resultsSecond}
+\end{center}
+\end{table}
+
+
+\begin{table}
+\begin{center}
+\begin{tabular}{c c | c c | c c | c | c }
+\toprule
+\multicolumn{2}{c|}{Airport}  &  \multicolumn{2}{c|}{$\mu_{p_O}$} & \multicolumn{2}{c|}{$\Pi_O$}  &  $q$  & $\Pi_R$ \\[.4ex]
+from  &  to  &  \$  & \%  &  \$  & \%  & \%  & \% \\
+    \midrule
+AMS  &  CDG  &    6.66  &  3.63  &   -0.92  &  -0.88  &  20.18  &  -0.18 \\
+~    &  DXB  &   18.58  &  3.24  &    9.84  &  1.66  &  44.04  &  0.73 \\
+~    &  JFK  &   26.54  &  3.32  &   -3.20  &  -0.23  &  42.86  &  -0.10 \\
+~    &  LHR  &    8.67  &  3.57  &    1.35  &  0.43  &  35.24  &  0.15 \\[.5ex]
+ATL  &  LAX  &   12.68  &  3.41  &    3.40  &  0.78  &  33.26  &  0.26 \\
+~    &  MCO  &    8.36  &  3.74  &   -0.30  &  -0.38  &  20.15  &  -0.08 \\[.5ex]
+CDG  &  AMS  &    7.02  &  3.56  &    0.51  &  -0.05  &  22.46  &  -0.01 \\
+~    &  LHR  &    7.32  &  3.47  &   -2.38  &  -1.35  &  37.93  &  -0.51 \\[.5ex]
+DEN  &  FLL  &    5.74  &  3.35  &    1.08  &  0.70  &  36.66  &  0.26 \\
+~    &  PHX  &    5.64  &  3.38  &    0.91  &  0.56  &  33.28  &  0.19 \\[.5ex]
+DFW  &  LAX  &    8.46  &  3.22  &    2.61  &  1.06  &  33.90  &  0.36 \\
+~    &  SFO  &   10.62  &  3.28  &   -5.79  &  -1.30  &  33.63  &  -0.44 \\[.5ex]
+JFK  &  CDG  &   84.03  &  3.32  &   42.51  &  0.79  &  32.95  &  0.26 \\
+~    &  LHR  &   31.27  &  3.57  &   21.75  &  2.41  &  12.05  &  0.29 \\[.5ex]
+LAX  &  LAS  &    6.39  &  3.32  &   -1.55  &  -1.06  &  37.43  &  -0.40 \\
+~    &  SFO  &    5.20  &  3.26  &   -7.66  &  -5.29  &  26.60  &  -1.41 \\[.5ex]
+LHR  &  AMS  &    7.77  &  3.50  &    1.42  &  0.43  &  34.33  &  0.15 \\
+~    &  JFK  &   27.91  &  3.46  &   19.46  &  2.29  &  17.48  &  0.40 \\
+~    &  LAX  &   40.69  &  3.43  &   23.69  &  1.88  &  19.81  &  0.37 \\
+~    &  MAD  &    8.72  &  3.31  &   -0.42  &  -0.22  &  42.96  &  -0.09 \\[.5ex]
+ORD  &  BOS  &    7.18  &  3.29  &    0.58  &  0.23  &  34.78  &  0.08 \\
+~    &  LGA  &    8.19  &  3.32  &    1.66  &  0.52  &  33.15  &  0.17 \\
+\midrule
+Means &  ~   &   16.07  &  3.41  &    4.93  &  0.14  &  31.14  &  0.02 \\
+    \bottomrule
+\end{tabular}
+\caption{Simulation results of Monte Carlo where $\min(p_O) = 3.22\,\%$}
+\label{tbl:resultsSecond}
+\end{center}
+\end{table}
+
+
+\begin{table}
+\begin{center}
+\begin{tabular}{c c | c c | c c | c | c }
+\toprule
+\multicolumn{2}{c|}{Airport}  &  \multicolumn{2}{c|}{$\mu_{p_O}$} & \multicolumn{2}{c|}{$\Pi_O$}  &  $q$  & $\Pi_R$ \\[.4ex]
+from  &  to  &  \$  & \%  &  \$  & \%  & \%  & \% \\
+    \midrule
+AMS  &  CDG  &    6.43  &  3.59  &    0.01  &  -0.40  &  17.82  &  -0.07 \\
+~    &  DXB  &   18.98  &  3.29  &   11.42  &  1.96  &  40.98  &  0.80 \\
+~    &  JFK  &   26.12  &  3.34  &    6.00  &  0.75  &  36.58  &  0.27 \\
+~    &  LHR  &    8.34  &  3.48  &    1.94  &  0.71  &  32.14  &  0.23 \\[.5ex]
+ATL  &  LAX  &   12.85  &  3.47  &    3.06  &  0.70  &  35.98  &  0.25 \\
+~    &  MCO  &    7.61  &  3.31  &   -0.19  &  -0.21  &  24.98  &  -0.05 \\[.5ex]
+CDG  &  AMS  &    6.88  &  3.53  &    0.66  &  -0.02  &  23.43  &  -0.01 \\
+~    &  LHR  &    7.04  &  3.60  &    0.56  &  0.04  &  24.10  &  0.01 \\[.5ex]
+DEN  &  FLL  &    5.72  &  3.33  &    1.20  &  0.75  &  38.87  &  0.29 \\
+~    &  PHX  &    5.91  &  3.52  &    1.03  &  0.64  &  32.35  &  0.21 \\[.5ex]
+DFW  &  LAX  &    8.60  &  3.27  &    2.87  &  1.17  &  32.80  &  0.38 \\
+~    &  SFO  &   10.36  &  3.41  &    0.62  &  0.06  &  23.92  &  0.01 \\[.5ex]
+JFK  &  CDG  &   87.39  &  3.41  &   44.87  &  0.74  &  38.68  &  0.29 \\
+~    &  LHR  &   30.36  &  3.33  &   11.82  &  1.30  &  39.84  &  0.52 \\[.5ex]
+LAX  &  LAS  &    6.49  &  3.42  &    0.18  &  -0.19  &  30.25  &  -0.06 \\
+~    &  SFO  &    6.01  &  3.40  &    1.60  &  0.44  &  12.27  &  0.05 \\[.5ex]
+LHR  &  AMS  &    7.53  &  3.42  &    1.93  &  0.72  &  31.44  &  0.23 \\
+~    &  JFK  &   27.98  &  3.37  &   14.21  &  1.64  &  37.93  &  0.62 \\
+~    &  LAX  &   40.66  &  3.32  &   15.24  &  1.15  &  36.96  &  0.43 \\
+~    &  MAD  &    8.44  &  3.32  &    1.96  &  0.68  &  31.69  &  0.22 \\[.5ex]
+ORD  &  BOS  &    7.25  &  3.37  &    1.39  &  0.56  &  31.61  &  0.18 \\
+~    &  LGA  &    8.43  &  3.52  &    2.92  &  1.02  &  28.91  &  0.29 \\
+\midrule
+Means &  ~   &   16.15  &  3.41  &    5.69  &  0.65  &  31.07  &  0.23 \\
+    \bottomrule
+\end{tabular}
+\caption{Simulation results of Monte Carlo with better forecasting and $\min(p_O) = 3.22\,\%$}
+\label{tbl:resultsSecond}
+\end{center}
+\end{table}
+
+
+%\begin{table}
+%\begin{center}
+%\begin{tabular}{c c | c c | c c | c | c }
+%\toprule
+%\multicolumn{2}{c|}{Airport}  &  \multicolumn{2}{c|}{$\mu_{p_O}$} & \multicolumn{2}{c|}{$\Pi_O$}  &  $q$  & $\Pi_R$ \\[.4ex]
+%from  &  to  &  \$  & \%  &  \$  & \%  & \%  & \% \\
+%    \midrule
+%    \bottomrule
+%\end{tabular}
+%\caption{Simulation results of }
+%\label{tbl:resultsSecond}
+%\end{center}
+%\end{table}

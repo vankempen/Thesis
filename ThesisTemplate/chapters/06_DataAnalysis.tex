@@ -54,6 +54,7 @@ $$
 \end{figure}
 
 
+
 \subsection{Outlier analysis}
 \label{subsec:outlierAnalysis}
 After cleansing the dataset, the outlier analysis was performed. First, extreme and invalid prices were identified and removed from the dataset. Google Flights sometimes yielded with an impossible airfare for a flight, and it is more likely that such values were not prices, but rather codes for the website. For example, when Google Flights does currently not have recent price information on a flight, the ticket price was set at 3. This of course is an impossible price for a flight, even more so considering the prices returned are in cents. To exclude these codes from the dataset, all airfares lower than 1,000~cents were removed from the dataset (i.e., $p_i < 1000$).
