@@ -42,3 +42,5 @@ ThesisTemplate/*.ptex
 
 *.sublime-project
 *.sublime-workspace
+
+.ipynb_checkpoints*
