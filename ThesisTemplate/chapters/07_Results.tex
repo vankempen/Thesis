@@ -49,7 +49,6 @@ Arrival: $ \sim \mbox{Poisson}(1)$
 Number of days till maturity: 3
 
 
-
 \subsection{Forecasting error with strong-from rational expectations}
 Due to the linear influence of the error term on the forecast, the variance of the random error term will define the average forecasting error of the prediction. There are several ways to calculate this forecasting error. The \emph{Mean Absolute Percentage Error} ($\mbox{MAPE}$), for example, is defined as:
 
@@ -64,8 +63,41 @@ When using the strong-form rational expectation, the MAPE is linearly related to
 0.    ,  0.0399,  0.0798,  0.1197,  0.1596,  0.1995,  0.2394, 0.2793
 
 \subsection{Simulation results and analysis}
-In this subsection I will present the results gained from running the simulation with the previously defined configuration of supply and demand submodels. I will also analyse these results and give explanations of the acquired data.
+In this subsection I will present the results gained from running the simulation with the previously defined configuration of supply and demand submodels. I will also analyse these results and give explanations of the acquired data. To check the influence of certain parameters in the model, I will furthermore alter several variables to see their effect on the outcome of the simulation model.
 
-To check the influence of certain parameters in the model, I will furthermore alter several variables to see their effect on the outcome of the simulation model.
+\subsubsection{Results}
+This first simulation run will look at the results obtained from a seller with perfect foresight who also knows the exact likelihood of flying of every customer. The customer in this simulation will base his predictions upon strong-form rational expectations.
 
+\autoref{fig:normalized_profits} presents the normalized profits of all routes for selling airfare~lock-in products with different levels of margins. As can be seen in the graph, the seller with perfect knowledge does not make any profits when the margin is set to nil. This is of course an expected outcome, as the seller with foresight does make precise forecasts on the actual future price fluctuations, and does thereby not accidentally overestimate option prices which might result in profits. He does however set the option prices to the expected payout, which result in a total profits of zero.
+
+\insertfigure{normalized_profits}{Normalized profits of all flights}
+
+By increasing the margin, the all knowing seller is able to yield profits from the sold options. Because the writer sets his minimum acceptable option price to the expected payout, every percentage in margins will result in a percentage increase in profits when the option is sold. However, due to the customer only accepting an option when his willingness to pay exceeds the offered price, an increase in lock-in~fee will result in less passengers actually buying the ticket. This is also visible in the figure with normalized profits. The graph first shows an increasing trends in profits; the increase in margins outweighs the decrease in customers buying the option. After a certain level --- around 0.075 in given example --- the increasing trend changes in a loss of total profits for every higher margin.
+
+The decreasing is also reflected in \autoref{fig:customer_decision_distribution}. The bars represent the percentage of customer's that chose to either \emph{buy} the flight immediately, \emph{wait} a few days till deciding to buy, or buy an option instead (i.e., \emph{option (buy)} and \emph{option (wait)} respectively). As can be reduced from the data, an increase in margin leads to a decrease in customer's willing to buy the option for the higher price.
+
+\insertfigure{customer_decision_distribution}{Customer's decision distribution}
+
+The relation between the profits gained by an increase in margin and the decrease in passengers buying options which both account for changes in total profits can be explained using the following equation:
+
+$$ \mbox{total relative profits} = (1 - F(r)) * r $$
+
+In which $r$ is the margin, and $F(r)$ is the cumulative distribution function of the customer's strong-form rational expectation function. This function can be defined as $\mathcal{N}(1, \sigma^2)$. The first part of the function ($1 - F(r)$) computes the expected percentage of customers that will still buy the option at a specified margin $r$. The multiplication by $r$ in the second part of the equation calculates the relative profits gained from selling all those options. Thus the higher the total relative profits, the higher the actual total profits are expected to be.
+
+To check whether the previously formulated equation aligns with the results found in the simulation, I have calculated Pearson's correlation coefficient. \todo{ref} presents the outcomes of this test, and shows that the empirical and theoretical results are a extremely good fit. The equation can thus be used as substitute for the simulation.
+
+\todo{table}
+correlation coefficient: $0.9899$, p-value: $< 0.0001$
+
+As shown in previous paragraphs, the total profits of a seller offering airfare~lock-in products are dependant on the margin that the seller adds to his option predictions. Next, as can be reduced from the equation, the accuracy of the customer's strong-form predictions are also relevant. An increase in error term in the customer's forecasts will results in a higher forecasting error (i.e., higher $\mbox{MAPE}$) as shown in \todo{ref}.
+
+\autoref{fig:relative_profits_customer_accuracy} shows the influence of the customer's accuracy upon the realized total profits. The total profits are the relative change compared to the base model in which the passenger's strong-form error term is set at $0.01$, or a $\mbox{MAPE}$ of $0.0798$.
+
+\insertfigure{relative_profits_customer_accuracy}{Relative increase in profits compared to customer's error term}
+
+While relative option profits are equal amongst different routes due to the configuration of the simulation model, average absolute profits differ between flights. These mean profits per sold option are presented in \todo{ref}. The difference in absolute profits realized per accepted lock-in product can be explained by the average absolute price changes of that same flight. These figures are also given in the table, and show a near perfect correlation with the realized option profits.
+
+\todo{table avg abs profits}
+profits & 7 & 19 & 27 & 8 & 13 & 8 & 7 & 7 & 6 & 6 & 9 & 13 & 91 & 32 & 6 & 7 & 8 & 29 & 43 & 9 & 8 & 9 \\
+average changes & 0.09 & 0.23 & 0.34 & 0.1 & 0.16 & 0.1 & 0.1 & 0.09 & 0.08 & 0.08 & 0.12 & 0.17 & 1.0 & 0.4 & 0.08 & 0.09 & 0.1 & 0.34 & 0.5 & 0.11 & 0.1 & 0.11
 
