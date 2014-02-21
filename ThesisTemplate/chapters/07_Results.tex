@@ -5,7 +5,7 @@ This chapter of my Master's Thesis will run and evaluate several simulations. Ea
 Due to the large amount of routes, only interesting or surprising results will be displayed and analysed in this chapter. Full tables with results can be found in the appendices \todo{ref}.
 
 
-\section(Benchmark model)
+\section{Benchmark model}
 Like stated before, the first model that will be evaluated is the benchmark model. In this simulation model, the seller has perfect information on both flight statistics and customer characteristics. This allows this configuration to be used to compare the performance of the different models, and makes it possible to reduce the impact of the other parameters in the simulation.
 
 \subsection{Characteristics definition}
@@ -45,14 +45,14 @@ $$ V_c \ge V_s $$
 
 
 \todo{table}
-Arrival: $ \sim \mbox{Poisson}(1)$
+Arrival: $ \sim \mbox{Poisson}(1) $
 Number of days till maturity: 3
 
 
 \subsection{Forecasting error with strong-from rational expectations}
 Due to the linear influence of the error term on the forecast, the variance of the random error term will define the average forecasting error of the prediction. There are several ways to calculate this forecasting error. The \emph{Mean Absolute Percentage Error} ($\mbox{MAPE}$), for example, is defined as:
 
-$$ \mbox{MAPE} = \frac{1}{n} \sum\limits_{k=0}^n \abs{\frac{F_m - E[F_m]}{F_m}} $$
+$$ \mbox{MAPE} = \frac{1}{n} \sum\limits_{k=0}^n \frac{|F_m - E[F_m]|}{F_m} $$
 
 When using the strong-form rational expectation, the MAPE is linearly related to the standard deviation of the error term distribution in the following way: $ \mbox{MAPE} = 0.798 \sigma $
 
@@ -70,17 +70,17 @@ This first simulation run will look at the results obtained from a seller with p
 
 \autoref{fig:normalized_profits} presents the normalized profits of all routes for selling airfare~lock-in products with different levels of margins. As can be seen in the graph, the seller with perfect knowledge does not make any profits when the margin is set to nil. This is of course an expected outcome, as the seller with foresight does make precise forecasts on the actual future price fluctuations, and does thereby not accidentally overestimate option prices which might result in profits. He does however set the option prices to the expected payout, which result in a total profits of zero.
 
-\insertfigure{normalized_profits}{Normalized profits of all flights}
+\insertfig{normalized_profits}{Normalized profits of all flights}
 
 By increasing the margin, the all knowing seller is able to yield profits from the sold options. Because the writer sets his minimum acceptable option price to the expected payout, every percentage in margins will result in a percentage increase in profits when the option is sold. However, due to the customer only accepting an option when his willingness to pay exceeds the offered price, an increase in lock-in~fee will result in less passengers actually buying the ticket. This is also visible in the figure with normalized profits. The graph first shows an increasing trends in profits; the increase in margins outweighs the decrease in customers buying the option. After a certain level --- around 0.075 in given example --- the increasing trend changes in a loss of total profits for every higher margin.
 
 The decreasing is also reflected in \autoref{fig:customer_decision_distribution}. The bars represent the percentage of customer's that chose to either \emph{buy} the flight immediately, \emph{wait} a few days till deciding to buy, or buy an option instead (i.e., \emph{option (buy)} and \emph{option (wait)} respectively). As can be reduced from the data, an increase in margin leads to a decrease in customer's willing to buy the option for the higher price.
 
-\insertfigure{customer_decision_distribution}{Customer's decision distribution}
+\insertfig{customer_decision_distribution}{Margin's influence on customer's decision distribution}
 
 The relation between the profits gained by an increase in margin and the decrease in passengers buying options which both account for changes in total profits can be explained using the following equation:
 
-$$ \mbox{total relative profits} = (1 - F(r)) * r $$
+$$ \mbox{total relative profits} = (1 - F(r)) \times r $$
 
 In which $r$ is the margin, and $F(r)$ is the cumulative distribution function of the customer's strong-form rational expectation function. This function can be defined as $\mathcal{N}(1, \sigma^2)$. The first part of the function ($1 - F(r)$) computes the expected percentage of customers that will still buy the option at a specified margin $r$. The multiplication by $r$ in the second part of the equation calculates the relative profits gained from selling all those options. Thus the higher the total relative profits, the higher the actual total profits are expected to be.
 
@@ -91,13 +91,89 @@ correlation coefficient: $0.9899$, p-value: $< 0.0001$
 
 As shown in previous paragraphs, the total profits of a seller offering airfare~lock-in products are dependant on the margin that the seller adds to his option predictions. Next, as can be reduced from the equation, the accuracy of the customer's strong-form predictions are also relevant. An increase in error term in the customer's forecasts will results in a higher forecasting error (i.e., higher $\mbox{MAPE}$) as shown in \todo{ref}.
 
-\autoref{fig:relative_profits_customer_accuracy} shows the influence of the customer's accuracy upon the realized total profits. The total profits are the relative change compared to the base model in which the passenger's strong-form error term is set at $0.01$, or a $\mbox{MAPE}$ of $0.0798$.
+\autoref{fig:relative_profits_customer_accuracy} shows the influence of the customer's accuracy upon the realized total profits. The total profits are the relative change compared to the base model in which the passenger's strong-form error term is set at $0.10$, or a $\mbox{MAPE}$ of $0.0798$. The seller's margin in these simulation runs is set at $0.075$, which is the optimal margin associated with this base case.
 
-\insertfigure{relative_profits_customer_accuracy}{Relative increase in profits compared to customer's error term}
+\insertfig{relative_profits_customer_accuracy}{Relative increase in profits compared to customer's error term}
+
+\autoref{fig:customer_decision_distribution_accu} shows that the percentage of customers that would buy the flight directly if no option was available increases as the accuracy of the passenger goes down. This trend is explained by the fact that a higher standard deviation of the customer's prediction model will yield more volatile price fluctuations. The consumer thus expects he has to pay a lot more when he postpones his decision. Therefore, he believes his best option is to buy the flight immediately at arrival and hope that he actually is going to use the ticket.
+
+As can be derived from the bar chart, a high percentage of these customers actually decide to buy the option instead. This is due to the fact that the seller has perfect information on ticket price fluctuations and the passenger's likelihood of travelling, and is able to set little option prices accordingly.
+
+\insertfig{customer_decision_distribution_accu}{Accuracy's influence on customer's decision distribution}
 
 While relative option profits are equal amongst different routes due to the configuration of the simulation model, average absolute profits differ between flights. These mean profits per sold option are presented in \todo{ref}. The difference in absolute profits realized per accepted lock-in product can be explained by the average absolute price changes of that same flight. These figures are also given in the table, and show a near perfect correlation with the realized option profits.
 
 \todo{table avg abs profits}
-profits & 7 & 19 & 27 & 8 & 13 & 8 & 7 & 7 & 6 & 6 & 9 & 13 & 91 & 32 & 6 & 7 & 8 & 29 & 43 & 9 & 8 & 9 \\
-average changes & 0.09 & 0.23 & 0.34 & 0.1 & 0.16 & 0.1 & 0.1 & 0.09 & 0.08 & 0.08 & 0.12 & 0.17 & 1.0 & 0.4 & 0.08 & 0.09 & 0.1 & 0.34 & 0.5 & 0.11 & 0.1 & 0.11
+%profits & 7 & 19 & 27 & 8 & 13 & 8 & 7 & 7 & 6 & 6 & 9 & 13 & 91 & 32 & 6 & 7 & 8 & 29 & 43 & 9 & 8 & 9 \\
+%average changes & 0.09 & 0.23 & 0.34 & 0.1 & 0.16 & 0.1 & 0.1 & 0.09 & 0.08 & 0.08 & 0.12 & 0.17 & 1.0 & 0.4 & 0.08 & 0.09 & 0.1 & 0.34 & 0.5 & 0.11 & 0.1 & 0.11
 
+\subsection{Customer's advantages of buying options}
+Selling options to consumers as an all knowing seller is profitable as shown in previous section. In this subsection I will examine the effect of buying options has on the expected costs to the passenger. I will compare the results of the customer's decision of the simulation model to the expected costs when this passenger would have bought an option instead.
+
+Theoretically, it is not always the optimal choice for the customer to buy an airfare~lock-in product. When the customer has a very high likelihood of travelling, it is often best to immediately buy the ticket to make sure price movements have no further influence on the passenger's costs. For example, when a customer has a $P^f$ of $0.9$, he is on average always better off buying the flight at arrival time when the expected increase in airfare is higher than about $11\,\%$.
+
+On the other hand, when the customer's probability is low, the best possibility is waiting till he knows for sure whether he is going to fly or not. Due to the definition of the option price in which the calculated fee equals the expected increase multiplied by the passenger's probability of flying, the expected costs of waiting equals the expected costs of buying an option \footnote{This only applies to the situation of the all knowing seller in which he sets the margin to $0\,\%$}. The customer will therefore be off equally well buying an option as waiting, and will thus be indifferent between the two.
+
+However, there are also two~cases in which the customer makes the wrong buy/wait-decision:
+
+\paragraph{Case 1: buying when the customer should have waited}
+
+This situation occurs when the customer \emph{overestimates} the future price fluctuations of the underlying ticket price. Due to this wrong choice, the passenger will on average have higher costs than he would have had when waiting a few days.
+
+As an example, consider a customer with a $P^f$ of $0.9$. While the actual price increase is $10\,\%$, he expect an increase of $12\,\%$. Due to this overestimation, the customer will decide to buy the flight ticket directly, instead of waiting till he knows whether he will actually use the ticket. His expected costs are therefore equal to the full ticket price. However, when he would have chosen to buy the option instead, his costs would have been $0.99$ ($= 1.1 \times 0.9$). He thus would have saved $1\,\%$ of the total ticket price on his costs for this trip.
+
+\paragraph{Case 2: waiting when the customer should have bought the flight immediately}
+
+The second case in which the customer makes the wrong decision, is when he chooses to wait while he should have bought the flight immediately. This situation occurs when the passenger \emph{underestimates} the price movements of the airfare. Buying an option in this case will still be suboptimal to buying the flight at arrival time, because the expected costs incurred due to the option are equal to the costs of waiting. However, relative to his decision, the customer will have equal costs.
+
+As shown in the previously described different scenario's the customer is most of the times equally well off by buying the option. There are two scenario's however, in which buying an option will make a difference in the costs incurred. These two cases both include the customer buying the flight at arrival time. In one scenario --- in which the passenger purchases the flight at arrival and should have done so --- the customer will decrease his utility by purchasing an option. In the other scenario --- in which the passenger purchases the flight ticket while he should have waited instead --- the buyer would actually be better off purchasing an lock-in product. On average, the customer will thus have lower costs when buying the option when the probability of the second scenario exceeds the likelihood of the first scenario. This will likely occur when the accuracy of the customer decreases. Due to this higher forecasting error, the customer will likely make more mistakes in the optimal buy/wait-decision. Some of these mistakes can be reverted by using airfare~lock-in products. A passenger will thus have higher utility when his error term for his predictions is higher.
+
+To test the previously described theory, I have compared the total costs incurred to the customer for three~different situations:
+\begin{compactitem}
+    \item The customer does never purchase an option, but only either buys the flight at arrival, or waits;
+    \item The customer always buys an option.
+    \item The customer makes the decision whether to buy the option, or buy/or wait (current simulation);
+\end{compactitem}
+
+\autoref{fig:customers_total_costs_strategies} shows the average relative total costs of these three strategies in a graph. The presented total costs are relative to the base case in which the customer has an error term of zero, which implies a customer that knows the exact level of future ticket price fluctuations.
+
+As can be derived from the figure, the total costs of always only choosing between the alternatives buying and waiting increases as the customer's accuracy decreases. The costs associated with always buying an option on the flight is fixated at around the $3\,\%$ level on top of the base case. Due to the increasing trend of the first~strategy, after a certain amount of standard deviation, this second~strategy will become the better alternative. The exact level of this turning point is dependant on the underlying flight. On average, however, this is when the customer's strong-form prediction method has an error term of $0.4$, which represents a $\mbox{MAPE}$ of around $32\,\%$. As described in the previous section, this turning point is due to the fact that at that level, is is more likely the customer will gain from an option --- the scenario in which he wrongfully chooses to buy the ticket at arrival --- than he will lose from it --- the scenario which he rightfully chooses to immediately buy the ticket.
+
+\insertfig{customers_total_costs_strategies}{Customer's total costs of different strategies}
+
+The figure also shows the strategy in which the customer decides whether he buys an option, or goes for the traditional method of choosing to buy or wait. When the customer is also able to make perfect predictions of future airfare movements, this strategy yields the same results as the first strategy. While the costs compared to the base case also increase slightly as the accuracy of the customer decreases, the extra costs outweigh the relatively large increases as observed in the first strategy.
+
+This last described method of combining the strategies always yields better results than the other two for reasonable error terms of the customer. So next to the seller, the customer on average also benefits from buying options. The bigger the difference between the seller's forecasting accuracy and the customer's, the higher the gain for a passenger to apply the combination strategy.
+
+\todo{ref accuracy seller < accuracy customer}
+
+\todo[Also advantage of buying options: lower variance in pay, lower max price, knows beforehand maximum pay]{desc}
+
+\section{Seller with strong-form rational expectations}
+In the previous section I evaluated several simulations run using a seller with perfect foreknowledge. This seller was able to `predict' future ticket prices with a $100\,\%$ accuracy. While not realistic in a real-world setting, the outcomes are valuable as a benchmark to compare other models with.
+
+In this section I will loosen the assumption that the seller has perfect information on future fare fluctuations. I will instead assume the seller uses strong-form rational expectations to compute his forecasts. Like the customer's prediction model in the previous section, this strong-form technique will generate `predictions' around the actual observed ticket price change with a certain standard deviation. This error term is a measurement of accuracy; higher error terms will result in less accurate predictions, while low values will decrease this forecasting error.
+
+In contrast to the all knowing seller, the seller that bases his predictions on strong-form rational expectations makes errors. This method is therefore more realistic than the benchmark and will thus yield plausible results. While this prediction technique bases its forecasts upon price movements that lay in the `future', a similar apparatus can be developed and implemented when enough resources and time is available. Actually developing such a model is not within the scope of the thesis, so this forecasting technique can be seen as a `black box'. The next few simulation runs will thus yield results as if such a hypothetical device was implemented in this research.
+
+Apart from the difference in prediction method for the seller, the rest of the characteristics are defined like the benchmark case. A summary of the configuration of the other parameters is given in \todo{ref table}.
+
+\todo{table with characteristics of base model}
+
+
+\subsection{Results}
+Due to the inaccuracies of the seller's forecasts, more risk is associated with offering the options. Therefore negative returns on selling options is possible when the company underestimates the price increases.
+
+\autoref{fig:strong_RE_AMS_CDG_total_profits} gives the total profits realized from selling options for different levels of margins for the flight AMS to CDG. Each line represents a different accuracy level of the option writer, while the customer's strong-form standard deviation is fixated at an amount of $0.10$.
+
+As can be reduced from the graph, a decrease in forecasting accuracy results in a decrease in optimal total profits. Furthermore, the seller has to charge a higher margin to get to the optimal level of profits.
+
+All the profit lines in the figure show negative returns when the seller calculates no margin. This is due to the effect that customers are more likely to accept lower option prices than high ones. Normally, when the customers would always accept the option prices he gets offered from the seller, the profits would average out to zero. This is because of the main principle of the strong-form rational expectation theory in which the mean of all the expectations will be equal to the actual observed mean. However, in my simulation, the passenger also uses strong-form RE. He will thus also inaccurate predictions which are sometimes lower, and sometimes higher than the actual observed future ticket price. Furthermore, the customer has the characteristic that he only accepts an offer for a lock-in product when his WTP is higher than the offered price. When he therefore gets offered a price below the mean, he has a much greater probability of making a prediction that is higher than the offer:
+
+$$ P(accept offer | V_s)  = 1 - F(V_s)  $$
+
+In which $V_s$ is the option price proposed by the seller, and $F(V_s)$ is the customer's cumulative distribution function of his strong-form rational expectations.
+
+Due to this effect, the prices at which the customer accepts are not normally distributed like the seller's strong-form predictions. They are however skewed to the left, which implies average losses for the option writer in the long run. This
+
+\insertfig{strong_RE_AMS_CDG_total_profits}{Total profits for seller with different standard errors}
