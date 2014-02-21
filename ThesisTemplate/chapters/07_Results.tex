@@ -170,10 +170,36 @@ As can be reduced from the graph, a decrease in forecasting accuracy results in 
 
 All the profit lines in the figure show negative returns when the seller calculates no margin. This is due to the effect that customers are more likely to accept lower option prices than high ones. Normally, when the customers would always accept the option prices he gets offered from the seller, the profits would average out to zero. This is because of the main principle of the strong-form rational expectation theory in which the mean of all the expectations will be equal to the actual observed mean. However, in my simulation, the passenger also uses strong-form RE. He will thus also inaccurate predictions which are sometimes lower, and sometimes higher than the actual observed future ticket price. Furthermore, the customer has the characteristic that he only accepts an offer for a lock-in product when his WTP is higher than the offered price. When he therefore gets offered a price below the mean, he has a much greater probability of making a prediction that is higher than the offer:
 
-$$ P(accept offer | V_s)  = 1 - F(V_s)  $$
+$$ P(\mbox{accept offer} | V_s)  = 1 - F(V_s)  $$
 
 In which $V_s$ is the option price proposed by the seller, and $F(V_s)$ is the customer's cumulative distribution function of his strong-form rational expectations.
 
-Due to this effect, the prices at which the customer accepts are not normally distributed like the seller's strong-form predictions. They are however skewed to the left, which implies average losses for the option writer in the long run. This
+Due to this effect, the prices at which the customer accepts are not normally distributed like the seller's strong-form predictions. They are however skewed to the left, which implies average losses for the option writer in the long run. This consequence will only be prevented when the customer overestimates price fluctuations, or by adding a margin to the proposed option price to reject customer's with a to low estimation.
 
 \insertfig{strong_RE_AMS_CDG_total_profits}{Total profits for seller with different standard errors}
+
+While running the simulation for all the different routes, some flight's total profits were influenced more by the decline in accuracy for the seller than others. \todo{ref to Appendix with results per route} shows the detailed results of the realized profits for each individual routes.
+
+\autoref{fig:profitsVSpricefluctuations_strong_05s-20c} shows a scatter plot with the described outcomes. Every dot represents the total profits of the option seller with a standard error of $0.05$ in a model with a customer that has a prediction error of $0.20$. To prevent the customers with a low estimate from buying the options, a margin of $10\,\%$ is being issued. The x-axis shows the average three-day price movements of the underlying tickets. The y-axis shows the total profits realized in the scenario with the seller using strong-form rational expectation as a percentage of the benchmark:
+
+$$ \mbox{percentage of perfect profits} = \frac{\mbox{current realized total profits}}{\mbox{total realized profits in benchmark}} $$
+
+As can be derived from the chart, there seems to be correlation between the average price fluctuation, and the percentage of maximum profits realized. An increase in mean price movements results in an expected decrease in gains. This also comes forward while calculating Pearson's correlation coefficient, which shows a significant negative relationship between the two variables. See \todo{ref table} for the statistics.
+
+\insertfig{profitsVSpricefluctuations_strong_05s-20c}{Relation between total profits and mean price change}
+
+\todo[Pearson (-0.6372, 0.001)]{table}
+
+While compared to the benchmark the total profits decrease in the model with the inaccurate seller, still a positive result is being acquired. \todo{Ref to appendix} shows these outcomes per route.
+
+
+\section{Customer with weak-form rational expectations}
+In previous sections I have evaluated the outcomes for two different kinds of sellers: the all knowing seller with perfect information, and the seller that uses strong-form rational expectations. In both cases, the customer relied on his own strong-form expectations to evaluate his willingness to pay for an airfare~lock-in product.
+
+For this section, I will release this assumption, and let the customer make his forecasts based upon weak-form rational expectations. This form relies solely on historical distributions of price movements, and the current available airfares. This configuration is thus a realistic one which could practically occur in the real word.
+
+As the historical distribution, I will use the training set as described in \todo{ref chap}. When a customer arrives at the model and wants to estimate the future ticket price for a specific route, he examines the historical data set of that flight and calculates his preferred option price using the acquired distribution.
+
+As an example, consider a customer that wants to determine the expected price increase of a flight from AMS to JFK. He arrives at the model 14~days prior to departure, and needs to decide whether he wants to buy an option with a maturity of three~days. To do so, he looks at all the available records on price changes between 14~days and 11~days before departure in the training data of AMS to JFK. This will give him the empirical distribution. From this distribution he will calculate the expected future ticket price, and hence the option price. Due to this simulation using weak-form rational expectations, a random error gets added on top of this obtained lock-in fee.
+
+
