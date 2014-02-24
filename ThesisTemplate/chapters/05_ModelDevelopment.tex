@@ -59,7 +59,7 @@ Using the method described above, the simulation will be used to compare the per
 \subsection{Structure of the model}
 In this research, two different submodels are being considered. The first one --- the \emph{demand submodel} --- is concerned with the option valuation on the customer's side. This submodel calculates the willingness to pay for an option from the perspective of the passenger determining whether to buy the product. The \emph{supply submodel}, on the other hand, computes the willingness to accept from the seller's view.
 
-\subsubsection{demand submodel}
+\subsubsection{Demand submodel}
 The demand submodel concerns itself with the calculation of the willingness to pay on the passenger's side of the model. To compute his willingness to pay, the customer uses the following equation:
 
 $$ \mbox{WTP}_c = E[V_c] \times P^f $$
@@ -215,12 +215,12 @@ Next to these configurable parameters, an airfare~lock-in product also has a cer
 \subsubsection{General characteristics of the simulation model}
 Next to the parameters and assumptions specific to the four entities described previously, the simulation model itself also has some characteristics defined.
 
-\parameter{arrival rate of passengers \hfill ($(42 - m) \times n$)}
-As seen in the process description of the simulation (see \todo{ref}), the model will generate passengers to determine the performance of the model. A passenger will arrive at every day before the departure of the flight for the full observed 42~days. However, it is only possible for a passenger to buy an option with $m$ days to maturity up till $m$ days before departure. The number of customer arrivals per flight is thus fixed per simulation and can be expressed as $42 - m$.
+\parameter{arrival rate of passengers \hfill $\sim Poisson(1)$}
+As seen in the process description of the simulation (see at the beginning of this chapter), the model will generate passengers to determine the performance of the model. A passenger will arrive following a Poisson distribution with $\lambda = 1$. This thus implies that, on average, a single customer arrives for each day prior to departure for every flight.
 
-For each specific route with $n$ flights, the simulation will therefore generate $(42 - m) \times n$ passengers.
+\parameter{number of trials \hfill (N=20)}
+Because pseudo random generation of numbers and probabilities are used in this model, there is a possibility of generating outliers in only a single run. To prevent such scenarios from happening, every simulation is run a number of times. The acquired data from these multiple trials is then averaged to get the converged mean.
 
-\parameter{number of trials \hfill (N=50)}
-Because pseudo random generation of numbers and probabilities are used in this model, there is a possibility of generating outliers in only a single run. To prevent such scenarios from happening, every simulation is run a vast amount of times. The acquired data from these multiple trials is then averaged to get the converged mean.
+A tests showed that the results converged to a mean at around 10~simulation runs. The rest of the simulations will therefore use a minimum of 20~trials before evaluating the results.
 
-Furthermore, to be able to compare the models even beter amongs themselves, the same random seed is set prior to running each simulation. This ensures the routes will receive the same `randomly' generated input for passenger arrival, error, et cetera.
+Lastly, to be able to compare the models even beter amongs themselves, the same random seed is set prior to running each simulation. This ensures the routes will receive the same `randomly' generated input for passenger arrival, error, et cetera.
