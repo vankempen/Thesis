@@ -117,59 +117,181 @@ ORD  &  BOS  &  0.146  &  0.738  &  789  &  0.318  \\
 \end{table}
 
 
-\begin{table}[h]
-\begin{center}
-\begin{tabular}{l r c c c c c c}
-\toprule
-    \multicolumn{2}{c}{Airport}  &  \multicolumn{2}{c}{Price per option} & \multicolumn{2}{c}{Profits per option}  &  Sold  & Profitability of model \\[.4ex]
-    from  &  to  &  \$  & \%  &  \$  & \%  & \%  & \% \\
-    \midrule
-AMS  &  CDG  &     226  &    8.93  &   3.95  &    8.60  &   96.30  &   75.94 \\
-    \bottomrule
-\end{tabular}
-\caption{Simulation results of all knowing seller}
-\label{tbl:resultsAllKnowing}
-\end{center}
-\end{table}
 
+\chapter{Simulation results of all knowing seller and strong customer}
+\label{app:SimulationResultsPerfectStrong}
+The table below gives the results of the simulation of the model with an all knowing seller and a customer using strong-form rational expectations. The strong seller can make perfect predictions, while the customer has an error term of $0.20$. The margin set by the seller is $10\,\%$.
 
-\chapter{Simulation results of Black--Scholes model}
-\label{app:SimulationResultsBS}
-The table below gives the results of the simulation of the Black--Scholes model. An analysis of the results can be found in \autoref{subsec:AnalysisOfBS}.
+An analysis of the results can be found in \todo{ref}.
 \\[2em]
 \begin{table}[h]
     \begin{center}
         \begin{tabular}{l r c c c c c c}
             \toprule
-            \multicolumn{2}{c}{Airport}  &  Ticket & \multicolumn{2}{c}{Option price} & \multicolumn{2}{c}{Options profits}  &  Sold  \\[.4ex]
-            from  &  to  &  \$   &  \$  & \%  &  \$  & \%  & \%  \\
+            \multicolumn{2}{c}{Airport}  & \multicolumn{2}{c}{Option price} & \multicolumn{2}{c}{Options profits}  &  Sold  \\[.4ex]
+            from  &  to  &  \$  & \%  &  \$  & \%  & \%  \\
             \midrule
-AMS  &  CDG  &     226  &   23.32  &  10.32  &   -1.74  &   -7.46  &   53.85 \\
-~    &  DXB  &     591  &   89.97  &  15.23  &   -9.81  &  -10.90  &   12.82 \\
-~    &  JFK  &     852  &   78.93  &   9.27  &  -41.16  &  -52.14  &   25.64 \\
-~    &  LHR  &     259  &   18.00  &   6.96  &   -0.55  &   -3.06  &   48.72 \\[.5ex]
-ATL  &  LAX  &     394  &   39.80  &  10.11  &   -4.55  &  -11.44  &   35.90 \\
-~    &  MCO  &     252  &   25.81  &  10.24  &    2.50  &    9.70  &   61.54 \\[.5ex]
-CDG  &  AMS  &     240  &   23.86  &   9.95  &   -1.11  &   -4.63  &   51.28 \\
-~    &  LHR  &     221  &   14.33  &   6.48  &   -3.02  &  -21.05  &   25.64 \\[.5ex]
-DEN  &  FLL  &     182  &   23.42  &  12.85  &  -15.12  &  -64.55  &   25.64 \\
-~    &  PHX  &     189  &   23.46  &  12.42  &    1.14  &    4.86  &   33.33 \\[.5ex]
-DFW  &  LAX  &     313  &   47.61  &  15.21  &  -31.37  &  -65.90  &   33.33 \\
-~    &  SFO  &     388  &   67.08  &  17.29  &  -38.55  &  -57.47  &   30.77 \\[.5ex]
-JFK  &  CDG  &    2637  &  336.52  &  12.76  &  179.20  &   53.25  &   35.90 \\
-~    &  LHR  &    1000  &  142.97  &  14.30  &   47.34  &   33.11  &   69.23 \\[.5ex]
-LAX  &  LAS  &     212  &   32.13  &  15.15  &   -2.47  &   -7.68  &   35.90 \\
-~    &  SFO  &     222  &   38.84  &  17.53  &   14.16  &   36.45  &   48.72 \\[.5ex]
-LHR  &  AMS  &     242  &   18.37  &   7.60  &    0.28  &    1.51  &   43.59 \\
-~    &  JFK  &     864  &  127.12  &  14.72  &   84.23  &   66.26  &   58.97 \\
-~    &  LAX  &    1286  &  198.47  &  15.43  &   99.67  &   50.22  &   53.85 \\
-~    &  MAD  &     282  &   22.49  &   7.96  &   -6.28  &  -27.95  &   20.51 \\[.5ex]
-ORD  &  BOS  &     249  &   40.87  &  16.40  &  -12.36  &  -30.24  &   33.33 \\
-~    &  LGA  &     273  &   38.28  &  14.02  &   -0.98  &   -2.57  &   38.46 \\
+AMS  &  CDG &   16.73  &     7.8  &    9.82  &    58.7  &   23.24  \\
+     &  DXB &   33.65  &     6.0  &   25.32  &    75.3  &   23.84  \\
+     &  JFK &   55.86  &     6.8  &   36.55  &    65.4  &   23.04  \\
+     &  LHR &   16.51  &     6.6  &   11.50  &    69.6  &   24.73  \\[.5ex]
+ATL  &  LAX &   26.97  &     7.1  &   17.31  &    64.2  &   23.90  \\
+     &  MCO &   19.02  &     7.9  &   11.03  &    58.0  &   22.31  \\[.5ex]
+CDG  &  AMS &   16.88  &     7.4  &   10.34  &    61.3  &   23.84  \\
+     &  LHR &   14.52  &     6.9  &    9.62  &    66.2  &   23.59  \\[.5ex]
+DEN  &  FLL &   12.51  &     6.9  &    8.41  &    67.2  &   22.72  \\
+     &  PHX &   12.54  &     6.8  &    8.27  &    65.9  &   24.11  \\[.5ex]
+DFW  &  LAX &   22.70  &     7.7  &   12.84  &    56.6  &   23.30  \\
+     &  SFO &   29.80  &     7.9  &   17.06  &    57.2  &   22.83  \\[.5ex]
+JFK  &  CDG &  139.56  &     6.2  &  117.53  &    84.2  &   24.97  \\
+     &  LHR &   58.89  &     6.3  &   42.61  &    72.3  &   25.29  \\[.5ex]
+LAX  &  LAS &   14.05  &     7.5  &    8.61  &    61.3  &   21.63  \\
+     &  SFO &   15.64  &     7.6  &   10.20  &    65.2  &   23.14  \\[.5ex]
+LHR  &  AMS &   15.68  &     6.7  &   10.77  &    68.7  &   24.60  \\
+     &  JFK &   45.47  &     5.4  &   38.59  &    84.9  &   25.80  \\
+     &  LAX &   68.71  &     5.7  &   56.24  &    81.8  &   24.82  \\
+     &  MAD &   18.08  &     6.6  &   12.41  &    68.6  &   24.79  \\[.5ex]
+ORD  &  BOS &   17.21  &     7.1  &   10.77  &    62.6  &   23.28  \\
+     &  LGA &   17.92  &     6.7  &   12.09  &    67.5  &   24.13  \\
             \bottomrule
         \end{tabular}
-        \caption{Simulation results of Black--Scholes model}
+        \caption{Simulation results of perfect seller with strong-form customer}
+        \label{tbl:resultsPerfectStrong}
+    \end{center}
+\end{table}
+
+
+
+\chapter{Simulation results of strong seller and strong customer}
+\label{app:SimulationResultsStrongStrong}
+The table below gives the results of the simulation of the model with both a strong seller and a customer. The strong seller used an standard error deviation of $0.10$, while the customer had his accuracy determined by a error term of $0.20$. The margin set by the seller was $10\,\%$.
+
+An analysis of the results can be found in \todo{ref}.
+\\[2em]
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{l r c c c c c c}
+            \toprule
+            \multicolumn{2}{c}{Airport}  & \multicolumn{2}{c}{Option price} & \multicolumn{2}{c}{Options profits}  &  Sold  \\[.4ex]
+            from  &  to  &  \$  & \%  &  \$  & \%  & \%  \\
+            \midrule
+AMS  &  CDG &   16.53  &     7.7  &    7.80  &    47.2  &   21.59  \\
+     &  DXB &   36.83  &     6.5  &   24.95  &    67.8  &   20.37  \\
+     &  JFK &   56.91  &     6.9  &   33.32  &    58.6  &   20.54  \\
+     &  LHR &   16.52  &     6.6  &   10.33  &    62.5  &   22.29  \\[.5ex]
+ATL  &  LAX &   26.64  &     7.0  &   14.59  &    54.8  &   21.94  \\
+     &  MCO &   18.29  &     7.7  &    8.45  &    46.2  &   21.18  \\[.5ex]
+CDG  &  AMS &   16.91  &     7.4  &    8.56  &    50.6  &   21.90  \\
+     &  LHR &   14.83  &     7.0  &    8.53  &    57.5  &   21.17  \\[.5ex]
+DEN  &  FLL &   12.59  &     7.0  &    6.63  &    52.7  &   20.57  \\
+     &  PHX &   12.65  &     6.8  &    7.23  &    57.1  &   21.83  \\[.5ex]
+DFW  &  LAX &   23.28  &     7.9  &   10.43  &    44.8  &   21.21  \\
+     &  SFO &   30.46  &     8.1  &   14.04  &    46.1  &   20.98  \\[.5ex]
+JFK  &  CDG &  148.61  &     6.5  &  120.58  &    81.1  &   21.65  \\
+     &  LHR &   63.85  &     6.8  &   42.17  &    66.0  &   21.82  \\[.5ex]
+LAX  &  LAS &   14.32  &     7.6  &    7.36  &    51.4  &   19.82  \\
+     &  SFO &   15.79  &     7.7  &    8.86  &    56.1  &   21.17  \\[.5ex]
+LHR  &  AMS &   15.50  &     6.6  &    9.43  &    60.8  &   22.36  \\
+     &  JFK &   49.07  &     5.9  &   40.41  &    82.4  &   21.83  \\
+     &  LAX &   74.01  &     6.1  &   57.68  &    77.9  &   21.39  \\
+     &  MAD &   18.30  &     6.7  &   11.10  &    60.6  &   22.16  \\[.5ex]
+ORD  &  BOS &   17.11  &     7.1  &    9.11  &    53.2  &   21.41  \\
+     &  LGA &   18.65  &     7.0  &   11.03  &    59.2  &   21.39  \\
+            \bottomrule
+        \end{tabular}
+        \caption{Simulation results of strong seller with strong customer}
+        \label{tbl:resultsStrongStrong}
+    \end{center}
+\end{table}
+
+
+
+
+\chapter{Simulation results of perfect seller and weak customer}
+\label{app:SimulationResultsPerfectWeak}
+The table below gives the results of the simulation of the model with a seller with perfect information and a customer that bases its predictions on weak-form rational expectations. While the seller makes perfect predictions, the weak-form customer has his accuracy determined by a error term of $0.20$. The margin set by the seller was $10\,\%$.
+
+An analysis of the results can be found in \todo{ref}.
+\\[2em]
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{l r c c c c c c}
+            \toprule
+            \multicolumn{2}{c}{Airport}  & \multicolumn{2}{c}{Option price} & \multicolumn{2}{c}{Options profits}  &  Sold  \\[.4ex]
+            from  &  to  &  \$  & \%  &  \$  & \%  & \%  \\
+            \midrule
+AMS  &  CDG &   12.24  &     5.6  &   10.06  &    82.2  &   25.77  \\
+     &  DXB &   28.09  &     4.8  &   26.65  &    94.9  &   25.55  \\
+     &  JFK &   43.02  &     5.2  &   37.67  &    87.6  &   24.34  \\
+     &  LHR &   13.93  &     5.4  &   11.71  &    84.1  &   25.79  \\[.5ex]
+ATL  &  LAX &   21.25  &     5.6  &   17.45  &    82.1  &   26.46  \\
+     &  MCO &   14.25  &     5.8  &   11.25  &    78.9  &   26.98  \\[.5ex]
+CDG  &  AMS &   12.76  &     5.5  &   10.59  &    83.0  &   26.14  \\
+     &  LHR &   11.32  &     5.2  &    9.92  &    87.6  &   24.42  \\[.5ex]
+DEN  &  FLL &   10.29  &     5.6  &    8.37  &    81.4  &   28.37  \\
+     &  PHX &    9.88  &     5.4  &    8.26  &    83.6  &   27.08  \\[.5ex]
+DFW  &  LAX &   15.69  &     5.5  &   12.70  &    80.9  &   27.17  \\
+     &  SFO &   20.86  &     5.6  &   17.15  &    82.2  &   27.17  \\[.5ex]
+JFK  &  CDG &  131.43  &     5.1  &  123.06  &    93.6  &   29.06  \\
+     &  LHR &   48.83  &     5.2  &   43.44  &    89.0  &   37.25  \\[.5ex]
+LAX  &  LAS &   10.68  &     5.4  &    9.15  &    85.7  &   25.59  \\
+     &  SFO &   12.59  &     5.6  &   10.54  &    83.7  &   29.45  \\[.5ex]
+LHR  &  AMS &   13.21  &     5.5  &   10.91  &    82.6  &   26.10  \\
+     &  JFK &   42.99  &     5.1  &   39.25  &    91.3  &   36.21  \\
+     &  LAX &   62.81  &     5.1  &   57.32  &    91.3  &   39.48  \\
+     &  MAD &   14.69  &     5.3  &   12.50  &    85.1  &   24.00  \\[.5ex]
+ORD  &  BOS &   13.48  &     5.6  &   10.97  &    81.4  &   27.08  \\
+     &  LGA &   14.04  &     5.3  &   12.18  &    86.7  &   28.07  \\
+            \bottomrule
+        \end{tabular}
+        \caption{Simulation results of perfect seller with weak-form customer}
         \label{tbl:resultsBS}
+    \end{center}
+\end{table}
+
+
+
+
+
+\chapter{Simulation results of strong seller and weak customer}
+\label{app:SimulationResultsPerfectWeak}
+The table below gives the results of the simulation of the model with a strong-form seller and a customer that bases his predictions on weak-form rational expectations. The seller has a standard deviation in his forecasting errors of $0.10$, and the weak-form customer has his accuracy determined by a error term of $0.20$. The margin set by the seller was $10\,\%$.
+
+An analysis of the results can be found in \todo{ref}.
+\\[2em]
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{l r c c c c c c}
+            \toprule
+            \multicolumn{2}{c}{Airport}  & \multicolumn{2}{c}{Option price} & \multicolumn{2}{c}{Options profits}  &  Sold  \\[.4ex]
+            from  &  to  &  \$  & \%  &  \$  & \%  & \%  \\
+            \midrule
+AMS  &  CDG &   13.00  &     5.9  &    9.81  &    75.5  &   23.76  \\
+     &  DXB &   32.39  &     5.5  &   29.48  &    91.0  &   22.11  \\
+     &  JFK &   45.52  &     5.5  &   38.27  &    84.1  &   21.71  \\
+     &  LHR &   14.73  &     5.8  &   11.72  &    79.6  &   23.23  \\[.5ex]
+ATL  &  LAX &   22.44  &     5.9  &   17.31  &    77.1  &   24.24  \\
+     &  MCO &   14.69  &     6.0  &   10.69  &    72.8  &   25.46  \\[.5ex]
+CDG  &  AMS &   13.62  &     5.9  &   10.47  &    76.9  &   23.78  \\
+     &  LHR &   12.17  &     5.6  &   10.14  &    83.3  &   21.79  \\[.5ex]
+DEN  &  FLL &   10.68  &     5.9  &    8.11  &    75.9  &   26.32  \\
+     &  PHX &   10.51  &     5.8  &    8.36  &    79.6  &   24.55  \\[.5ex]
+DFW  &  LAX &   17.15  &     6.1  &   13.10  &    76.4  &   24.79  \\
+     &  SFO &   22.57  &     6.0  &   17.66  &    78.3  &   25.04  \\[.5ex]
+JFK  &  CDG &  146.61  &     5.7  &  136.13  &    92.9  &   25.45  \\
+     &  LHR &   55.42  &     5.8  &   48.76  &    88.0  &   33.11  \\[.5ex]
+LAX  &  LAS &   11.38  &     5.7  &    9.36  &    82.3  &   23.53  \\
+     &  SFO &   13.57  &     6.0  &   10.95  &    80.7  &   27.12  \\[.5ex]
+LHR  &  AMS &   13.83  &     5.8  &   10.77  &    77.8  &   23.69  \\
+     &  JFK &   48.25  &     5.6  &   43.91  &    91.0  &   31.59  \\
+     &  LAX &   70.79  &     5.7  &   64.47  &    91.1  &   35.26  \\
+     &  MAD &   15.67  &     5.7  &   12.56  &    80.2  &   21.35  \\[.5ex]
+ORD  &  BOS &   14.11  &     5.9  &   10.92  &    77.4  &   25.03  \\
+     &  LGA &   15.43  &     5.8  &   12.88  &    83.4  &   25.12  \\
+            \bottomrule
+        \end{tabular}
+        \caption{Simulation results of strong seller with weak-form customer}
+        \label{tbl:resultsStrongWeak}
     \end{center}
 \end{table}
 

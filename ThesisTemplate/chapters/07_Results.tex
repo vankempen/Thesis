@@ -178,13 +178,13 @@ Due to this effect, the prices at which the customer accepts are not normally di
 
 \insertfig{strong_RE_AMS_CDG_total_profits}{Total profits for seller with different standard errors}
 
-While running the simulation for all the different routes, some flight's total profits were influenced more by the decline in accuracy for the seller than others. \todo{ref to Appendix with results per route} shows the detailed results of the realized profits for each individual routes.
+While running the simulation for all the different routes, some flight's total profits were influenced more by the decline in accuracy for the seller than others. \autoref{app:SimulationResultsStrongStrong} shows the detailed results of the realized profits for each individual routes.
 
 \autoref{fig:profitsVSpricefluctuations_strong_05s-20c} shows a scatter plot with the described outcomes. Every dot represents the total profits of the option seller with a standard error of $0.05$ in a model with a customer that has a prediction error of $0.20$. To prevent the customers with a low estimate from buying the options, a margin of $10\,\%$ is being issued. The x-axis shows the average three-day price movements of the underlying tickets. The y-axis shows the total profits realized in the scenario with the seller using strong-form rational expectation as a percentage of the benchmark:
 
 $$ \mbox{percentage of perfect profits} = \frac{\mbox{current realized total profits}}{\mbox{total realized profits in benchmark}} $$
 
-As can be derived from the chart, there seems to be correlation between the average price fluctuation, and the percentage of maximum profits realized. An increase in mean price movements results in an expected decrease in gains. This also comes forward while calculating Pearson's correlation coefficient, which shows a significant negative relationship between the two variables. See \todo{ref table} for the statistics.
+As can be derived from the chart, there seems to be correlation between the average price fluctuation, and the percentage of maximum profits realized. An increase in mean price movements results in an expected decrease in gains. This also comes forward while calculating Pearson's correlation coefficient, which shows a significant negative relationship between the two variables. See \todo{ref table} for the statistics. A higher historical volatility of the underlying airfare thus more likely results in a higher willingness to pay for the customer, and higher profits for the all knowing seller.
 
 \insertfig{profitsVSpricefluctuations_strong_05s-20c}{Relation between total profits and mean price change}
 
@@ -200,6 +200,28 @@ For this section, I will release this assumption, and let the customer make his 
 
 As the historical distribution, I will use the training set as described in \todo{ref chap}. When a customer arrives at the model and wants to estimate the future ticket price for a specific route, he examines the historical data set of that flight and calculates his preferred option price using the acquired distribution.
 
-As an example, consider a customer that wants to determine the expected price increase of a flight from AMS to JFK. He arrives at the model 14~days prior to departure, and needs to decide whether he wants to buy an option with a maturity of three~days. To do so, he looks at all the available records on price changes between 14~days and 11~days before departure in the training data of AMS to JFK. This will give him the empirical distribution. From this distribution he will calculate the expected future ticket price, and hence the option price. Due to this simulation using weak-form rational expectations, a random error gets added on top of this obtained lock-in fee.
+As an example, consider a customer that wants to determine the expected price increase of a flight from AMS to JFK. He arrives at the model 14~days prior to departure, and needs to decide whether he wants to buy an option with a maturity of 3~days. To do so, he looks at all the available records on price changes between 14~days and 11~days before departure in the training data of AMS to JFK. This will give him the empirical distribution. From this distribution he will calculate the expected future ticket price, and hence the option price. Due to this simulation using weak-form rational expectations, a random error gets added on top of this obtained lock-in fee.
+
+\subsection{Results: all knowing seller}
+First, the model will simulate customers with weak-form rational expectations and an all knowing seller that has perfect predictions. By doing so, the results of this model can be compared with the perfect/strong model from the previous section (see \todo{ref} for a complete analysis of that simulation run).
+
+The details of this simulation can be found in \autoref{app:SimulationResultsPerfectStrong}. When comparing the results from this model with the results from the simulations with a strong-form customer, one can see that higher profits are being generate when the customer uses historical information. This can be explained by the fact that instead of a point estimate as is being used in the strong-form case, the weak-form RE customer determines the price of an option using a historical \emph{distribution}. The use of a distribution by the customer implies that the entity has less accurate information available, and will thus more likely be willing to pay more of an option. For example, while in the strong-form case the passengers uses a point estimate as his maximum option price, in the weak-form case the user combines many expectations (increases as well as decreases in price) with a certain probability.
+
+As can be derived from the statistics, some routes outperform the strong-case customer much more than others. This has likely to do with the evaluation method of a weak-form customer to find his preferred option price as described in previous paragraph. The routes with a higher variability in price changes are more likely to yield higher lock-in fees. Due to the higher volatility, this configuration of customer is also more willing to pay for an option due to this uncertainty.
+
+To test this theory, a scatter plot has been created which compared the total profits of each route with the variability of price movements in the training set of that route. \autoref{total_profits_VS_volatility_weak} shows the chart with the trend line. As shown in the plot, there seems to be a strong correlation between the total profits gained from selling airfare~lock-in products of that route and the standard deviation of ticket price changes. This correlation is also confirmed by calculating Pearson's correlation coefficient as can be found in \todo{ref table}.
+
+\todo{pearson's r}
+(0.91761275125778174, 1.8446460874628813e-09)
+
+\insertfig{total_profits_VS_volatility_weak}{Total profits and volatility of price fluctuations}
+
+
+As shown in the analysis in previous section of the perfect seller with a strong-form customer, in that specific configuration the option price was not strongly correlated with the volatility of the underlying asset. Instead, it interacted with the mean price movement of the ticket (see \todo{ref to correlation of means of perfect-strong} for the details). This difference between that case and the current simulation can also be explained by the prediction method the passenger uses. While the strong-form's point estimate is not related to the volatility of the underlying asset, the weak-form RE customer's forecasting distribution does. The latter case thus aligns more with standard option theory techniques like the Black--Scholes model.
+
+\subsection{Results: strong seller}
+The simulation model in the previous subsection evaluated the results yielded by a weak-form customer in combination with an all knowing seller. This section will look at a more realistic example, in which the option seller has not the ability to make perfect forecast, but rather bases his predictions upon strong-form rational expectations. As described previously, this type of forecasting method can be understood as a `black box' for a company that has been able to develop an accurate forecasting model.
+
+\autoref{app:SimulationResultsPerfectWeak} presents the table with the results of this simulation run divided per route. The seller in this case had an standard error of $0.10$, while the weak-form rational expectations of the customer yielded an error term of $0.20$.
 
 
