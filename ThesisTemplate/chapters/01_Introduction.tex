@@ -2,17 +2,47 @@
 \label{chap:Introduction}
 \chapterprecishere{The fastest way to become a millionaire is to start off with a billion dollars and invest in an airline}
 
-It might not come as a surprise that companies in the aviation sector have to operate on profit margins close to none\footnote{\url{http://on.wsj.com/MftvqH}}, and that they were struck hard by the financial crisis. To cope with these challenges, airliners are known to implement many revue management concepts (e.g. market segmentation, protection levels). Robert Crandall, former CEO of American Airlines, even said stated that yield management is ``\emph{the single most important technical development in transportation management since we entered deregulation}'' \cite[p.~30]{cross97}.
+It might not come as a surprise that companies in the aviation sector have to operate on profit margins close to none\footnote{\url{http://on.wsj.com/MftvqH}}, and that they were struck hard by the financial crisis. To cope with these challenges, airliners are known to implement many revenue management concepts (e.g., market segmentation, protection levels). Robert Crandall, former CEO of American Airlines, even said stated that yield management is ``\emph{the single most important technical development in transportation management since we entered deregulation}'' \cite[p.~30]{cross97}.
 
 The implementation of such revenue management models has caused major changes in the aviation sector. For instance, the application of booking protection levels has created many fluctuations in airfares within a single flight. Early bookers usually can purchase a ticket at a low rate while passengers later in the booking process can only acquire the same seat at a much higher fare. Early booking of a flight, however, brings along much more uncertainty, as there might occur many situations in which the buyer is unable to utilize the ticket. For example, when a passenger wants to go skiing, but breaks his leg prior to departure. A person can cover himself from any losses caused by these kind of situations by buying insurance. However, insurance does not always provide a solution for no-shows. By way of illustration, consider you would like to go on holiday with a group of your friends, but your friends are undecided over whether they can go on the trip or not. Now you have two options to choose from:
-\begin{inparaenum}[\itshape (i)\upshape]
+\begin{compactitem}
     \item buy the flight now and risk not using this ticket because your friends can't come along, or
     \item wait to buy the flight until you know for sure your friends will go and risk sudden price increases in airfare or even sell-outs.
-\end{inparaenum}
-This extra level of uncertainty is undesired by customers, and makes it more difficult to make rational decisions.
+\end{compactitem}
+\noindent
+This extra level of uncertainty is undesired for customers, and makes it more difficult to let them make rational decisions.
 
-A recent trend in the aviation industry might provide a solution to this problem of uncertainty. Airliners offering \emph{airfare lock-in products} allow their customers to cover themselves for certain risks. An airfare lock-in product allows a customer who is unsure whether he wants to directly buy a ticket to buy an \emph{option} on that flight instead. The option gives him the opportunity to buy the actual ticket at a later time at a predetermined price. Some airliners (e.g., United Airlines, Air France-KLM, Estonian Air) already offer this new type of service and allow the customer to reserve a seat for 2 to 14~days. New external companies like OptionIt, OptionsAway, SteadyFare, also arise, though all still in their initial stage\footnote{OptionIt currently offers only options for sporting events, but plans to offer options for tickets of major airlines. OptionsAway just made their service available to the public for flights departing from Chicago, and SteadyFare is not available for public use}.
+A recent trend in the aviation industry might provide a solution to this problem of uncertainty. Airliners offering \emph{airfare~lock-in products} allow their customers to cover themselves for certain risks. An airfare~lock-in product allows a customer who is unsure whether he wants to directly buy a ticket to buy an \emph{option} on that flight instead. The option gives him the opportunity to buy the actual ticket at a later time at a predetermined price. Some airliners (e.g., United Airlines, Air France-KLM, Estonian Air) already offer this new type of service and allow the customer to reserve a seat for 2~to 14~days. New external companies like OptionIt, options away, SteadyFare, also arise, though all still in their initial stage\footnote{OptionIt currently offers only options for sporting events, but plans to offer options for tickets of major airlines. The company options away just made their service available to the public, and SteadyFare is not available for public use}.
 
-The offering of lock-in products might be viable to passengers and external companies that write these options, as well as the actual airlines. However, research on this topic is scarce and results of successful applications of the strategy are not yet public. Further theoretical and empirical research might provide answers to the actual viability, and could offer support for companies that would like to implement this type of product.
+The offering of lock-in products might be valuable to passengers and external companies that write these options, as well as the actual airlines. However, research on this topic is scarce and results of successful applications of the strategy are not yet public. Further theoretical and empirical research might provide answers to the actual viability, and could offer support for companies that would like to implement this type of product.
 
-In this thesis I would like to contribute to this topic and study whether external companies can offer these kind of airfare~lock-in products in a sustainable way. Furthermore, I want to test different practical option valuation models, and see which model performs best in a realistic setting. This research could therefore be useful to companies that write such options, as well the airline carrier of the underlying flights. On a more general perspective, concepts studied in this thesis might also be applicable to other organizations that have to deal with perishable services. This paper could offer insights to these kinds of industries as well.
+\subsection{Research objective and questions}
+In this thesis I would like to contribute to the topic of options in the aviation industry. I will do so by studying whether external companies can offer these kind of airfare~lock-in products in a sustainable way. Furthermore, I want to test different option valuation models, and see under which conditions the model performs best.
+
+This research could therefore be useful to companies that write such options, as well the airline carrier of the underlying flights. On a more general perspective, concepts studied in this thesis might also be applicable to other organizations that have to deal with perishable services. Think of other travel-related companies like hotels or car-rental services, or in industries where uncertainty might withhold consumers to buy products like ticket sales for basketball games. This Master's thesis could offer insights into these kinds of industries as well.
+
+The first main research question that I will try to provide an answer to can be defined as follows:
+
+\begin{quote}\emph{Is it sustainable for an external company without capacity information or seat reservation capabilities to set the price of airfare~lock-in~products at a level that the customer accepts?}\end{quote}
+
+As \autoref{chap:Results} will show, a company could operate in a viable way by relying on selling airfare~lock-in products. \todo{add conclusions}.
+
+The second question I will research in my thesis, is associated with the benefits an option offers to the customer:
+
+\begin{quote}\emph{What are the advantages of purchasing an airfare~lock-in product for the customer?}\end{quote}
+
+As will be shown in \todo{ref} does the buying of an option on a flight ticket in certain situations be beneficial for the passenger compared to buying the underlying ticket immediately or waiting a few days before making the purchasing decision. When the customer makes more inaccurate price movement predictions relative to the seller, he will more likely make the wrong initial decision, and is thus better off buying the lock-in product.
+
+
+\begin{quote}\emph{How can a company offering airfare~lock-in products optimize its profits by using forecasting techniques and applying safety margins?}\end{quote}
+
+
+\subsection{Scope of research}
+This study will analyse a set of 22~different single-legged routes covering flights within the United States and Europe, as well as intercontinental legs (see \autoref{app:SelectedRoutes} for a the selected routes). Results of this research will therefore be generalizable to flights falling within the boundaries of this particular set. As being stated previously, the findings might also be applicable to industries where similar perishable services are being offered.
+
+Furthermore, this research will build its models based upon theoretical frameworks and empirical data that is available to the public. I will thus consider the third party as an independent option writer that does not have any inside information or capabilities other than a customer has. For instance, the model will assume that the external company has no possibility of reserving capacity on a flight, and therefore has to deal with the risk of sell-outs. In a practical situation, however, the company might make an arrangement with the operating carrier to reserve seats for a certain premium. This would cut uncertainty for the option writer, and thus decrease option prices. The model I use in this study might therefore be harsher than realistically would be the case.
+
+
+\subsection{Methodology}
+To provide answers to the proposed research questions, I will collect pricing data on a select number of flights for a period of three~months. After the collection and parsing of these data, I will run several simulations on this empirical information to see under what conditions the model might be viable. The simulation trials will rely on concepts from literature to make sure the outcomes are aligned with
+

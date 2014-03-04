@@ -1,4 +1,5 @@
 \chapter{Results}
+\label{chap:Results}
 This chapter of my Master's Thesis will run and evaluate several simulations. Each simulation has a different set of characteristics defined for every entity. The first will evaluate the case in which the seller has foreknowledge. This unrealistic scenario will be useful as a benchmark to compare other models with, and will be used to show the impact of other variables on the performance of selling airfare~lock-in products.
 
 Due to the large amount of routes, most of the times only summary statistics of all the aggregated routes will be presented in this chapter. Full tables with results can be found in the appendices \ref{app:SimulationResultsPerfectStrong} till \ref{app:SimulationResultsStrongWeak}.
@@ -53,7 +54,7 @@ ORD  &  BOS &    100  &     78  &    130  &    120  \\
 \subsection{Overall option statistics}
 \autoref{tbl:optionStatisticsAgregated} presents the aggregated results of the simulations with different underlying characteristics of seller and customer.
 
-One can quickly notice that while amongst simulations with the same customer prediction method (either strong-form, or weak-form), the results differ relatively little. However, differences of simulations between strong- and weak-form differ significantly. While average options revenues are lower in case of the weak-form customer, the extra profits seen in \autoref{tbl:resultsRelativeBenchmark} are due to the higher acceptance of options, and higher percentage of revenues that result in actual profits. This has to do with the higher volatility of the underlying assets, and thus the extra uncertainty paired with the customer.
+One can quickly notice that while amongst simulations with the same customer prediction method (either strong-form, or weak-form), the results differ relatively little. However, differences of simulations between strong- and weak-form differ significantly. While average options revenues are lower in case of the weak-form customer, the extra profits seen in \autoref{tbl:resultsRelativeBenchmark} are due to the higher acceptance of options, and higher percentage of profits that result in actual profits. This has to do with the higher volatility of the underlying assets, and thus the extra uncertainty paired with the customer.
 
 
 \begin{table}[h]
@@ -157,7 +158,7 @@ This first simulation run will look at the results obtained from a seller with p
 
 By increasing the margin, the all knowing seller is able to yield profits from the sold options. Because the writer sets his minimum acceptable option price to the expected payout, every percentage in margins will result in a percentage increase in profits when the option is sold. However, due to the customer only accepting an option when his willingness to pay exceeds the offered price, an increase in lock-in~fee will result in less passengers actually buying the ticket. This is also visible in the figure with normalized profits. The graph first shows an increasing trends in profits; the increase in margins outweighs the decrease in customers buying the option. After a certain level --- around 0.075 in given example --- the increasing trend changes in a loss of total profits for every higher margin.
 
-The decreasing is also reflected in \autoref{fig:customer_decision_distribution}. The bars represent the percentage of customer's that chose to either \emph{buy} the flight immediately, \emph{wait} a few days till deciding to buy, or buy an option instead (i.e., \emph{option (buy)} and \emph{option (wait)} respectively). As can be reduced from the data, an increase in margin leads to a decrease in customer's willing to buy the option for the higher price.
+The decreasing is also reflected in \autoref{fig:customer_decision_distribution}. The bars represent the percentage of customer's that chose to either \emph{buy} the flight immediately, \emph{wait} a few days till deciding to buy, or buy an option instead (i.e. \emph{option (buy)} and \emph{option (wait)} respectively). As can be reduced from the data, an increase in margin leads to a decrease in customer's willing to buy the option for the higher price.
 
 \insertfig{customer_decision_distribution}{Margin's influence on customer's decision distribution}
 
@@ -184,7 +185,7 @@ Pearson's correlation coefficient   &  0.9899  &  $< 0.001$ \\
 
 
 
-As shown in previous paragraphs, the total profits of a seller offering airfare~lock-in products are dependant on the margin that the seller adds to his option predictions. Next, as can be reduced from the equation, the accuracy of the customer's strong-form predictions are also relevant. An increase in error term in the customer's forecasts will results in a higher forecasting error (i.e., higher $\mbox{MAPE}$) as shown in \autoref{tbl:stderrMAPE}.
+As shown in previous paragraphs, the total profits of a seller offering airfare~lock-in products are dependant on the margin that the seller adds to his option predictions. Next, as can be reduced from the equation, the accuracy of the customer's strong-form predictions are also relevant. An increase in error term in the customer's forecasts will results in a higher forecasting error (i.e. higher $\mbox{MAPE}$) as shown in \autoref{tbl:stderrMAPE}.
 
 \autoref{fig:relative_profits_customer_accuracy} shows the influence of the customer's accuracy upon the realized total profits. The total profits are the relative change compared to the base model in which the passenger's strong-form error term is set at $0.10$, or a $\mbox{MAPE}$ of $0.0798$. The seller's margin in these simulation runs is set at $0.075$, which is the optimal margin associated with this base case.
 

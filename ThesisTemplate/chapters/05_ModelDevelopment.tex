@@ -41,7 +41,7 @@ The simulation model in this thesis uses many different configurations for the o
 
 \item[Calculate the price of the option] Step number four will calculate the price at which the option will be offered to the passenger. This simulation will calculate this value by either setting it to the customer's exact degree of WTP, or by applying a margin on top of the WTA calculated in previous step. To ensure that the seller does not offer options for a negative revenue --- which could be the case when he expects a decrease in airfare --- also a minimum price is set. All calculated option prices that fall below this set minimum price will be raised to this level. After computing the option price, the customer then gets offered the option at this fare.
 
-\item[Acceptance of the offer] The next step will determine whether the customer will accept the airfare~lock-in product offer. This is done by comparing the customer's WTP and the offered option price. When the Willingness To Pay of the customer for a certain flight is higher than the option price calculated in prior process, a customer will accept the offer (i.e., $\text{WTP} \ge p_O$).
+\item[Acceptance of the offer] The next step will determine whether the customer will accept the airfare~lock-in product offer. This is done by comparing the customer's WTP and the offered option price. When the Willingness To Pay of the customer for a certain flight is higher than the option price calculated in prior process, a customer will accept the offer (i.e. $\text{WTP} \ge p_O$).
 
 \item[Exercising the option] The second-last step in the simulation process will determine whether the customer will actually exercise his option at the date of maturity. To do so, the model will first `wait' $m$~days, and check the observed ticket price. A customer will only exercise its right when this observed airfare is higher than the strike price of the option, $p_S$. Furthermore, the passenger will only use the option when he has decided to fly. When both of these rules apply to a certain customer, he will thus make use of his lock-in product, and let the seller buy the flight ticket for him.
 
@@ -151,7 +151,7 @@ $$ WTA_s = \max(V_{min} \times F_0, E[V_s] \times M) $$
 
 Where $V_{min}$ is the minimum option price in percentages of current airfare, $F_0$ is the current airfare, $E[V_s]$ is the expected standard options price according to the seller, and $M$ is the margin.
 
-The first part of the equations ensures that there is always set an option price higher than zero. This is to prevent situations from happening where the seller thinks the airfare will go down at the date of maturity, and asks a negative option price (i.e., he would offer the customer money for buying the customer). This is of course an undesirable effect which is averted by setting a minimum price relative to the current airfare.
+The first part of the equations ensures that there is always set an option price higher than zero. This is to prevent situations from happening where the seller thinks the airfare will go down at the date of maturity, and asks a negative option price (i.e. he would offer the customer money for buying the customer). This is of course an undesirable effect which is averted by setting a minimum price relative to the current airfare.
 
 To calculate the expected option price, the seller can also make use of three different prediction methods.
 
@@ -186,7 +186,7 @@ The first entity represents the ticket for a flight. A ticket gives its holder t
 
 \vspace{1em}
 
-Each ticket also has a certain price. This price can differ depending on the lookup~time of the ticket. In this research, airfare changes have been monitored up to six~weeks (i.e., 42~days) prior to departure. A certain price of a ticket can thus be defined in the number of \emph{days before departure}, or \emph{dbd}.
+Each ticket also has a certain price. This price can differ depending on the lookup~time of the ticket. In this research, airfare changes have been monitored up to six~weeks (i.e. 42~days) prior to departure. A certain price of a ticket can thus be defined in the number of \emph{days before departure}, or \emph{dbd}.
 
 Lastly, the simulation model used in this research makes the assumption that the underlying tickets are non-transferable and non-refundable. The customer is therefore \emph{not} able to buy a ticket and get a refund at a later time, or transfer it to another person or departure date. This is essential for the concept of options to work, as else the passenger will likely always buy the ticket immediately at arrival and request a refund when he is unable to fly.
 

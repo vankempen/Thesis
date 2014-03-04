@@ -42,7 +42,7 @@ When a doubting passenger arrives at the booking process, there is a series of e
 
 First, the customer has to decide whether to \emph{buy the flight} immediately, \emph{wait} a certain amount of time, or \emph{buy an option} on the flight and postpone the decision. Next, after a certain period of time, the customer will know whether he will actually take the flight. The probability of flying or not flying is respectively $P^f$ and $1 - P^f$, and is based upon uncertain events that might occur. For instance, the probability of not flying might consist of the probability that the passenger is not able to take a week vacation from work, or even that the weather is bad when the customer wants to go on a sunny holiday.
 
-The action that follows this outcome depends upon the decision made in the first phase. The outcome is calculated by comparing the extra costs incurred by the decision with the `\emph{optimal}' decision that would have been made by a passenger that knew whether he would fly or not ($P^f$ would respectively be $1$ or $0$). The difference of these options is the monetary value of the passenger's \emph{regret} of making his first decision. So, when the passenger decides to actually fly, the costs of his chosen path are compared with the costs of directly buying the flight in the first phase (i.e., $p_I$). On the other hand, when the customer decides not to go, the outcome is calculated by comparing the path with \emph{not buying the ticket in the first place} (i.e., $0$).
+The action that follows this outcome depends upon the decision made in the first phase. The outcome is calculated by comparing the extra costs incurred by the decision with the `\emph{optimal}' decision that would have been made by a passenger that knew whether he would fly or not ($P^f$ would respectively be $1$ or $0$). The difference of these options is the monetary value of the passenger's \emph{regret} of making his first decision. So, when the passenger decides to actually fly, the costs of his chosen path are compared with the costs of directly buying the flight in the first phase (i.e. $p_I$). On the other hand, when the customer decides not to go, the outcome is calculated by comparing the path with \emph{not buying the ticket in the first place} (i.e. $0$).
 
 \noindent
 The different paths that can be followed are
@@ -78,14 +78,14 @@ In a risk neutral setting with equal shared information between option seller an
 \min(P^f \times (p_E - p_I), (1 - P^f) \times p_I)
 \end{equation}
 
-From the third party's perspective the minimum option price the company is willing to accept is equal to expected incurred costs of selling the product. For a set $\left\{ E(p_1), E(p_2), \ldots, E(p_n)\right\}$ where $E(p_n)$ is the expected result (i.e., $(p_n - p_I) \times P^{\,p_n}$) of price $p_n$ occurring at maturity. The value of $p_O$ can thus be defined as:
+From the third party's perspective the minimum option price the company is willing to accept is equal to expected incurred costs of selling the product. For a set $\left\{ E(p_1), E(p_2), \ldots, E(p_n)\right\}$ where $E(p_n)$ is the expected result (i.e. $(p_n - p_I) \times P^{\,p_n}$) of price $p_n$ occurring at maturity. The value of $p_O$ can thus be defined as:
 \begin{equation}
 p_O = \sum\limits_{i=1}^n\begin{cases}
 	 E(p_i), & \mbox{if } E(p_i) > 0 \\
 	0, & \mbox{if } E(p_i) \le 0 \end{cases}
 \end{equation}
 
-This minimum price is related to the costs an option writer expects from selling the airfare~lock-in product. The formula yields the prices at which the company anticipates to lose as much as it gains from selling the option (i.e., the resulting profit from selling this option is $0$).
+This minimum price is related to the costs an option writer expects from selling the airfare~lock-in product. The formula yields the prices at which the company anticipates to lose as much as it gains from selling the option (i.e. the resulting profit from selling this option is $0$).
 
 The equations of the customer's \emph{WTP} and the seller's \emph{WTA} imply that --- in a risk neutral setting --- there will arise an equilibrium between the maximum a customer wants to pay, and the minimum a providing company wants to accepts. This stationary formula for this equilibrium can be defined as:
 \begin{equation}
@@ -97,7 +97,7 @@ The stationary points are thus dependent on the ratio $\frac{p_E}{p_I}$. This is
 	\centering
 	\begin{tikzpicture}[domain=1:3]
 		\begin{axis}[xlabel=$p_E/p_I$, ylabel=$P^f$]
-			\addplot[mark=none] {1/x}; 
+			\addplot[mark=none] {1/x};
 		\end{axis}
 	\end{tikzpicture}
 	\caption{Stationary points}
@@ -108,7 +108,7 @@ For combinations of $P^f$ and $\frac{p_E}{p_I}$ that result in an outcome left o
 
 \subsubsection{Option style}
 \label{sec:OptionStyle}
-While customers might be allowed to execute their option during the whole period up till maturity (i.e., American style), I will assume that all options are exercised on the date of maturity (i.e., European option). This is in accordance with the theory of \citeA{merton1973theory}, who states that an American option that does not return dividends should rationally only be exercised at maturity. This assumption can easily be illustrated with the use of an example. If a customer who has bought a real option has decided to exercise the option, it has nothing to lose by waiting till the option matures. By waiting this extra time, the customer only gains an advantage which allows him to still withhold himself from actually buying the ticket. In this way, when there occurs an unforeseen situation after his decision, he still has not bought the ticket and can waive the flight. Therefore it would be unrealistic of the customer to exercise the option before the date of maturity.
+While customers might be allowed to execute their option during the whole period up till maturity (i.e. American style), I will assume that all options are exercised on the date of maturity (i.e. European option). This is in accordance with the theory of \citeA{merton1973theory}, who states that an American option that does not return dividends should rationally only be exercised at maturity. This assumption can easily be illustrated with the use of an example. If a customer who has bought a real option has decided to exercise the option, it has nothing to lose by waiting till the option matures. By waiting this extra time, the customer only gains an advantage which allows him to still withhold himself from actually buying the ticket. In this way, when there occurs an unforeseen situation after his decision, he still has not bought the ticket and can waive the flight. Therefore it would be unrealistic of the customer to exercise the option before the date of maturity.
 
 
 
@@ -152,7 +152,7 @@ After parsing of the files, the prices of the 6~hour time windows will be conver
             \#1    & p_{t_5} & p_{t_6} & p_{t_7} & p_{t_8} & \vrule & \cdots \\
             \#2    & p_{t_5} & p_{t_6} & p_{t_7} & p_{t_8} & \vrule & \cdots \\
             \vdots & \vdots  & \vdots  & \vdots  & \vdots  & \vrule & \ddots \\
-            \#n    & p_{t_5} & p_{t_6} & p_{t_7} & p_{t_8} & \vrule & \cdots 
+            \#n    & p_{t_5} & p_{t_6} & p_{t_7} & p_{t_8} & \vrule & \cdots
     }
     \Rightarrow
     \kbordermatrix{
@@ -167,9 +167,9 @@ After parsing of the files, the prices of the 6~hour time windows will be conver
     \label{fig:conversionOfTimeslotsIntoDailyAirfares}
 \end{figure}
 
-When certain timeslots contain no price observation, this single timeslot is left out of the calculation of the average airfare for that specific number of days before departure. Only when all 4~of the timeslots for a specific day have no data available, the value in the new data matrix is assigned as \emph{missing value} (i.e., n/a). 
+When certain timeslots contain no price observation, this single timeslot is left out of the calculation of the average airfare for that specific number of days before departure. Only when all 4~of the timeslots for a specific day have no data available, the value in the new data matrix is assigned as \emph{missing value} (i.e. n/a).
 
-The whole illustrated process only describes one route (i.e., \emph{ATL} to \emph{MCO}) departing on one specific date (i.e., departure on \emph{August $20^{th}$}). The automated program however takes into account every route described in \autoref{app:selectedroutes}, and all dates in the period from August $20^{th}$ till September $30^{th}$.
+The whole illustrated process only describes one route (i.e. \emph{ATL} to \emph{MCO}) departing on one specific date (i.e. departure on \emph{August $20^{th}$}). The automated program however takes into account every route described in \autoref{app:selectedroutes}, and all dates in the period from August $20^{th}$ till September $30^{th}$.
 
 After retrieval of the flight information, the data is parsed and stored in the \href{http://www.hdfgroup.org/HDF5/}{HDF5-format}. This data format is often used in big data analysis, and enables quick reading of big sets of data to memory. Following the loading into RAM, the data will be converted to a \href{http://pandas.pydata.org/}{Pandas} object after which analysis can be done.
 
@@ -207,7 +207,7 @@ In this research I will compare three different types of option pricing methods,
 \end{inparaenum} The first model is is the theoretical optimal method, while the latter are practically feasible.
 
 \subsubsection{Theoretically optimal: foreknowledge}
-The first option valuation model built in this research is based upon the assumption that the option seller knows the exact price of the underlying flight in the future. While this is infeasible in practice, this theoretical model will provide the answer to the first~research question. By using this technique one can conclude whether the external company is able to provide options at a price which the passenger accepts. If it is viable to offer such option in this theoretical setting, more realistic models can be built to see whether it is also feasible in the practical world. Furthermore, this optimal method will be used as baseline to compare the other two models. 
+The first option valuation model built in this research is based upon the assumption that the option seller knows the exact price of the underlying flight in the future. While this is infeasible in practice, this theoretical model will provide the answer to the first~research question. By using this technique one can conclude whether the external company is able to provide options at a price which the passenger accepts. If it is viable to offer such option in this theoretical setting, more realistic models can be built to see whether it is also feasible in the practical world. Furthermore, this optimal method will be used as baseline to compare the other two models.
 
 \subsubsection{Theory-based: Black--Scholes model}
 The Black--Scholes model will be the first practical implementations of a option valuation technique in this research. The model is used to determine the European option price based upon the volatility of the underlying asset. \citeA{jain11} demonstrated in their paper that this model can also be used to determine optimal option prices based on the volatility of airfares. In this paper, I calculate the volatility of the airfares by using the first 4~weeks of the census. With this variable, the optimal option price according to the Black--Scholes method can be calculated, and the outcome can be tested in the simulation model. The adapted equation used for this flight specific scenario is derived from \citeA[p.~13]{jain11}:
@@ -228,7 +228,7 @@ The next practical implementation of an option valuation technique is the Monte~
 \label{subsec:SimulationAndSensitivityAnalysis}
 In the third phase the three pricing models described in \typenameref{subsec:OptionValuationModels} will be evaluated using simulation.
 
-This simulation model generates passengers that want to buy tickets of a certain flight as a function of time (6~weeks till one day before departure). 
+This simulation model generates passengers that want to buy tickets of a certain flight as a function of time (6~weeks till one day before departure).
 
 To make sure the models are not overfitted on the train data, the simulation will be run on the separate set of test data.
 
