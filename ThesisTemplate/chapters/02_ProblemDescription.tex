@@ -1,0 +1,186 @@
+\chapter{Problem Description}
+\label{chap:ProblemDescription}
+In this thesis I will try to determine whether it is feasible for an airfare~lock-in products seller to offer options to passengers in a sustainable manner. This type of option product allows the customer to `buy' some extra time before purchasing the underlying ticket. In this extra decision time the customer is covered from any price increases or sold-outs, and is able to cancel the purchase of the actual ticket without extra costs. This is thus different from travel insurances policies where the customer has to provide a valid reason to cancel her ticket. Furthermore, the penalty of cancelling or changing your flight directly via the airliner might be very expensive, and run up into the hundreds of dollars\footnote{\url{http://on.wsj.com/1i9EUej}}. An airfare~lock-in product could therefore provide an answer to the problem of uncertainty of the customer.
+
+Currently, some airliners already offer these kind of lock-in products on their own flights. These prices are mostly set at a fixed rate, and do not vary much relative till the time of the flight's departure. For instance, customers are presented the same price when purchasing the option 1~day or 4~weeks before departure. Furthermore, the option price is not related to the current airfare of the underlying ticket. When a customer wants to purchase an option on a ticket with a fee of US\$ $1000$, she gets offered the same lock-in fare as she would have received when the ticket price would only have been US\$ $100$. The airliners do, however, offer different prices for options with a different number of days to maturity. This \emph{maturity time} gives the option holder some extra decision time before actually buying the option, without risking fare increases. Currently, aviation companies sell options with a maturity time between 2~and 14~days. \autoref{tbl:PriceOfAirfareLockIn} gives an overview of airliners that at this moment offer airfare~lock-in products.
+
+\begin{table}
+    \centering
+    \begin{tabular}{l  c  c  c  c}
+    \toprule
+    Airline         & 2~days & 3~days   & 7~days   & 14~days  \\
+    \midrule
+    United Airways  &        & \$\,5.99 & \$\,8.99 &           \\
+    Air France-KLM  &        &          &          & \$\,20    \\
+    Estonian Air    & \$\,15 &          &          &           \\
+    \bottomrule
+    \end{tabular}
+    \caption{Price of currently available airfare lock-in products}
+    \label{tbl:PriceOfAirfareLockIn}
+\end{table}
+
+These airliners only supply airfare~lock-in products for their own flights. However, currently some option selling companies are also trying to enter this new market. For example, \emph{options away} launched their service to the public in August~2013. This option seller offers flights for many different airliners and to multiple destinations within the United States. The company supplies lock-in products with a maturity time ranging from 24~hours up till 20~days. The fares associated with these options differ in relation with some of the characteristics of the underlying flight:
+
+\begin{compactitem}
+    \item the maturity time,
+    \item the current number of days before departure,
+    \item the date of departure, and
+    \item the in- and outbound airport.
+\end{compactitem}
+
+To calculate the option price, the company uses airfare forecasting methods and historical information to predict future ticket prices and set the price accordingly. Options away is registered as a travel agency, and thus has reservation capabilities and updated information on capacity. The approach I will use in this thesis is thus different from the concept options away is applying. I will assume a third party that has no access to such data, but is completely independent of the airliner that is providing the tickets.
+
+
+\section{Description of offering airfare~lock-in products}
+
+With the concept of offering airfare~lock-in products several parties and products are involved. These four~entities are the following:
+\begin{compactitem}
+\item the flight ticket,
+\item the airfare~lock-in product,
+\item the external company which sells the airfare~lock-in products, and
+\item the passenger.
+\end{compactitem}
+
+\noindent
+This section will describe each of the different entities concerned with the process.
+
+
+\subsection{Flight ticket}
+\label{subsec:FlightTicket}
+A flight ticket gives its holder the right to fly on a particular date and time from and to a particular airport using a specified airline. Flights can be distinct by their unique \emph{call-sign}, which consists of three~different components: \begin{inparaenum}[\itshape (i)\upshape]
+\item the IATA airline code,
+\item the IATA flight number, and
+\item the date of departure.
+\end{inparaenum}.
+
+\noindent
+To limit the scope of this research, I only use a specific set of flights that share specific charactersitics:
+
+\begin{compactitem}
+\item each flight is for a specific route between outbound and inbound airport,
+\item only single-legged (direct) flights are being considered,
+\item only round trip flights are being considered,
+\item each flight has a specific departure date, and
+\item the return date of the flight is always 1~week after the departure date.
+\end{compactitem}
+\vspace{1em}
+
+Each ticket also has a certain price. This price can differ depending on the lookup~time of the ticket. In this research, airfare changes have been monitored up to six~weeks (i.e. 42~days) prior to departure. A certain price of a ticket can thus be defined in the number of \emph{days before departure}, or \emph{dbd}.
+
+Also, for the simulation model used in this research I make the assumption that the underlying tickets are non-transferable and non-refundable. The customer is therefore \emph{not} able to buy a ticket and get a refund at a later time, or transfer it to another person or departure date. This is essential for the concept of options to work, as else the passenger will likely always buy the ticket immediately at arrival and request a refund when he is unable to fly.
+
+During this thesis, a data set of airfares on flight tickets for 22~different routes was collected during a period of 12~weeks. The empirical data acquired in this stage are being used in the simulation model. The complete analysis on these airfares is given in \autoref{chap:DataAnalysis}.
+
+A ticket for a particular flight can be bought many weeks prior to departure. At a certain time, tickets are either available or \emph{sold-out} --- in which an alternate flight with compensation is necessary. In the aviation industry, `sold-out' does not always mean that there are no tickets available at a future moment in time. As a result of revenue management and discount allocation, airliners are known to open and close certain \emph{discount buckets} \cite{mcgill1999revenue}. The opening and closing of these buckets prevents missed revenues of high-grossing customers due to actual sell-outs. It is therefore possible that a flight seems to be sold-out weeks before departure, but reappears again closer to the deadline.
+
+The revenue management concept of discount buckets has lead to different prices throughout the booking period. Customers that want to buy a seat for a certain flight earlier to the departure date are likely to be offered other fares than early bookers. Flight tickets are thus dynamically priced.
+
+
+
+\subsection{Airfare lock-in product}
+The airfare~lock-in products gives its holder the right --- but not the obligation --- to buy the underlying flight on or before a certain maturity date for a predetermined strike price. The holder is thereby covered from sudden increases in price or potential sell-outs, but is still able to not fly at all or gain from large price decreases.
+
+The strike price, denoted by $p_S$, is the cost at which the passenger is able to buy the underlying flight ticket when he exercises the option. In this research I will consider the cases where the strike price of the airfare~lock-in product is equal to the initial airfare of the underlying flight at purchase of the option.
+$$p_S = p_I$$
+
+For example, when the current ticket price $p_I$ is equal to \$\,100 and the customer decides to buy the option, he has the opportunity to buy the ticket for \$\,100 at the date of maturity.
+
+Setting the strike price to a different level than the initial ticket price is also possible in a realistic setting, and can provide --- in some cases --- even better alignment with the customer's preferences. For example, \citeA{courty2000sequential} show in their research that by setting different combinations of ticket price and possible level of refund, the airliner is able to segment customers relative to their level of uncertainty. A more detailed description of this paper can be found in \autoref{subsec:AviationIndustry}. In this research, however, I will not evaluate those cases, and will thus only consider strike prices that are equal to the initial airfare.
+
+
+Another property that is associated with an airfare~lock-in products, is the \emph{maturity time} of said option. This value denotes the number of days of extra \emph{decision time} a customer gains when he buys the option. At the date of maturity, the customer has to make the decision to actually buy the ticket, or to not exercise the option at all. A passenger will choose for the first alternative when he has decided to actually fly, and the current airfare is higher than the agreed upon \emph{strike price}. During this number of days $m$, the customer is thus \emph{insured} against price fluctuations and will therefore not risk high fare increases.
+
+For the simulation models used in this thesis, I assume a maturity time of 3~days. When a passenger thus purchases the option, he will be able to decide whether to exercise the option 3~days after the acquisition of the lock-in product.
+
+Next to these configurable parameters, an airfare~lock-in product also has a certain price at which the option is offered to the customer. The theoretical level of this option price is described in \typenameref{subsec:PassengersWTP}. In this research, however, a number of different option valuation techniques are being considered. These pricing models are characterized by different configurations of the parameters of this simulation model, and will be described in detail in \autoref{chap:ModelDevelopment}.
+
+
+\subsection{External company}
+An external company is the entity that offers the airfare~lock-in products to passengers. The seller sets its minimal option prices based upon the expected loss due to fare increases or sell-out of the underlying flight. The company therefore only accepts to sell the product when the customer will offer a price that is equal or higher than this expected costs.
+
+When the company writes an option, it is thereby obliged to offer the underlying ticket at the specified strike price $p_s$ if the holder decides to exercise it. Flight tickets are capacity constrained, and therefore not unlimited. This means that sometimes the situation emerges in which the option holder wants to exercise its right, but the flight is sold-out. The option writer than has to offer the customer a ticket for an alternative flight plus an extra compensation.
+
+In this study, the level of compensation will be calculated using the average ticket price of that specific route on one day before departure multiplied by~three. The multiplication by a factor of~three is used to account for transferring the passenger to another flight, plus legislative compensation. A sell-out thus creates much increased costs. Therefore, the option price will dramatically increase when the probability of a sell-out is high. In such situations the selling company might refrain itself from offer the option for that particular flight in full.
+
+
+\subsection{Passenger}
+\label{sec:Passenger}
+The most central entity in the simulation is the \emph{passenger}.  In this research, a passenger is defined as a customer who considers to purchase a ticket or option for a particular flight on a particular number of days before actual departure of this flight. \todo[The distribution of the arrival process for the simulation of passengers will be derived from the article by \citeA{weatherford1993modeling}. In their paper, the authors simulate the arrival according to a inhomogeneous Poisson process. \citeA{bertsimas2005simulation} defined a model more specific for the aviation industry based on the PARM-model.]{move to future research}
+
+The simulation model upon which this research is based will only consider the arrival of economy class passengers. This is because the data provide no reliable method of distinguishing different classes, and persons that travel in economy are more price elastic than their business class counterparts. They are therefore more likely to consider an airfare~lock-in product to cover their risk.
+
+\section{Model of passenger's behaviour}
+When a doubting passenger arrives at the booking process, there is a series of events that might occur. The passenger's decision model is illustrated in \autoref{fig:PassengersDecisionTree}.
+
+\insertfigure{PassengersDecisionTree}{Passenger's decision tree}
+
+First, the customer has to decide whether to \emph{buy the flight} immediately, \emph{wait} a certain amount of time, or \emph{buy an option} on the flight and postpone the decision. Next, after a certain period of time, the customer will know whether he will actually take the flight. The probability of flying or not flying is respectively $P^f$ and $1 - P^f$, and is based upon uncertain events that might occur. For instance, the probability of not flying might consist of the probability that the passenger is not able to take a week vacation from work, or even that the weather is bad when the customer wants to go on a sunny holiday.
+
+The action that follows this outcome depends upon the decision made in the first phase. The outcome is calculated by comparing the extra costs incurred by the decision with the `\emph{optimal}' decision that would have been made by a passenger that knew whether he would fly or not ($P^f$ would respectively be $1$ or $0$). The difference of these options is the monetary value of the passenger's \emph{regret} of making his first decision. So, when the passenger decides to actually fly, the costs of his chosen path are compared with the costs of directly buying the flight in the first phase (i.e. $p_I$). On the other hand, when the customer decides not to go, the outcome is calculated by comparing the path with \emph{not buying the ticket in the first place} (i.e. $0$).
+
+\noindent
+The different paths that can be followed are
+\begin{compactdesc}
+\item[buy flight $\rightarrow$ fly] in this scenario, the passenger has already bought the ticket and no further action has to be undertaken. The customer has no regret of making his first decision ($0$);
+\item[buy flight $\rightarrow$ don't fly] the passenger will not fly, and the bought ticket is thus rendered useless. The regret of this path is equal to the initial ticket price in the first phase ($p_I$);
+\item[wait $\rightarrow$ fly] when the passenger decides to fly after waiting, it will have to buy a ticket. The customer's regret of waiting is equal to the expected price in the second phase minus the initial ticket price ($p_E - p_I$)
+\item[wait $\rightarrow$ don't fly] the passenger has to undertake no action, and has not lost any money to a ticket. The customer has therefore no regret of making his first decision ($0$);
+\item[buy option $\rightarrow$ fly] the passenger will buy the ticket at the agreed strike price. The extra costs relative to buying the ticket in the primary phase are equal to the option price plus the strike price ($p_S$) minus the initial ticket price. In this research, the strike price will be equal to the initial price, so the customer's regret of making this decision will in this case be the same as the price of the option ($p_O + p_S - p_I = p_O$)
+\item[buy option $\rightarrow$ don't fly] the passenger will not exercise the option and will not buy the ticket; The customer's regret is therefore equal to the option price ($p_O$).
+\vspace{1ex}
+\end{compactdesc}
+
+The expected outcome of each decision made in the first phase can be calculated by multiplying the decision variables $P^f$ and $1 - P^f$ with the result of each branch. The passenger's regret of buying the flight immediately is therefore:
+\begin{equation*}
+P^f \times 0 + (1 - P^f) \times p_I = (1 - P^f) \times p_I
+\end{equation*}
+
+The cost of waiting can be defined as:
+\begin{equation*}
+P^f \times (p_E - p_I) + (1 - P^f) \times 0 = P^f \times (p_E - p_I)
+\end{equation*}
+
+Lastly, the regret of buying an option is:
+\begin{equation*}
+P^f \times p_O + (1 - P^f) \times p_O = p_O
+\end{equation*}
+
+\subsubsection{Passenger's WTP and the third party's WTA}
+\label{subsec:PassengersWTP}
+In a risk neutral setting with equal shared information between option seller and buyer, the price a passenger is willing to pay for the option equals:
+\begin{equation}
+\min(P^f \times (p_E - p_I), (1 - P^f) \times p_I)
+\end{equation}
+
+From the third party's perspective the minimum option price the company is willing to accept is equal to expected incurred costs of selling the product. For a set $\left\{ E(p_1), E(p_2), \ldots, E(p_n)\right\}$ where $E(p_n)$ is the expected result (i.e. $(p_n - p_I) \times P^{\,p_n}$) of price $p_n$ occurring at maturity. The value of $p_O$ can thus be defined as:
+\begin{equation}
+p_O = \sum\limits_{i=1}^n\begin{cases}
+     E(p_i), & \mbox{if } E(p_i) > 0 \\
+    0, & \mbox{if } E(p_i) \le 0 \end{cases}
+\end{equation}
+
+This minimum price is related to the costs an option writer expects from selling the airfare~lock-in product. The formula yields the prices at which the company anticipates to lose as much as it gains from selling the option (i.e. the resulting profit from selling this option is $0$).
+
+The equations of the customer's \emph{WTP} and the seller's \emph{WTA} imply that --- in a risk neutral setting --- there will arise an equilibrium between the maximum a customer wants to pay, and the minimum a providing company wants to accepts. This stationary formula for this equilibrium can be defined as:
+\begin{equation}
+\frac{1}{p_E/p_I} = P^f
+\end{equation}
+
+The stationary points are thus dependent on the ratio $\frac{p_E}{p_I}$. This is illustrated by \autoref{fig:StationaryPoints}
+\begin{figure*}
+    \centering
+    \begin{tikzpicture}[domain=1:3]
+        \begin{axis}[xlabel=$p_E/p_I$, ylabel=$P^f$]
+            \addplot[mark=none] {1/x};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Stationary points}
+    \label{fig:StationaryPoints}
+\end{figure*}
+
+For combinations of $P^f$ and $\frac{p_E}{p_I}$ that result in an outcome left of the stationary line there is an call option price that both satisfies the passenger and the provider. The combinations to the right of this function do not result in such an option price, and the customer will rather directly buy the flight ticket. An option seller can still target passengers in this area by providing them with a ticket and an option that allows the customers to return the ticket's without additional costs.
+
+\subsection{Option style}
+\label{sec:OptionStyle}
+While customers might be allowed to execute their option during the whole period up till maturity (i.e. American style), I will assume that all options are exercised on the date of maturity (i.e. European option). This is in accordance with the theory of \citeA{merton1973theory}, who states that an American option that does not return dividends should rationally only be exercised at maturity. This assumption can easily be illustrated with the use of an example. If a customer who has bought a real option has decided to exercise the option, it has nothing to lose by waiting till the option matures. By waiting this extra time, the customer only gains an advantage which allows him to still withhold himself from actually buying the ticket. In this way, when there occurs an unforeseen situation after his decision, he still has not bought the ticket and can waive the flight. Therefore it would be unrealistic of the customer to exercise the option before the date of maturity.
+

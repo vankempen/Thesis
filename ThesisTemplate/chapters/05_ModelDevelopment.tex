@@ -1,10 +1,10 @@
 \chapter{Model development}
 \label{chap:ModelDevelopment}
-This chapter will discuss the simulation model used for the evaluation of the option pricing techniques. \todo{descr}
+This chapter will discuss the simulation model used for the evaluation of the forecasting techniques. \todo{descr}
 
-\section{Simulation model}
+\section{Overview of simulation model}
 \label{sec:SimulationModel}
-In this thesis, a series of simulations will be run to determine the performance of different option valuation models. These pricing models range from theoretical optimal --- the seller with perfect foresight --- up till the practically implementable --- based upon historical prices and Monte~Carlo simulation.
+In this thesis, I will run a series of simulations to determine the performance of different option valuation models. These pricing models range from theoretical optimal --- the seller with perfect foresight --- up till the practically implementable --- based upon historical prices and Monte~Carlo simulation.
 
 The first simulation run will determine the maximum possible profits an option seller could realize. The results will be acquired by assuming an option writer that has perfect information on price movements and customer characteristics, and thus acts accordingly. Though these assumptions are unrealistic in a real word setting, the observations of this run can be used as the benchmark to compare the performance of other option models to.
 
@@ -54,13 +54,11 @@ $$ y = p_O - (p_S - p_m) $$
 Using the method described above, the simulation will be used to compare the performance of the proposed option valuation models. The same procedure will also be used to test the influence of a particular configuration of parameters within a single option valuation model.
 
 
-
-
 \subsection{Structure of the model}
 In this research, two different submodels are being considered. The first one --- the \emph{demand submodel} --- is concerned with the option valuation on the customer's side. This submodel calculates the willingness to pay for an option from the perspective of the passenger determining whether to buy the product. The \emph{supply submodel}, on the other hand, computes the willingness to accept from the seller's view.
 
-\subsubsection{Demand submodel}
-The demand submodel concerns itself with the calculation of the willingness to pay on the passenger's side of the model. To compute his willingness to pay, the customer uses the following equation:
+\section{Customer submodel}
+The customer submodel concerns itself with the calculation of the willingness to pay on the passenger's side of the model. To compute his willingness to pay, the customer uses the following equation:
 
 $$ \mbox{WTP}_c = E[V_c] \times P^f $$
 
@@ -78,7 +76,7 @@ $$ E[F_m] = F_m \times \epsilon$$
 The random error in the equation will be drawn from a normal distribution with mean 0 and a specified standard deviation:
 $$ \epsilon \sim \mathcal{N} (0, \sigma^2) $$
 
-A higher standard deviation will thus lower the accuracy of the passenger's expectations.
+A higher standard deviation will thus lower the accuracy of the passenger's expectations. For illustration, the connection can be observed in the relation between this error term and the $\mbox{MAPE}$. A detailed description of this relation is provided in \autoref{app:errorMAPE}.
 
 The resulting prediction $E[F_m]$ will be a point estimate which represents the expected future airfare according to the customer. To compute his standard option price, the passenger will subtract the current ticket price from the acquired point estimate:
 
@@ -144,8 +142,8 @@ He will thus \emph{not} exercise his option when:
 \todo{tree}
 
 
-\subsubsection{Supply submodel}
-Like the demand submodel, the supply submodel concerns itself with determining acceptable option prices. However, this model computes the prices from the perspective of the seller. This thus means that instead of calculating a willingness to \emph{pay}, the supply submodel tries to determine the best willingness to \emph{accept}. It does so by using the following equation:
+\section{Seller submodel}
+Like the customer submodel, the seller submodel concerns itself with determining acceptable option prices. However, this model computes the prices from the perspective of the seller. This thus means that instead of calculating a willingness to \emph{pay}, the supply submodel tries to determine the best willingness to \emph{accept}. It does so by using the following equation:
 
 $$ WTA_s = \max(V_{min} \times F_0, E[V_s] \times M) $$
 
@@ -166,57 +164,26 @@ The last forecasting method of the seller to determine its preferred option pric
 
 
 
-\subsection{Parameters and assumptions of the simulation model}
-Next to previously defined submodels, a number of entity characteristics and parameters have been defined. The next section will describe these variables, and define the configuration for the baseline which is being used for the initial simulation. The simulation models in later sections (e.g., \todo{ref}) will loosen the specified parameters to see its effects on the performance of the parameters itself.
+\paragraph{Seller knows exact level of $P^F$ of customer}
+Next to these different forecasting methods the seller uses, the company also has complete information on each individual customer's likelihood of travelling ($P^f$). This allows the seller to make precise estimates of the expected payout of the passengers. This will thus enable the option writer to set the option prices accordingly.
 
-In this research, a parameter is defined as a variable of the underlying object which can be altered to represent different values. The sensitivity analysis will thus adjust some of these parameters, and determine their influence. For example, the number of days till maturity of an airfare~lock-in product can hold the values 3, 7, 14, or 21~days for different simulation runs.
+For example, when a customer has a $P^f$ of $0.70$, and the seller knows the prices will increase with $\mbox{US\,\$} 10$, he can set the option price to a minimum of $\mbox{US\,\$} 7.0$ ($= 0.70 \times 10$). This is because the company knows that \emph{on average}, it only has to pay out $\mbox{US\,\$} 10$ in $70\,\%$ of the cases. This is the minimum willingness to accept of the seller.
 
+The seller computes the option price he offers to the customer by multiplying the previously described percentage of expected payout by a specific margin. To ensure no options for under zero US\$ will be sold, the seller sets his minimum willingness to accept to 1 (as WTA is defined relative to the current ticket price $F_0$).
 
-\subsubsection{Characteristics of the flight ticket}
-\label{sub:CharacteristicsOfTheFlightTicket}
-The first entity represents the ticket for a flight. A ticket gives its holder the right to take a seat on a particular underlying flight. In this thesis, a specific set of flights is being used:
+$$ V_s = (1 + \min(\mbox{WTA}, 1) \times r) $$
 
-\begin{compactitem}
-\item each flight is for a specific route between outbound and inbound airport;
-\item only single-legged (direct) flights are being considered;
-\item only round trip flights are being considered;
-\item each flight has a specific departure date;
-\item the return date of the flight is always 1~week after the departure date.
-\end{compactitem}
+In the current configuration with the seller with perfect information, the margin can be seen as the part of the equation that will yield profits for the seller. The cases further in this chapter --- in which the seller does not know the exact level of price movements --- the margin will also serve as a technique to reduce losses resulted by underestimation of future fare changes due to forecasting errors.
 
-\vspace{1em}
-
-Each ticket also has a certain price. This price can differ depending on the lookup~time of the ticket. In this research, airfare changes have been monitored up to six~weeks (i.e. 42~days) prior to departure. A certain price of a ticket can thus be defined in the number of \emph{days before departure}, or \emph{dbd}.
-
-Lastly, the simulation model used in this research makes the assumption that the underlying tickets are non-transferable and non-refundable. The customer is therefore \emph{not} able to buy a ticket and get a refund at a later time, or transfer it to another person or departure date. This is essential for the concept of options to work, as else the passenger will likely always buy the ticket immediately at arrival and request a refund when he is unable to fly.
-
-During this thesis, a data set of airfares on flight tickets for 22~different routes was collected during a period of 12~weeks. The empirical data acquired in this stage are being used in the simulation model. The complete analysis on these airfares is given in \autoref{chap:DataAnalysis}.
+The best level of margin that will result in the optimization of total profits yielded by this simulation will be evaluated in later this section.
 
 
-\subsubsection{Characteristics of the airfare~lock-in product}
-The next entity which is being considered in this simulation model is the airfare~lock-in product. This product gives its holder the right --- but not the obligation --- to buy the underlying flight. There are two parameters associated with the entity. Unlike for financial options, the model assumes that the options on flights are non-transferable. When a customer thus decides he won't be exercising the ticket, he \emph{cannot} sell the airfare~lock-in product to another customer.
 
-\parameter{the option's number of days till maturity \hfill ($m = 3$)}
-The first parameter of the airfare~lock-in products is its number of days till maturity. This value denotes the number of days of extra \emph{decision time} a customer gains when he buys the option. At the date of maturity, the customer has to make the decision to actually buy the ticket, or to not exercise the option at all. A passenger will choose for the first alternative when he has decided to actually fly, and the current airfare is higher than the agreed upon \emph{strike price}. During this number of days $m$, the customer is thus \emph{insured} against price fluctuations and will therefore not risk high fare increases.
-
-In the baseline model of the simulation, a maturity of 3~days is being considered. When a passenger thus purchases the option, he will decide whether to exercise the option 3~days after the acquisition of the lock-in product.
-
-\parameter{the option's strike price \hfill ($p_S = p_I$)}
-The second parameter associated with the entity is the strike price of the airfare~lock-in product. This price, denoted by $p_S$, is the cost at which the passenger is able to buy the underlying flight ticket when he exercises the option.
-
-This research will consider a strike price of the airfare~lock-in product that is equal to the initial airfare of the underlying flight at purchase of the option.
-$$p_S = p_I$$
-
-For example, when the current ticket price $p_I$ is equal to \$\,100 and the customer decides to buy the option, he has the opportunity to buy the ticket for \$\,100 at the date of maturity.
-
-Next to these configurable parameters, an airfare~lock-in product also has a certain price at which the option is offered to the customer. The theoretical level of this option price is described in \typenameref{subsec:PassengersWTP}. In this research, however, a number of different option valuation techniques are being considered. These pricing models are characterized by different configurations of the parameters of this simulation model, and will be described in detail in \autoref{chap:Results}. \todo{edit}
-
-
-\subsubsection{General characteristics of the simulation model}
-Next to the parameters and assumptions specific to the four entities described previously, the simulation model itself also has some characteristics defined.
+\section{General characteristics of the simulation model}
+Next to the parameters defined in the two submodels, the simulation model itself also has some characteristics defined.
 
 \parameter{arrival rate of passengers \hfill $\sim Poisson(1)$}
-As seen in the process description of the simulation (see at the beginning of this chapter), the model will generate passengers to determine the performance of the model. A passenger will arrive following a Poisson distribution with $\lambda = 1$. This thus implies that, on average, a single customer arrives for each day prior to departure for every flight.
+To determine the performance of the model this simulation will generate passengers. A passenger will arrive following a Poisson distribution with $\lambda = 1$. This thus implies that, on average, a single customer arrives for each day prior to departure for every flight.
 
 \parameter{number of trials \hfill (N=20)}
 Because pseudo random generation of numbers and probabilities are used in this model, there is a possibility of generating outliers in only a single run. To prevent such scenarios from happening, every simulation is run a number of times. The acquired data from these multiple trials is then averaged to get the converged mean.

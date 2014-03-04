@@ -4,6 +4,37 @@ This chapter of my Master's Thesis will run and evaluate several simulations. Ea
 
 Due to the large amount of routes, most of the times only summary statistics of all the aggregated routes will be presented in this chapter. Full tables with results can be found in the appendices \ref{app:SimulationResultsPerfectStrong} till \ref{app:SimulationResultsStrongWeak}.
 
+\section{Base model setup}
+In \autoref{chap:ModelDevelopment} I have explained the different configurations that the different entities can take. To limit the total number of possible configurations, I have defined a base model that will be used throughout the simulation runs. This base model fixates some of the parameters used in the models, and are left unchanged throughout the rest of this chapter. \autoref{tbl:ConfigBaseModel} shows an overviews of these variables.
+
+ \begin{table} \centering
+    \begin{tabular}{l  r}
+    \toprule
+    Parameter      &  Value \\
+    \midrule
+    Passenger's likelihood of travelling  &  $\sim \mbox{Unif}(0, 1)$  \\
+    Arrival rate of passengers   &  $\sim \mbox{Pois}(\lambda=1)$ \\
+    Maturity time of option      &  3~days \\
+    Number of simulation trials  &  20 \\
+    \bottomrule
+    \end{tabular}
+    \caption{Configuration of the base model}
+    \label{tbl:ConfigBaseModel}
+\end{table}
+During the simulation, the parameters not yet set in this base model will thus be variable. These parameters are:
+
+
+\begin{compactitem}
+    \item seller's forecasting method,
+    \item seller's forecasting accuracy,
+    \item seller's applied margin,
+    \item customer's forecasting method, and
+    \item customer's forecasting accuracy.
+\end{compactitem}
+
+The exact configuration of each of these variables is explained at the start of each simulation run. A detailed description of all the parameters can be found in chapters \autoref{chap:ProblemDescription} and \autoref{chap:ModelDevelopment}.
+
+
 \section{Overview of results}
 As being stated previously, this chapter of the thesis will run several different configurations of option sellers and customers. This section will give an overview of statistics amongst these routes. Detailed descriptions, further statistics and explanations can be found in following sections of this chapter.
 
@@ -81,68 +112,23 @@ The next few sections will give a more detailed analysis of the outcomes of the 
 \section{Benchmark model}
 Like stated before, the first model that will be evaluated is the benchmark model. In this simulation model, the seller has perfect information on both flight statistics and customer characteristics. This allows this configuration to be used to compare the performance of the different models, and makes it possible to reduce the impact of the other parameters in the simulation.
 
-\subsection{Characteristics definition}
+\subsection{Simulation setup}
+
+
 The benchmark model can be defined using the following characteristics:
 
-\paragraph{Seller has perfect foresight}
-This model will simulate a seller that has perfect information on the price movement of all underlying tickets. The company thus knows exactly whether prices will drop op rise in till the end of the maturity date. He thus is able to make predictions on future airfares with a $100\,\%$ accuracy.
-
-\paragraph{Seller knows exact level of $P^F$ of customer}
-The company also has complete information on each individual customer's likelihood of travelling ($P^f$). This allows the seller to make precise estimates of the expected payout of the passengers. This will thus enable the option writer to set the option prices accordingly.
-
-For example, when a customer has a $P^f$ of $0.70$, and the seller knows the prices will increase with $\mbox{US\,\$} 10$, he can set the option price to a minimum of $\mbox{US\,\$} 7.0$ ($= 0.70 \times 10$). This is because the company knows that \emph{on average}, it only has to pay out $\mbox{US\,\$} 10$ in $70\,\%$ of the cases. This is the minimum willingness to accept of the seller.
-
-The seller computes the option price he offers to the customer by multiplying the previously described percentage of expected payout by a specific margin. To ensure no options for under zero US\$ will be sold, the seller sets his minimum willingness to accept to 1 (as WTA is defined relative to the current ticket price $F_0$).
-
-$$ V_s = (1 + \min(\mbox{WTA}, 1) \times r) $$
-
-In the current configuration with the seller with perfect information, the margin can be seen as the part of the equation that will yield profits for the seller. The cases further in this chapter --- in which the seller does not know the exact level of price movements --- the margin will also serve as a technique to reduce losses resulted by underestimation of future fare changes due to forecasting errors.
-
-The best level of margin that will result in the optimization of total profits yielded by this simulation will be evaluated in later this section.
-
-
-\paragraph{Customer uses strong-form rational expectation}
-To make his own predictions, the customer uses the strong-form rational expectation method. This technique assumes that \emph{on average} the passengers predict the exact observed future price. However, to every forecast is associated a random error. This error term follows a certain distribution $\epsilon \sim \mathcal{N}(1, \sigma^2)$. The predictions of a customer thus follow the following equation:
-
-$$ E[F_m] = F_m \times \epsilon $$
-
-In which $E[F_m]$ is the expected future fare on the maturity date, $F_m$ is the actual observed fee on the date of maturity.
-
-As stated in section \todo{ref}, the customer will calculate his willingness to pay for an option by multiplying his likelihood of travelling by the expected increase in price:
-
-$$ V_c = (E[F_m] - F_0) \times P^f $$
-
-The customer will only buy the option when his WTP is higher than the seller's option price:
-
-$$ V_c \ge V_s $$
-
-
-\todo{table}
-Arrival: $ \sim \mbox{Poisson}(1) $
-Number of days till maturity: 3
-
-
-\subsection{Forecasting error with strong-from rational expectations}
-Due to the linear influence of the error term on the forecast, the variance of the random error term will define the average forecasting error of the prediction. There are several ways to calculate this forecasting error. The \emph{Mean Absolute Percentage Error} ($\mbox{MAPE}$), for example, is defined as:
-
-$$ \mbox{MAPE} = \frac{1}{n} \sum\limits_{k=0}^n \frac{|F_m - E[F_m]|}{F_m} $$
-
-When using the strong-form rational expectation, the MAPE is linearly related to the standard deviation of the error term distribution in the following way: $ \mbox{MAPE} = 0.798 \sigma $
-
-\autoref{tbl:stderrMAPE} shows the MAPE associated with several different levels of sigma. As the formula implied, this forecasting error is relatively associated to the standard deviation; higher values of $\sigma$ will result in a higher level of $\mbox{MAPE}$.
-
-
 \begin{table}
-\centering
-\begin{tabular}{l c c c c}
-\toprule
-
-Standard error term  &  0  &  0.1  &  0.2  &  0.3  \\
-$\mbox{MAPE}$        &  0  &  0.0798  &  0.1596  &  0.2394  \\
-\bottomrule
-\end{tabular}
-\caption{Standard error term and associated level of MAPE}
-\label{tbl:stderrMAPE}
+    \centering
+    \begin{tabular}{l  r}
+    \toprule
+    Entity      &  Forecasting method \\
+    \midrule
+    Seller    &  perfect foresight  \\
+    Customer  &  strong-form rational expectations \\
+    \bottomrule
+    \end{tabular}
+    \caption{Configuration of forecasting methods}
+    \label{tbl:ForecastingConfigBenchmark}
 \end{table}
 
 

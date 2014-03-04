@@ -118,6 +118,35 @@ ORD  &  BOS  &  0.146  &  0.738  &  789  &  0.318  \\
 
 
 
+\chapter{Relation between standard error term and MAPE}
+
+
+\subsection{Forecasting error with strong-from rational expectations}
+\label{app:errorMAPE}
+Due to the linear influence of the error term on the forecast, the variance of the random error term will define the average forecasting error of the prediction. There are several ways to calculate this forecasting error. The \emph{Mean Absolute Percentage Error} ($\mbox{MAPE}$), for example, is defined as:
+
+$$ \mbox{MAPE} = \frac{1}{n} \sum\limits_{k=0}^n \frac{|F_m - E[F_m]|}{F_m} $$
+
+When using the strong-form rational expectation, the MAPE is linearly related to the standard deviation of the error term distribution in the following way: $ \mbox{MAPE} = 0.798 \sigma $
+
+\autoref{tbl:stderrMAPE} shows the MAPE associated with several different levels of sigma. As the formula implied, this forecasting error is relatively associated to the standard deviation; higher values of $\sigma$ will result in a higher level of $\mbox{MAPE}$.
+
+
+\begin{table}
+\centering
+\begin{tabular}{l c c c c}
+\toprule
+
+Standard error term  &  0  &  0.1  &  0.2  &  0.3  \\
+$\mbox{MAPE}$        &  0  &  0.0798  &  0.1596  &  0.2394  \\
+\bottomrule
+\end{tabular}
+\caption{Standard error term and associated level of MAPE}
+\label{tbl:stderrMAPE}
+\end{table}
+
+
+
 \chapter{Simulation results Perfect/Strong}
 \label{app:SimulationResultsPerfectStrong}
 The table below gives the results of the simulation of the model with an all knowing seller and a customer using strong-form rational expectations. The strong seller can make perfect predictions, while the customer has an error term of $0.20$. The margin set by the seller is $10\,\%$.
