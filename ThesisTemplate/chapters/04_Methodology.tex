@@ -61,7 +61,7 @@ The whole illustrated process only describes one route (i.e. \emph{ATL} to \emph
 
 After retrieval of the flight information, the data is parsed and stored in the \href{http://www.hdfgroup.org/HDF5/}{HDF5-format}. This data format is often used in big data analysis, and enables quick reading of big sets of data to memory. Following the loading into RAM, the data will be converted to a \href{http://pandas.pydata.org/}{Pandas} object after which analysis can be done.
 
-Distinction between flights is made by hashing flight's  properties\footnote{The \emph{call sign} of each segment and \emph{ticketing code} of the flight}. Prices of the flight will be stored in the HDF5-file using the hash as the identification key. This enables easy extraction of price fluctuations within exact same flights relative to time. The time of departure of each flight is converted to UTC.
+Distinction between flights is made by hashing flight's  properties\footnote{The \emph{call sign} of each segment and \emph{ticketing code} of the flight. The ticketing code is added as an identifier, as some routes within the United States seemed to be using the same call signs for flights departing from differen airports at different times during the day.}. Prices of the flight will be stored in the HDF5-file using the hash as the identification key. This enables easy extraction of price fluctuations within exact same flights relative to time. The time of departure of each flight is converted to UTC.
 
-For illustration, an example extract from the HDF5-data matrix containing the first few flights of the route AMS-JFK can be seen in \autoref{fig:extractFromAMStoJFK} of \autoref{chap:DataAnalysis}.
+For illustration, an example extract from the HDF5-data matrix containing the first few flights of the route AMS-JFK can be seen in \autoref{fig:extractFromAMStoJFK}.
 

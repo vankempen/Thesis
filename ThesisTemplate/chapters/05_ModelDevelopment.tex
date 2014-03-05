@@ -6,11 +6,11 @@ This chapter will discuss the simulation model used for the evaluation of the fo
 \label{sec:SimulationModel}
 In this thesis, I will run a series of simulations to determine the performance of different option valuation models. These pricing models range from theoretical optimal --- the seller with perfect foresight --- up till the practically implementable --- based upon historical prices and Monte~Carlo simulation.
 
-The first simulation run will determine the maximum possible profits an option seller could realize. The results will be acquired by assuming an option writer that has perfect information on price movements and customer characteristics, and thus acts accordingly. Though these assumptions are unrealistic in a real word setting, the observations of this run can be used as the benchmark to compare the performance of other option models to.
+The first simulation run will determine the maximum possible profits an option seller could realize when the customer uses strong-form rational expectations. The results will be acquired by assuming an option writer that has perfect information on price movements and customer characteristics, and thus acts accordingly. Though these assumptions are unrealistic in a real word setting, the observations of this run can be used as the benchmark to compare the performance of other option models to.
 
 The runs after the optimal case will drop some of the assumptions made about the seller with perfect foreknowledge, and determine the influences of those assumptions on the results. The final case will be a practically implementable option valuation model based upon historical prices.
 
-To determine the outcomes associated with each of the models, each simulation will run through a number of steps. This process is illustrated in \autoref{fig:simulationProcess}. The processes above the line are the ones associated with the buyer, the demand side. The ones below are connected to the airfare~lock-in product seller, the supply model.
+To determine the outcomes associated with each of the models, each simulation will run through a number of steps. This process is illustrated in \autoref{fig:simulationProcess}. The processes above the line are the ones associated with the buyer, the customer submodel. The ones below are connected to the airfare~lock-in product seller, the seller submodel.
 
 \insertfigure{simulationProcess}{Illustration of simulation process}
 
@@ -19,48 +19,42 @@ The process shown in the figure can be described in more detail using the seven~
 \begin{description}
 \item[Arrival of passenger] In the first stage of the simulation, the model will generate the arrival of passengers. A passenger is interested in buying an airfare~lock-in product on a specific flight. The simulation does not calculate the customers willingness to pay for the ticket price, but assumes that they all in principle want to buy the ticket at the current fare. Therefore, the model only determines whether the customer wants to buy the option on the flight.
 
-In this research, I will generate passengers according to a homogeneous Poisson distribution with an average arrival rate of 1 customer per option per day before departure ($\sim \mbox{Pois}(\lambda=1)$). The use of a (non-)homogeneous Poisson distribution is common in literature on simulating arrivals for flights (e.g., \citeA{2007simulation}, \citeA{bertsimas2005simulation}, \ldots).
+In this research, I will generate passengers according to a homogeneous Poisson distribution with an average arrival rate of 1 customer per option per day before departure ($\sim \mbox{Pois}(\lambda=1)$). The use of a Poisson distribution is common in literature on simulating arrivals for flights (e.g., \citeA{gosavi2007simulation}, \citeA{bertsimas2005simulation}, \ldots).
 
 Because data have been collected on flights up till 42~days before departure, each ticket will receive this same number of passengers with option requests on average. However, because when selling options with a specific number of days to maturity $m$ it is not possible to buy options fewer that $m$ days to departure, these customers get excluded from the model. As an example, the test dataset containing airfares of tickets from LHR to JFK includes 7,690 unique flights after cleansing. When simulating this model for options with a maturity of 3 days an expected total of $(42 - 3) \times 7,690 = 299,910$ passengers will be generated. Due to the probabilistic outcomes of the Poisson distribution, the exact number of arrivals number might vary.
 
 \item[Calculate the passenger's WTP] The next step of the simulation will engage itself in the calculation of the customer's Willingness To Pay. This amount is determined by computing the minimum of the expected utility of buying the flight immediately, or postponing the decision to fly $m$~days later.
 
-The exact level of a customer's WTP is dependant on three other variables. These variables are
-\begin{compactitem}
-    \item the customer's forecasting method of the expected increase in airfare,
-    \item the accuracy of the customer's forecasts, and
-    \item the likelihood of travelling.
-\end{compactitem}
-The implementation of these concepts is explained in detail in \todo{ref}.
+The implementation of the customer's WTP decision model is explained in detail in \autoref{sec:ModelPassengerBehaviour}, and the exact calculation of this WTP in \autoref{sec:CustomerSubmodel}.
 
 Now that the customer knows his level of WTP, he requests the seller for the price of the option.
 
 \item[Calculate the option seller's WTA] The third step is responsible for the computing the option seller's minimum \emph{Willingness To Accept}. A writer's WTA is the minimum level at which the seller wants to offer options that insure against price risks. When he would offer the airfare~lock-in products at this value, the seller would not expect any returns on the sale. The WTA of the external party is thus calculated using the writer's predictions of how the airfare is expected to change.
 
-The simulation model in this thesis uses many different configurations for the option sellers. In the benchmark case, a lock-in product seller with perfect information is considered. His WTA for each option is the same as the observed level of increase of the underlying fares. The different methods for computing the WTA for every particular configuration of the writer will be described in detail in \todo{ref}.
+The simulation model in this thesis uses many different configurations for the option sellers. In the benchmark case, a lock-in product seller with perfect information is considered. His WTA for each option is the same as the observed level of increase of the underlying fares. The different methods for computing the WTA for every particular configuration of the writer will be described in detail in \autoref{sec:sellerSubmodel}.
 
-\item[Calculate the price of the option] Step number four will calculate the price at which the option will be offered to the passenger. This simulation will calculate this value by either setting it to the customer's exact degree of WTP, or by applying a margin on top of the WTA calculated in previous step. To ensure that the seller does not offer options for a negative revenue --- which could be the case when he expects a decrease in airfare --- also a minimum price is set. All calculated option prices that fall below this set minimum price will be raised to this level. After computing the option price, the customer then gets offered the option at this fare.
+\item[Calculate the price of the option] Step number four will calculate the price at which the option will be offered to the passenger. This simulation will calculate this value by applying a margin on top of the WTA calculated in previous step. To ensure that the seller does not offer options for a negative revenue --- which could be the case when he expects a decrease in airfare --- also a minimum price is set. All calculated option prices that fall below this set minimum price will be raised to this level. After computing the option price, the customer then gets offered the option at this fare.
 
 \item[Acceptance of the offer] The next step will determine whether the customer will accept the airfare~lock-in product offer. This is done by comparing the customer's WTP and the offered option price. When the Willingness To Pay of the customer for a certain flight is higher than the option price calculated in prior process, a customer will accept the offer (i.e. $\text{WTP} \ge p_O$).
 
-\item[Exercising the option] The second-last step in the simulation process will determine whether the customer will actually exercise his option at the date of maturity. To do so, the model will first `wait' $m$~days, and check the observed ticket price. A customer will only exercise its right when this observed airfare is higher than the strike price of the option, $p_S$. Furthermore, the passenger will only use the option when he has decided to fly. When both of these rules apply to a certain customer, he will thus make use of his lock-in product, and let the seller buy the flight ticket for him.
+\item[Exercising the option] The second-last step in the simulation process will determine whether the customer will actually exercise his option at the date of maturity. To do so, the model will first `wait' $m$~days, and check the observed ticket price. A customer will only exercise her right when this observed airfare is higher than the strike price of the option, $S$. Furthermore, the passenger will only use the option when he has decided to fly. When both of these rules apply to a certain customer, he will thus make use of his lock-in product, and let the seller buy the flight ticket for him. The passenger's decision tree associated with this choice is given in \autoref{fig:exercise_option}.
 
-\todo{decision tree}
+\insertfigure{exercise_option}{Passenger's exercise decision tree}
 
-\item[Calculate generated outcomes] The final step in the model will calculate the outcomes of each sold option. When the customer does not exercise his option on the date of maturity, the seller will gain the full price at which he has sold the option in profits. When the passenger actually does exercise his right, the profits or losses gained from selling the option can be defined as:
-$$ y = p_O - (p_S - p_m) $$
+\item[Calculate generated outcomes] The final step in the model will calculate the outcomes of each sold option. When the customer does not exercise his option on the date of maturity, the seller will gain the full price at which he has sold the option in profits. When the passenger actually does exercise her right, the profits or losses gained from selling the option can be defined as:
+$$ \Pi = p_O - (S - T_m) $$
 \end{description}
 
 Using the method described above, the simulation will be used to compare the performance of the proposed option valuation models. The same procedure will also be used to test the influence of a particular configuration of parameters within a single option valuation model.
 
 
-\subsection{Structure of the model}
-In this research, two different submodels are being considered. The first one --- the \emph{demand submodel} --- is concerned with the option valuation on the customer's side. This submodel calculates the willingness to pay for an option from the perspective of the passenger determining whether to buy the product. The \emph{supply submodel}, on the other hand, computes the willingness to accept from the seller's view.
-
 \section{Customer submodel}
+\label{sec:CustomerSubmodel}
+In this research, two different submodels are being considered; the \emph{customer submodel} and the \emph{seller submodel}. This section will describe the customer model. The next section will concern itself with the definition of the seller submodel.
+
 The customer submodel concerns itself with the calculation of the willingness to pay on the passenger's side of the model. To compute his willingness to pay, the customer uses the following equation:
 
-$$ \mbox{WTP}_c = E[V_c] \times P^f $$
+$$ \mbox{WTP} = E[V_c] \times P^f $$
 
 Where $P^f$ is the customer's likelihood of travelling and $E[V_c]$ is the customer's expectation of the standard option price. In this thesis, \emph{standard option price} refers to the value of an option that a customer would be willing to pay when his $P^f$ is equal to 1.
 
@@ -71,22 +65,22 @@ For the passenger, I will consider two types of rational expectations:
 \paragraph{Strong-form rational expectation (used in benchmark)}
 In the strong-form case, the customer will base his expectations based upon the actual price changes as seen in the future:
 
-$$ E[F_m] = F_m \times \epsilon$$
+$$ E[T_m] = T_m \times \epsilon$$
 
 The random error in the equation will be drawn from a normal distribution with mean 0 and a specified standard deviation:
 $$ \epsilon \sim \mathcal{N} (0, \sigma^2) $$
 
 A higher standard deviation will thus lower the accuracy of the passenger's expectations. For illustration, the connection can be observed in the relation between this error term and the $\mbox{MAPE}$. A detailed description of this relation is provided in \autoref{app:errorMAPE}.
 
-The resulting prediction $E[F_m]$ will be a point estimate which represents the expected future airfare according to the customer. To compute his standard option price, the passenger will subtract the current ticket price from the acquired point estimate:
+The resulting prediction $E[T_m]$ will be a point estimate which represents the expected future airfare according to the customer. To compute his standard option price, the passenger will subtract the current ticket price from the acquired point estimate:
 
-$$ E[V_c] = E[F_m] - F_0$$
+$$ E[V_c] = E[T_m] - T_0$$
 
 
 \paragraph{Weak-form rational expectation}
 When applying the weak-form case of rational expectation, the customer will base his expectations upon the historically observed changes:
 
-$$ E[F_m] = (E[F_m] | I_0) \times \epsilon $$
+$$ E[T_m] = (E[T_m] | I_0) \times \epsilon $$
 
 Where $I_0$ represents the historical distribution of price changes of the current route.
 
@@ -94,10 +88,10 @@ Like in the strong-form RE, the random error term in the above equation will be 
 
 From the historical distribution, this form of rational expectation will construct an expected distribution of price changes of the current airfare. Next, the expected distribution of fluctuations is used to calculate the anticipated ticket price at the option's date of maturity:
 
-$$ E[F_m] | I_0 = \sum |F_m \times P[F_m]| $$
+$$ E[T_m] | I_0 = \sum |T_m \times P[T_m]| $$
 
 The customer's standard option price is then computed by subtracting the current airfare from the expected future fee:
-$$ E[V_c] = E[F_m] - F_0 $$
+$$ E[V_c] = E[T_m] - T_0 $$
 
 For the benchmark, the simulation assumes that the customer will base his expectations using the \emph{weak-form rational expectation} method. After the computation of the passenger's standard option price, his willingness to pay has to be determined using his probability of flying.
 
@@ -110,7 +104,7 @@ Every customer thus has his own random value of $P^f$. The model assumes the cus
 
 As stated in previous section, the customer will accept the option if his willingness to pay is greater than or equal to the offer he receives from the seller:
 
-$$ \mbox{WTP}_c \ge V_s $$
+$$ \mbox{WTP} \ge V_s $$
 
 The methodology for how the seller sets the price of the option, $V_s$, is described in detail in \todo{ref}.
 
@@ -129,13 +123,13 @@ Due to this property, the passenger will thus always receive information on the 
 
 After the Bernoulli trial, the customer will have to decide whether he will exercise his option. This is the case when the following applies:
 \begin{compactitem}
-    \item the ticket price on the option's date of maturity is lower than the strike price, ($p_S < F_m$) and
+    \item the ticket price on the option's date of maturity is lower than the strike price, ($S < T_m$) and
     \item the customer \emph{does} want to make use of the flight.
 \end{compactitem}
 
 He will thus \emph{not} exercise his option when:
 \begin{compactitem}
-    \item the ticket fee on the option's date of maturity is higher than the strike price ($p_S > F_m$), or
+    \item the ticket fee on the option's date of maturity is higher than the strike price ($S > T_m$), or
     \item the customer does \emph{not} want to make use of the flight.
 \end{compactitem}
 
@@ -143,18 +137,19 @@ He will thus \emph{not} exercise his option when:
 
 
 \section{Seller submodel}
+\label{sec:sellerSubmodel}
 Like the customer submodel, the seller submodel concerns itself with determining acceptable option prices. However, this model computes the prices from the perspective of the seller. This thus means that instead of calculating a willingness to \emph{pay}, the supply submodel tries to determine the best willingness to \emph{accept}. It does so by using the following equation:
 
-$$ WTA_s = \max(V_{min} \times F_0, E[V_s] \times M) $$
+$$ \mbox{WTA} = \max(V_{min} \times T_0, E[V_s] \times M) $$
 
-Where $V_{min}$ is the minimum option price in percentages of current airfare, $F_0$ is the current airfare, $E[V_s]$ is the expected standard options price according to the seller, and $M$ is the margin.
+Where $V_{min}$ is the minimum option price in percentages of current airfare, $T_0$ is the current airfare, $E[V_s]$ is the expected standard options price according to the seller, and $M$ is the applied margin.
 
 The first part of the equations ensures that there is always set an option price higher than zero. This is to prevent situations from happening where the seller thinks the airfare will go down at the date of maturity, and asks a negative option price (i.e. he would offer the customer money for buying the customer). This is of course an undesirable effect which is averted by setting a minimum price relative to the current airfare.
 
 To calculate the expected option price, the seller can also make use of three different prediction methods.
 
 \paragraph{Perfect foresight (used in benchmark)}
-In the simulation where the seller has perfect foresight, it can 100\,\% accurately predict price changes of a flight. Though this is not a realistic assumption for a real-world setting, it gives valuable insights and will be used as an `optimal' benchmark to compare the other simulation models with.
+In the simulation where the seller has perfect foresight, it can $100\,\%$ accurately predict price changes of a flight. Though this is not a realistic assumption for a real-world setting, it gives valuable insights and will be used as an `optimal' benchmark to compare the other simulation models with.
 
 \paragraph{Strong-form rational expectation}
 The strong-form rational expectation model uses the same underlying technique as the strong-form case of the customer's prediction method. This model is being used as a `black box' to represent a relatively accurate prediction system implemented by a company. While there is too limited time and resources in this research to actually develop such a forecasting model, research has shown that accurate models can be developed (\todo{ref}). In this simulation the model thus assumes such a prediction model has been developed and implemented.
@@ -167,11 +162,11 @@ The last forecasting method of the seller to determine its preferred option pric
 \paragraph{Seller knows exact level of $P^F$ of customer}
 Next to these different forecasting methods the seller uses, the company also has complete information on each individual customer's likelihood of travelling ($P^f$). This allows the seller to make precise estimates of the expected payout of the passengers. This will thus enable the option writer to set the option prices accordingly.
 
-For example, when a customer has a $P^f$ of $0.70$, and the seller knows the prices will increase with $\mbox{US\,\$} 10$, he can set the option price to a minimum of $\mbox{US\,\$} 7.0$ ($= 0.70 \times 10$). This is because the company knows that \emph{on average}, it only has to pay out $\mbox{US\,\$} 10$ in $70\,\%$ of the cases. This is the minimum willingness to accept of the seller.
+For example, when a customer has a $P^f$ of $0.70$, and the seller knows the prices will increase with US\$\,10, he can set the option price to a minimum of US\$\,7.0 ($= 0.70 \times 10$). This is because the company knows that \emph{on average}, it only has to pay out US\$\,10 in $70\,\%$ of the cases. This is the minimum willingness to accept of the seller.
 
-The seller computes the option price he offers to the customer by multiplying the previously described percentage of expected payout by a specific margin. To ensure no options for under zero US\$ will be sold, the seller sets his minimum willingness to accept to 1 (as WTA is defined relative to the current ticket price $F_0$).
+The seller computes the option price he offers to the customer by multiplying the previously described percentage of expected payout by a specific margin. To ensure no options for under US\$\,0 will be sold, the seller sets his minimum willingness to accept to 1 (as WTA is defined relative to the current ticket price $T_0$).
 
-$$ V_s = (1 + \min(\mbox{WTA}, 1) \times r) $$
+$$ V_s = (1 + \min(\mbox{WTA}, 1) \times M) $$
 
 In the current configuration with the seller with perfect information, the margin can be seen as the part of the equation that will yield profits for the seller. The cases further in this chapter --- in which the seller does not know the exact level of price movements --- the margin will also serve as a technique to reduce losses resulted by underestimation of future fare changes due to forecasting errors.
 

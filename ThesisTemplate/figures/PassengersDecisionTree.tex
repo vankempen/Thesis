@@ -11,7 +11,7 @@
                 node[above] {$1 - P^f$}
             }
             child {
-                node {$p_O$}
+                node {$p_O + S$}
                 edge from parent
                 node[above] {$P^f$}
             }
@@ -26,7 +26,7 @@
                 node[above] {$1 - P^f$}
             }
             child {
-                node {$p_E - p_I$}
+                node {$T_m$}
                 edge from parent
                 node[above] {$P^f$}
             }
@@ -34,18 +34,8 @@
         node[above] {wait}
     }
     child {
-        node[bag] {}
-       		child {
-                node {$p_I$}
-                edge from parent
-                node[above] {$1 - P^f$}
-            }
-            child {
-                node {$0$}
-                edge from parent
-                node[above] {$P^f$}
-            }
-        edge from parent
+       node {$T_0$}
+       edge from parent
         node[above] {buy flight}
     };
 
@@ -54,8 +44,8 @@
 \begin{tabular}{clcl}
 \hline \\
 $P^f$ & Probability of flying &
-$p_I$ & Initial airfare \\
-$p_E$ & Expected airfare &
+$S$ & Strike price \\
+$T_m$ & Future airfare &
 $p_O$ & Option price
 \end{tabular}
 };

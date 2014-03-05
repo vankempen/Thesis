@@ -84,12 +84,13 @@ The next few sections will give a more detailed analysis of the outcomes of the 
 
 \section{Base model setup}
 In \autoref{chap:ModelDevelopment} I have explained the different configurations that the different entities can take. To limit the total number of possible configurations, I have defined a base model that will be used throughout the simulation runs. This base model fixates some of the parameters used in the models, and are left unchanged throughout the rest of this chapter. \autoref{tbl:ConfigBaseModel} shows an overviews of these variables.
-
+\todo{customer accepts ticket WTP}
  \begin{table} \centering
     \begin{tabular}{l  r}
     \toprule
     Parameter      &  Value \\
     \midrule
+    Strike price is initial airfare  &  $S = T_0$ \\
     Passenger's likelihood of travelling  &  $\sim \mbox{Unif}(0, 1)$  \\
     Arrival rate of passengers   &  $\sim \mbox{Pois}(\lambda=1)$ \\
     Maturity time of option      &  3~days \\
