@@ -39,7 +39,6 @@ The simulation model in this thesis uses many different configurations for the o
 
 \item[Exercising the option] The second-last step in the simulation process will determine whether the customer will actually exercise his option at the date of maturity. To do so, the model will first `wait' $m$~days, and check the observed ticket price. A customer will only exercise her right when this observed airfare is higher than the strike price of the option, $S$. Furthermore, the passenger will only use the option when he has decided to fly. When both of these rules apply to a certain customer, he will thus make use of his lock-in product, and let the seller buy the flight ticket for him. The passenger's decision tree associated with this choice is given in \autoref{fig:exercise_option}.
 
-\insertfigure{exercise_option}{Passenger's exercise decision tree}
 
 \item[Calculate generated outcomes] The final step in the model will calculate the outcomes of each sold option. When the customer does not exercise his option on the date of maturity, the seller will gain the full price at which he has sold the option in profits. When the passenger actually does exercise her right, the profits or losses gained from selling the option can be defined as:
 $$ \Pi = p_O - (S - T_m) $$
@@ -54,21 +53,19 @@ In this research, two different submodels are being considered; the \emph{custom
 
 The customer submodel concerns itself with the calculation of the willingness to pay on the passenger's side of the model. To compute his willingness to pay, the customer uses the following equation:
 
-$$ \mbox{WTP} = E[V_c] \times P^f $$
+$$ \mbox{WTP} = V_c \times P^f $$
 
-Where $P^f$ is the customer's likelihood of travelling and $E[V_c]$ is the customer's expectation of the standard option price. In this thesis, \emph{standard option price} refers to the value of an option that a customer would be willing to pay when his $P^f$ is equal to 1.
+Where $P^f$ is the customer's likelihood of travelling and $V_c$ is the customer's expectation of the standard option price. In this thesis, \emph{standard option price} refers to the value of an option that a customer would be willing to pay when his $P^f$ is equal to 1.
 
-The customer's expectation of the option price is calculated using a specific prediction method. In this research, the customer will base these forecasts on his \emph{rational expectations} (RE) of ticket price movements. This type of prediction method was first introduced by \citeA{muth1961rational}, and later generalized to also include more cases by \citeA{arrow1962economic}. The expectations generated from the RE-model assume that the entity makes rational predictions based upon all the information he has, plus a random \emph{error term}. In the strong case, the RE-model assumes the entity's predicted values are the actual observed prices plus a random fluctuation. The weak case, however, assumes the customer will base his forecasts only on available (historical) information, $I_0$. Because this information might differ from the actual observed values, this method is expected to be less accurate.
+The customer's expectation of the option price is calculated using a specific prediction method. In this research, the customer will base these forecasts on his \emph{rational expectations} (RE) of ticket price movements. This type of prediction method was first introduced by \citeA{muth1961rational}, and later generalized to also include more cases by \citeA{arrow1962economic}. The expectations generated from the RE-model assume that the entity makes rational predictions based upon all the information he has, plus a random \emph{error term}. In the strong case, the RE-model assumes the entity's predicted values are the actual observed prices plus a random fluctuation. The weak case, however, assumes the customer will base his forecasts only on available (historical) information, $I_0$. Because this information might differ from the actual observed values, this method is expected to be less accurate. A more detailed description of these two forms of expectations is given below.
 
-For the passenger, I will consider two types of rational expectations:
-
-\paragraph{Strong-form rational expectation (used in benchmark)}
-In the strong-form case, the customer will base his expectations based upon the actual price changes as seen in the future:
+\paragraph{1. Strong-form rational expectation (used in benchmark)}
+In the strong-form case, the customer will base her expectations (i.e. $E[T_m]$) upon the actual price changes as seen in the future (i.e. $T_m$):
 
 $$ E[T_m] = T_m \times \epsilon$$
 
-The random error in the equation will be drawn from a normal distribution with mean 0 and a specified standard deviation:
-$$ \epsilon \sim \mathcal{N} (0, \sigma^2) $$
+The random error in the equation will be drawn from a normal distribution with mean 1 and a specified standard deviation:
+$$ \epsilon \sim \mathcal{N} (1, \sigma^2) $$
 
 A higher standard deviation will thus lower the accuracy of the passenger's expectations. For illustration, the connection can be observed in the relation between this error term and the $\mbox{MAPE}$. A detailed description of this relation is provided in \autoref{app:errorMAPE}.
 
@@ -77,40 +74,39 @@ The resulting prediction $E[T_m]$ will be a point estimate which represents the 
 $$ E[V_c] = E[T_m] - T_0$$
 
 
-\paragraph{Weak-form rational expectation}
-When applying the weak-form case of rational expectation, the customer will base his expectations upon the historically observed changes:
+\paragraph{2. Weak-form rational expectation}
+When applying the weak-form case of rational expectation, the customer will base her expectations upon the historically observed changes:
 
 $$ E[T_m] = (E[T_m] | I_0) \times \epsilon $$
 
-Where $I_0$ represents the historical distribution of price changes of the current route.
+Where $I_0$ represents the historical distribution of price ticket changes of the current route. In this thesis I thus assume the customer has on average the availability over this correct historical distribution.
 
-Like in the strong-form RE, the random error term in the above equation will be drawn from a normal distribution with mean zero and a standard deviation. A higher standard deviation also results in lower accuracy of the passenger's predictions.
+Like in the strong-form RE, the random error term in the above equation will be drawn from a normal distribution with mean one and a standard deviation. A higher standard deviation also results in lower accuracy of the passenger's predictions.
 
 From the historical distribution, this form of rational expectation will construct an expected distribution of price changes of the current airfare. Next, the expected distribution of fluctuations is used to calculate the anticipated ticket price at the option's date of maturity:
 
 $$ E[T_m] | I_0 = \sum |T_m \times P[T_m]| $$
 
 The customer's standard option price is then computed by subtracting the current airfare from the expected future fee:
-$$ E[V_c] = E[T_m] - T_0 $$
+$$ V_c = E[T_m] - T_0 $$
 
-For the benchmark, the simulation assumes that the customer will base his expectations using the \emph{weak-form rational expectation} method. After the computation of the passenger's standard option price, his willingness to pay has to be determined using his probability of flying.
+For the benchmark, the simulation assumes that the customer will base his expectations using the \emph{strong-form rational expectation} method. After the computation of the passenger's standard option price, his willingness to pay has to be determined using his probability of flying.
 
 \paragraph{Passenger's likelihood of travelling}
 The passenger's likelihood of travelling gives the probability that he will decide to fly when his option matures. Each passenger's $P^f$ is being simulated by drawing a random value from a uniform distribution between zero and one:
 
 $$ P^f \sim \mbox{Unif}(0, 1)$$
 
-Every customer thus has his own random value of $P^f$. The model assumes the customer knows the \emph{exact} level of this probability, and acts accordingly. As shown in \todo{ref}, this probability of flying influences the passenger's willingness to pay of an option linearly; a low $P^f$ results in a low likelihood of actually having to use the option, while a high probability leads to a higher likelihood of having to exercise the product at maturity. The customer's willingness to pay for an option thus is the standard option price times this probability.
+Every customer thus has his own random value of $P^f$. The model assumes the customer knows the \emph{exact} level of this probability, and acts accordingly. As shown at the beginning of this section, this probability of flying influences the passenger's willingness to pay of an option linearly; a low $P^f$ results in a low likelihood of actually having to use the option, while a high probability leads to a higher likelihood of having to exercise the product at maturity. The customer's willingness to pay for an option thus is the standard option price times this probability.
 
-As stated in previous section, the customer will accept the option if his willingness to pay is greater than or equal to the offer he receives from the seller:
+Next, the customer will only accept the option if his willingness to pay is greater than the offer he receives from the seller:
 
-$$ \mbox{WTP} \ge V_s $$
+$$ \mbox{WTP} \ge \mbox{WTA} $$
 
-The methodology for how the seller sets the price of the option, $V_s$, is described in detail in \todo{ref}.
+The methodology for how the seller sets the price of the option $\mbox{WTA}$ is described in detail in \autoref{sec:sellerSubmodel}.
 
-As can be reduced from the equation for calculating the WTP, this simulation model assumes \emph{risk neutral} customers. However, research has shown this is unlikely the case as real option buyers tend to be risk averse (see for example \cite{miller2004empirical}). As risk aversion leads to a higher willingness to pay, the results yielded from this simulation will probably be lower. The inclusion of risk neutrality is a conservative assumption, but allows for a more simplistic model. Also, when future research decides to implement risk averse buyers in the model, the results will mainly be better; if the concept yields positive results in a risk neutral setting, it will most likely do so as well in a risk averse scene.
 
-\paragraph{Exercise of the option}
+\subsection{Exercise of the option}
 On the date of maturity, a Bernoulli trial will be run to determine whether the customer will actually fly. When the outcome of the trial is $0$, the customer has decided to \emph{not} travel and thus make no use of the option. When the outcome of the trial is $1$, the customer has decided that he will make use of the flight.
 
 \begin{equation}
@@ -119,70 +115,81 @@ On the date of maturity, a Bernoulli trial will be run to determine whether the 
     \mbox{don't fly}, & \mbox{if } 0 \end{cases}
 \end{equation}
 
-Due to this property, the passenger will thus always receive information on the date of maturity on whether he will fly.
+Due to this property, the passenger will thus always receive information on the date of maturity on whether she will fly.
 
-After the Bernoulli trial, the customer will have to decide whether he will exercise his option. This is the case when the following applies:
+After the Bernoulli trial, the customer will have to decide whether she will exercise his option. This is the case when the following applies:
 \begin{compactitem}
-    \item the ticket price on the option's date of maturity is lower than the strike price, ($S < T_m$) and
+    \item the ticket price on the option's date of maturity is greater than the strike price, ($T_m > S$) and
     \item the customer \emph{does} want to make use of the flight.
 \end{compactitem}
+\vspace{1em}
 
+\noindent
 He will thus \emph{not} exercise his option when:
 \begin{compactitem}
-    \item the ticket fee on the option's date of maturity is higher than the strike price ($S > T_m$), or
+    \item the ticket fee on the option's date of maturity is littler than the strike price ($T_m \le S$), or
     \item the customer does \emph{not} want to make use of the flight.
 \end{compactitem}
+\vspace{1em}
 
-\todo{tree}
+The customer's decision tree associated with this choice is provided in \autoref{fig:exercise_option}.
+
+\insertfigure{exercise_option}{Passenger's exercise decision tree}
+
+
 
 
 \section{Seller submodel}
 \label{sec:sellerSubmodel}
-Like the customer submodel, the seller submodel concerns itself with determining acceptable option prices. However, this model computes the prices from the perspective of the seller. This thus means that instead of calculating a willingness to \emph{pay}, the supply submodel tries to determine the best willingness to \emph{accept}. It does so by using the following equation:
+Like the customer submodel, the seller submodel concerns itself with determining acceptable option prices. However, this model computes the prices from the perspective of the seller. This thus means that instead of calculating a willingness to \emph{pay}, the seller submodel tries to determine the best willingness to \emph{accept}. It does so by using the following equation:
 
-$$ \mbox{WTA} = \max(V_{min} \times T_0, E[V_s] \times M) $$
+$$ \mbox{WTA} = \max(0, V_s \times M) $$
 
-Where $V_{min}$ is the minimum option price in percentages of current airfare, $T_0$ is the current airfare, $E[V_s]$ is the expected standard options price according to the seller, and $M$ is the applied margin.
+Where $V_s$ is the expected standard options price according to the seller, and $M$ is the applied margin. In the benchmark configuration simulating a seller with perfect information, this margin can be seen as the part of the equation that will yield profits for the seller. The other two~cases used in this thesis --- in which the seller does not know the exact level of price movements --- the margin will also serve as a technique to reduce losses resulted by underestimation of future fare changes due to forecasting errors. The best level of this margin that will result in the optimization of total profits yielded by this simulation will be evaluated in \autoref{chap:Results}.
 
-The first part of the equations ensures that there is always set an option price higher than zero. This is to prevent situations from happening where the seller thinks the airfare will go down at the date of maturity, and asks a negative option price (i.e. he would offer the customer money for buying the customer). This is of course an undesirable effect which is averted by setting a minimum price relative to the current airfare.
 
-To calculate the expected option price, the seller can also make use of three different prediction methods.
+The first part of the equation above ensures that there is always set an option price of at least zero. This is to prevent situations from happening where the seller thinks the airfare will go down at the date of maturity, and asks a negative option price (i.e. he would offer the customer money for buying the airfare lock-in product). This is of course an undesirable effect which is averted by setting a minimum price of zero.
 
-\paragraph{Perfect foresight (used in benchmark)}
+
+To calculate the standard option price $V_s$, the seller can also make use of three~different prediction methods.
+
+\paragraph{1. Perfect foresight (used in benchmark)}
 In the simulation where the seller has perfect foresight, it can $100\,\%$ accurately predict price changes of a flight. Though this is not a realistic assumption for a real-world setting, it gives valuable insights and will be used as an `optimal' benchmark to compare the other simulation models with.
 
-\paragraph{Strong-form rational expectation}
-The strong-form rational expectation model uses the same underlying technique as the strong-form case of the customer's prediction method. This model is being used as a `black box' to represent a relatively accurate prediction system implemented by a company. While there is too limited time and resources in this research to actually develop such a forecasting model, research has shown that accurate models can be developed (\todo{ref}). In this simulation the model thus assumes such a prediction model has been developed and implemented.
+\paragraph{2. Strong-form rational expectation}
+The strong-form rational expectation model uses the same underlying technique as the strong-form case of the customer's prediction method. This model is being used as a `black box' to represent a relatively accurate prediction system implemented by a company. While there are too limited time and resources available to this research to actually develop such a forecasting model, research has shown that accurate models can be developed (see \autoref{sec:PredictabilityOfAirfares} for a brief literature review on this topic). In this simulation the model thus assumes such a prediction model has been developed and implemented.
 
-\paragraph{Monte Carlo}
+\paragraph{3. Monte Carlo simulation}
 The last forecasting method of the seller to determine its preferred option prices makes use of the Monte Carlo method. This is a practical forecasting model that can be easily implemented in a realistic setting. The model only uses historically available information obtained from the training set, so any predictions made in this model could also have been made when the test set was not available yet. When this model will yield positive results, it shows that even with a simplistic model the airfare~lock-in product business model could be viable.
 
 
 
-\paragraph{Seller knows exact level of $P^F$ of customer}
-Next to these different forecasting methods the seller uses, the company also has complete information on each individual customer's likelihood of travelling ($P^f$). This allows the seller to make precise estimates of the expected payout of the passengers. This will thus enable the option writer to set the option prices accordingly.
+\subsection{Seller knows exact probability of flying of customer}
+Next to these different forecasting methods the seller uses, the company also has complete information on each individual customer's likelihood of travelling ($P^f$). This allows the seller to make precise estimates of the expected payout to the passengers. It will thus enable the option writer to set the option prices accordingly.
 
-For example, when a customer has a $P^f$ of $0.70$, and the seller knows the prices will increase with US\$\,10, he can set the option price to a minimum of US\$\,7.0 ($= 0.70 \times 10$). This is because the company knows that \emph{on average}, it only has to pay out US\$\,10 in $70\,\%$ of the cases. This is the minimum willingness to accept of the seller.
+For example, when a customer has a $P^f$ of $0.70$, and the seller knows the prices will increase with US\$\,10, he can set the option price to a minimum of US\$\,7.0. This is because the company knows that \emph{on average} it only has to pay out US\$\,10 in $70\,\%$ of the cases. This is the minimum willingness to accept of the seller.
 
-The seller computes the option price he offers to the customer by multiplying the previously described percentage of expected payout by a specific margin. To ensure no options for under US\$\,0 will be sold, the seller sets his minimum willingness to accept to 1 (as WTA is defined relative to the current ticket price $T_0$).
-
-$$ V_s = (1 + \min(\mbox{WTA}, 1) \times M) $$
-
-In the current configuration with the seller with perfect information, the margin can be seen as the part of the equation that will yield profits for the seller. The cases further in this chapter --- in which the seller does not know the exact level of price movements --- the margin will also serve as a technique to reduce losses resulted by underestimation of future fare changes due to forecasting errors.
-
-The best level of margin that will result in the optimization of total profits yielded by this simulation will be evaluated in later this section.
+The fact that the seller is able to determine the customer's likelihood of travelling is an important concept in this model. When the option seller would not be able to do so, he would have difficulties setting prices at which the customer accepts without under- or overestimating her WTP. Determining the exact level of this parameter $P^f$ is beyond the scope of this research, but \citeA{courty2000sequential} give an explanation of how to set up a self-selecting mechanism for passengers so they reveal this information. See \autoref{subsec:AviationIndustry} for a description of this topic.
 
 
 
 \section{General characteristics of the simulation model}
 Next to the parameters defined in the two submodels, the simulation model itself also has some characteristics defined.
 
-\parameter{arrival rate of passengers \hfill $\sim Poisson(1)$}
-To determine the performance of the model this simulation will generate passengers. A passenger will arrive following a Poisson distribution with $\lambda = 1$. This thus implies that, on average, a single customer arrives for each day prior to departure for every flight.
+\subsection{Arrival rate of passengers}
+To determine the performance of the model, this simulation will generate passengers. A passenger will arrive following a homogeneous Poisson distribution with an arrival rate equal to one per day for each day prior to departure for every flight:
 
-\parameter{number of trials \hfill (N=20)}
+$$ \sim \mbox{Poisson}(\lambda = 1) $$
+
+This thus implies that on average a single customer arrives at every possibility in the simulation model.
+
+
+\subsection{Number of trials}
 Because pseudo random generation of numbers and probabilities are used in this model, there is a possibility of generating outliers in only a single run. To prevent such scenarios from happening, every simulation is run a number of times. The acquired data from these multiple trials is then averaged to get the converged mean.
 
-A tests showed that the results converged to a mean at around 10~simulation runs. The rest of the simulations will therefore use a minimum of 20~trials before evaluating the results.
+A tests showed that the results converged to a mean at around 10~simulation runs. To be safe, the rest of the simulations will therefore use a minimum of 20~trials before evaluating the results.
 
-Lastly, to be able to compare the models even beter amongs themselves, the same random seed is set prior to running each simulation. This ensures the routes will receive the same `randomly' generated input for passenger arrival, error, et cetera.
+Lastly, to be able to compare the models even better amongst themselves, the same random seed is set prior to running each simulation. This ensures the routes will receive the same `randomly' generated input for passenger arrival, error term, and so forth.
+
+
+
