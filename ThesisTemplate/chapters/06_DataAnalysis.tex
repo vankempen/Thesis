@@ -5,9 +5,9 @@ This chapter will engage in the analysis of the acquired flight data from Google
 \section{Data description and cleansing}
 Flight ticket prices were collected for a period of 42~days ranging from the $9^{th}$ of July till the $29^{th}$ of September. During this data collection phase, airfares on the 22~routes described in \autoref{app:SelectedRoutes} were gathered on flights departing from the $20^{th}$ of August till the $30^{th}$ of September. In these 12~weeks, 158,410~files were requested from Google~Flights' RPC-servers, which resulted in a set of almost 18~gigabytes of JSON~data. Fifteen of these requests failed at the first try, and had to be downloaded again one quarter of an hour later. Of these retries, the automated script also failed to download 2~files at the second request. These failures were the request made on the $20^{th}$ of September at 00:00 GMT+2 for flights departing from JFK to LHR on the $25^{th}$ of September and the request made on the $26^{th}$ of July at 00:00 GMT+2 for flights departing from LHR to LAX on the $1^{st}$ of July. Due to the methodology applied by this research, in which 4~daily time windows are aggregated into a single value, these 2~failures did not create any gaps of missing values in the final data matrix.
 
-After retrieval of the data all the JSON-files were parsed for airfares of flights. As stated in \autoref{subsec:FlightTicket}, this research only includes single-legged round~trip flights between the defined 22~routes between outbound and inbound airport. The parsing of the files resulted in a matrix with rows containing a flight's fare history in 6~hour time windows. These windows were then converted into daily observed airfares. The conversion into daily values resulted in a database containing 462,662 unique flights which included 12,865,953 airfare observations. Due to Google Flights' nature of returning a limited set of airfares for each request, some flights did contain gaps of missing values within their data. In alignment with the study by \citeA{groves2013agent}, this paper therefore excludes flights for which less than $\frac{2}{3}$ of the possible airfare observations are available. So, because there are a total of 42~observations days prior to each flight, tickets that do have fewer points than $42 \times \frac{2}{3} = 28$ available will be excluded from the analysis. Next, because airlines are known to open and close specific price-buckets \cite{mcgill1999revenue}, some gaps were still present in the dataset. These gaps were filled with the data available from observations made in the future. For example, when a particular flight misses a price observation at 35~days before departure, but it does contain the airfare for 34 and 36~days prior to departure, the 35~days' window would be filled with the same value as the 34~days before departure. In reality this would mean that when a customer's option expires, but the ticket is not available on the date of maturity (i.e. no price observation). The customer thus would have to wait till the airline resumes the sale of that flight. He would therefore get the ticket at the price in the future.
+After retrieval of the data all the JSON-files were parsed for airfares of flights. As stated in \autoref{subsec:FlightTicket}, this research only includes single-legged round~trip flights between the defined 22~routes between outbound and inbound airport. The parsing of the files resulted in a matrix with rows containing a flight's fare history in 6~hour time windows. These windows were then converted into daily observed airfares. The conversion into daily values resulted in a database containing 462,662 unique flights which included 12,865,953 airfare observations. Due to Google Flights' nature of returning a limited set of airfares for each request, some flights did contain gaps of missing values within their data. In alignment with the study by \citeA{groves2013agent}, this paper therefore excludes flights for which less than $\frac{2}{3}$ of the possible airfare observations are available. So, because there are a total of 42~observations days prior to each flight, tickets that do have fewer points than $42 \times \frac{2}{3} = 28$ available will be excluded from the analysis. Next, because airlines are known to open and close specific price-buckets \cite{mcgill1999revenue}, some gaps were still present in the dataset. These gaps were filled with the data available from observations made in the future. For example, when a particular flight misses a price observation at 35~days before departure, but it does contain the airfare for 34 and 36~days prior to departure, the 35~days' window would be filled with the same value as the 34~days before departure. In reality this would mean that when a customer's option expires, but the ticket is not available on the date of maturity (i.e. no price observation). The customer thus would have to wait till the airline resumes the sale of that flight. She would therefore get the ticket at the price in the future.
 
-Missing data at for the last (few) days prior to departure are considered to be the sold-outs of a flight. Because Google Flights' also offers Business and First class tickets, this implies that all the seats are completely sold-out, and there is no possibility of still buying the ticket. This means that when a customer's option expires on such a ticket and he wishes to exercise it, an alternative flight has to be offered. To prevent such situations from happening, these missing data on sold-out flights is filled with a penalty similar to the technique used by \citeA{etzioni03}. By introducing such a penalty, the option valuation model is triggered into trying not to offer options when the probability of sell-out is high. Instead of the \$300,000 proposed by the authors, I have chosen to set the penalty at 3 times the average airfare at 1~day before departure. This is more realistic in a sense that the customer could be offered an alternative flight that leaves on the same day plus some extra form of monetary compensation. Furthermore this lower fill-value prevents penalties from biasing the airfares closer to departure.
+Missing data at for the last (few) days prior to departure are considered to be the sold-outs of a flight. Because Google Flights' also offers Business and First class tickets, this implies that all the seats are completely sold-out, and there is no possibility of still buying the ticket. This means that when a customer's option expires on such a ticket and she wishes to exercise it, an alternative flight has to be offered. To prevent such situations from happening, these missing data on sold-out flights is filled with a penalty similar to the technique used by \citeA{etzioni03}. By introducing such a penalty, the option valuation model is triggered into trying not to offer options when the probability of sell-out is high. Instead of the \$300,000 proposed by the authors, I have chosen to set the penalty at 3 times the average airfare at 1~day before departure. This is more realistic in a sense that the customer could be offered an alternative flight that leaves on the same day plus some extra form of monetary compensation. Furthermore this lower fill-value prevents penalties from biasing the airfares closer to departure.
 
 An illustration of this data filling process is given in \autoref{fig:dataFillingOfMissingValues}. Airfares are given as integers representing the price in cents. As can be seen in the figure, the n/a-gaps are filled with the nearest available future price closer to departure. Furthermore, the missing value for the flight with id~\#3 at 1~day before departure is seen as a sold-out ticket. This value is filled with $3 \times \bar{c_1}$, where $\bar{c_1}$ represents the average of the airfares observed at a single day before departure.
 
@@ -57,7 +57,7 @@ $$
 
 \subsection{Outlier analysis}
 \label{subsec:outlierAnalysis}
-After cleansing the dataset, the outlier analysis was performed. First, extreme and invalid prices were identified and removed from the dataset. Google Flights sometimes yielded an impossible airfare for a flight. It is more likely that such values were not prices, but rather codes for the website. For example, when Google Flights does currently not have recent price information on a flight, the ticket price was set at~3. This of course is an impossible price for a flight, even more so considering the prices returned are in cents. To exclude these codes from the dataset, all airfares lower than 1,000~cents were removed from the dataset (i.e. $p_i < 1000$).
+After cleansing the dataset, the outlier analysis was performed. First, extreme and invalid prices were identified and removed from the dataset. The server of Google Flights sometimes yielded an impossible airfare for a flight. It is more likely that such values were not prices, but rather codes for the website. For example, when Google Flights does currently not have recent price information on a flight, the ticket price was set at~3. This of course is an impossible price for a flight, even more so considering the prices returned are in cents. To exclude these codes from the dataset, all airfares lower than 1,000~cents were removed from the dataset (i.e. $p_i < 1000$).
 
 For the next step of the outlier analysis, box plots of the observed ticket prices were generated. These plots are displayed in \autoref{fig:BoxplotsWithOutlierAnalysis}. The whiskers for these plots have been set to 1.5~times the interquartile range.
 
@@ -121,49 +121,13 @@ This section will concern itself with the descriptive analysis of the fare chang
 
 $$ x_t = \frac{p_{t}}{p_{t+1}} $$
 
-The mean, variance, and range of the airfares as well as the price fluctuations are computed on the entire dataset. The results of this analysis are displayed in \autoref{tbl:DescriptiveAnalysisEntireDataset}.
+The mean, variance, and range of the airfares as well as the price fluctuations are computed on the entire dataset. The results of this analysis are displayed in \autoref{tbl:DescriptiveAnalysisEntireDataset} in the appendix.
 
 As can be seen in the table, the range for the ticket prices is quite large. The high maximum ticket price can be explained by the fact that Google Flights also returns prices of first and business~class seats. The website normally returns the fares of the lowest available option. However, when regular economy~class tickets are sold out, the Google Flights will yield the next-lowest fare, which could be an available business~class seat. The low minimum ticket prices can be described by the airliners offering cheap fares at the beginning of the booking period, and some high price~drops at 1~day before departure.
 
 The data also shows that the route CDG to JFK has the highest average ticket price, as well as the largest standard deviation. This is because of the unregular spread seen in fares for flights covering this specific route. While in other routes the observed prices were clustered together with only a few exceptions (i.e. outiers), the flights for the route CDG to JFK seemed to have multiple means. For illustration, \autoref{fig:SpreadOfTicketPrices} gives a comparision of ticket price distribution of this specific route, and the example of the spread of flights leaving from AMS to LHR.
 
 
-\begin{table}
-\centering
-\footnotesize
-\begin{tabular}{c c | c c c c | c c c c}
-\toprule
-\multicolumn{2}{c|}{Airport}  & \multicolumn{4}{c|}{Ticket price} & \multicolumn{4}{c}{Daily changes} \\[.4ex]
-from & to    &  $\mu_{p}$ & $\sigma_{p}$  &  $\min_p$  & $\max_p$  & $\mu_x$ & $\sigma_x$  & $\min_x$  &  $\max_x$ \\
-\midrule
-
-AMS  &  CDG  &   237  &    79  &    98  &   835  &  1.023  &  0.089  &  0.380  &  2.742  \\
-~    &  DXB  &   718  &   165  &   467  &  2205  &  1.010  &  0.065  &  0.631  &  2.656  \\
-~    &  JFK  &  1023  &   334  &   546  &  3975  &  1.012  &  0.074  &  0.431  &  2.985  \\
-~    &  LHR  &   262  &    81  &   128  &   816  &  1.014  &  0.052  &  0.547  &  1.960  \\[.5ex]
-ATL  &  LAX  &   383  &    60  &   251  &   985  &  1.018  &  0.068  &  0.510  &  1.918  \\
-~    &  MCO  &   239  &    47  &    89  &   900  &  1.025  &  0.085  &  0.545  &  1.992  \\[.5ex]
-CDG  &  AMS  &   245  &    81  &    98  &   915  &  1.022  &  0.083  &  0.349  &  2.818  \\
-~    &  LHR  &   231  &    74  &    97  &   780  &  1.013  &  0.084  &  0.358  &  2.265  \\[.5ex]
-DEN  &  FLL  &   193  &    61  &    89  &   546  &  1.013  &  0.066  &  0.680  &  1.711  \\
-~    &  PHX  &   186  &    45  &   103  &  1101  &  1.017  &  0.069  &  0.397  &  2.837  \\[.5ex]
-DFW  &  LAX  &   312  &    86  &   110  &  2068  &  1.029  &  0.086  &  0.184  &  5.417  \\
-~    &  SFO  &   380  &   124  &   164  &  2018  &  1.030  &  0.107  &  0.283  &  3.934  \\[.5ex]
-JFK  &  CDG  &  2353  &  2177  &   638  &  9164  &  1.017  &  0.104  &  0.203  &  5.949  \\
-~    &  LHR  &  1389  &   959  &   604  &  11498  &  1.037  &  0.179  &  0.136  &  7.304  \\[.5ex]
-LAX  &  LAS  &   205  &    90  &    54  &  1306  &  1.018  &  0.118  &  0.195  &  5.129  \\
-~    &  SFO  &   207  &   112  &    82  &  1332  &  1.027  &  0.129  &  0.164  &  3.791  \\[.5ex]
-LHR  &  AMS  &   255  &    93  &   113  &   996  &  1.015  &  0.052  &  0.501  &  2.082  \\
-~    &  JFK  &  1177  &   831  &   510  &  9565  &  1.022  &  0.160  &  0.118  &  8.745  \\
-~    &  LAX  &  1554  &  1073  &   683  &  8944  &  1.029  &  0.219  &  0.162  &  8.406  \\
-~    &  MAD  &   330  &    90  &   172  &  1141  &  1.012  &  0.060  &  0.366  &  2.335  \\[.5ex]
-ORD  &  BOS  &   245  &    61  &    89  &  1682  &  1.017  &  0.079  &  0.259  &  4.223  \\
-~    &  LGA  &   272  &    49  &    89  &  1219  &  1.018  &  0.067  &  0.388  &  3.186  \\
-\bottomrule
-\end{tabular}
-\caption{Descriptive analysis of entire dataset}
-\label{tbl:DescriptiveAnalysisEntireDataset}
-\end{table}
 
 
 \begin{figure*}
@@ -260,7 +224,7 @@ While the statistical tests clearly show that the training and test dataset on i
 \end{figure*}
 
 
-Because this research will use the averages of the fluctuations to make its predictions in the empirical models, it is not expected that the difference amongst the sets in the individual cases will have a negative impact on the forecasting accuracy of the simulations. The similarities between the sets on an average level, however, are expected to have a positive impact on the results of the simulation models.
+Because this research will use the averages of the fluctuations to make its predictions in the empirical models, it is not expected that the difference between the sets in the individual cases will have a negative impact on the forecasting accuracy of the simulations. The similarities between the sets on an average level, however, are expected to have a positive impact on the results of the simulation models.
 
 \autoref{tbl:StatisicalComparison} in \autoref{app:StatisticalComparisonDatasets} shows the same tests on a route level. Most of the routes show that both the price fluctuations in the training and test set come from the same distribution with a high probability. These flights are expected to perform well in the practical simulation models, as these make their forecasts of the test data by using the data in the training set. For some routes, however, there seems to be a significant difference amongst both sets. These routes include DFW to SFO, JFK to LHR, LAX to LAS, LAX to SFO, LHR to JFK, and LHR to LAX. These routes are expected to perform less in the simulation model based upon Monte-Carlo simulation, as their historical input data does not align the observed price fluctuations.
 

@@ -1,6 +1,6 @@
 \chapter{Model development}
 \label{chap:ModelDevelopment}
-This chapter will discuss the simulation model used for the evaluation of the forecasting techniques. \todo{descr}
+This chapter will discuss the details of simulation models used for the evaluation of the forecasting techniques.
 
 \section{Overview of simulation model}
 \label{sec:SimulationModel}
@@ -27,7 +27,7 @@ Because data have been collected on flights up till 42~days before departure, ea
 
 The implementation of the customer's WTP decision model is explained in detail in \autoref{sec:ModelPassengerBehaviour}, and the exact calculation of this WTP in \autoref{sec:CustomerSubmodel}.
 
-Now that the customer knows his level of WTP, he requests the seller for the price of the option.
+Now that the customer knows his level of WTP, she requests the seller for the price of the option.
 
 \item[Calculate the option seller's WTA] The third step is responsible for the computing the option seller's minimum \emph{Willingness To Accept}. A writer's WTA is the minimum level at which the seller wants to offer options that insure against price risks. When he would offer the airfare~lock-in products at this value, the seller would not expect any returns on the sale. The WTA of the external party is thus calculated using the writer's predictions of how the airfare is expected to change.
 
@@ -37,7 +37,7 @@ The simulation model in this thesis uses many different configurations for the o
 
 \item[Acceptance of the offer] The next step will determine whether the customer will accept the airfare~lock-in product offer. This is done by comparing the customer's WTP and the offered option price. When the Willingness To Pay of the customer for a certain flight is higher than the option price calculated in prior process, a customer will accept the offer (i.e. $\text{WTP} \ge p_O$).
 
-\item[Exercising the option] The second-last step in the simulation process will determine whether the customer will actually exercise his option at the date of maturity. To do so, the model will first `wait' $m$~days, and check the observed ticket price. A customer will only exercise her right when this observed airfare is higher than the strike price of the option, $S$. Furthermore, the passenger will only use the option when he has decided to fly. When both of these rules apply to a certain customer, he will thus make use of his lock-in product, and let the seller buy the flight ticket for him. The passenger's decision tree associated with this choice is given in \autoref{fig:exercise_option}.
+\item[Exercising the option] The second-last step in the simulation process will determine whether the customer will actually exercise his option at the date of maturity. To do so, the model will first `wait' $m$~days, and check the observed ticket price. A customer will only exercise her right when this observed airfare is higher than the strike price of the option, $S$. Furthermore, the passenger will only use the option when she has decided to fly. When both of these rules apply to a certain customer, she will thus make use of her lock-in product, and let the seller buy the flight ticket for her. The passenger's decision tree associated with this choice is given in \autoref{fig:exercise_option}.
 
 
 \item[Calculate generated outcomes] The final step in the model will calculate the outcomes of each sold option. When the customer does not exercise his option on the date of maturity, the seller will gain the full price at which he has sold the option in profits. When the passenger actually does exercise her right, the profits or losses gained from selling the option can be defined as:
@@ -57,7 +57,7 @@ $$ \mbox{WTP} = V_c \times P^f $$
 
 Where $P^f$ is the customer's likelihood of travelling and $V_c$ is the customer's expectation of the standard option price. In this thesis, \emph{standard option price} refers to the value of an option that a customer would be willing to pay when his $P^f$ is equal to 1.
 
-The customer's expectation of the option price is calculated using a specific prediction method. In this research, the customer will base these forecasts on his \emph{rational expectations} (RE) of ticket price movements. This type of prediction method was first introduced by \citeA{muth1961rational}, and later generalized to also include more cases by \citeA{arrow1962economic}. The expectations generated from the RE-model assume that the entity makes rational predictions based upon all the information he has, plus a random \emph{error term}. In the strong case, the RE-model assumes the entity's predicted values are the actual observed prices plus a random fluctuation. The weak case, however, assumes the customer will base his forecasts only on available (historical) information, $I_0$. Because this information might differ from the actual observed values, this method is expected to be less accurate. A more detailed description of these two forms of expectations is given below.
+The customer's expectation of the option price is calculated using a specific prediction method. In this research, the customer will base these forecasts on his \emph{rational expectations} (RE) of ticket price movements. This type of prediction method was first introduced by \citeA{muth1961rational}, and later generalized to also include more cases by \citeA{arrow1962economic}. The expectations generated from the RE-model assume that the entity makes rational predictions based upon all the information she has, plus a random \emph{error term}. In the strong case, the RE-model assumes the entity's predicted values are the actual observed prices plus a random fluctuation. The weak case, however, assumes the customer will base his forecasts only on available (historical) information, $I_0$. Because this information might differ from the actual observed values, this method is expected to be less accurate. A more detailed description of these two forms of expectations is given below.
 
 \paragraph{1. Strong-form rational expectation (used in benchmark)}
 In the strong-form case, the customer will base her expectations (i.e. $E[T_m]$) upon the actual price changes as seen in the future (i.e. $T_m$):
@@ -93,13 +93,13 @@ $$ V_c = E[T_m] - T_0 $$
 For the benchmark, the simulation assumes that the customer will base his expectations using the \emph{strong-form rational expectation} method. After the computation of the passenger's standard option price, his willingness to pay has to be determined using his probability of flying.
 
 \paragraph{Passenger's likelihood of travelling}
-The passenger's likelihood of travelling gives the probability that he will decide to fly when his option matures. Each passenger's $P^f$ is being simulated by drawing a random value from a uniform distribution between zero and one:
+The passenger's likelihood of travelling gives the probability that she will decide to fly when his option matures. Each passenger's $P^f$ is being simulated by drawing a random value from a uniform distribution between zero and one:
 
 $$ P^f \sim \mbox{Unif}(0, 1)$$
 
 Every customer thus has his own random value of $P^f$. The model assumes the customer knows the \emph{exact} level of this probability, and acts accordingly. As shown at the beginning of this section, this probability of flying influences the passenger's willingness to pay of an option linearly; a low $P^f$ results in a low likelihood of actually having to use the option, while a high probability leads to a higher likelihood of having to exercise the product at maturity. The customer's willingness to pay for an option thus is the standard option price times this probability.
 
-Next, the customer will only accept the option if his willingness to pay is greater than the offer he receives from the seller:
+Next, the customer will only accept the option if his willingness to pay is greater than the offer she receives from the seller:
 
 $$ \mbox{WTP} \ge \mbox{WTA} $$
 
@@ -107,7 +107,7 @@ The methodology for how the seller sets the price of the option $\mbox{WTA}$ is 
 
 
 \subsection{Exercise of the option}
-On the date of maturity, a Bernoulli trial will be run to determine whether the customer will actually fly. When the outcome of the trial is $0$, the customer has decided to \emph{not} travel and thus make no use of the option. When the outcome of the trial is $1$, the customer has decided that he will make use of the flight.
+On the date of maturity, a Bernoulli trial will be run to determine whether the customer will actually fly. When the outcome of the trial is $0$, the customer has decided to \emph{not} travel and thus make no use of the option. When the outcome of the trial is $1$, the customer has decided that she will make use of the flight.
 
 \begin{equation}
 \sim \mbox{Bernoulli}(P^f)\begin{cases}
@@ -117,7 +117,7 @@ On the date of maturity, a Bernoulli trial will be run to determine whether the 
 
 Due to this property, the passenger will thus always receive information on the date of maturity on whether she will fly.
 
-After the Bernoulli trial, the customer will have to decide whether she will exercise his option. This is the case when the following applies:
+After the Bernoulli trial, the customer will have to decide whether she will exercise her option. This is the case when the following applies:
 \begin{compactitem}
     \item the ticket price on the option's date of maturity is greater than the strike price, ($T_m > S$) and
     \item the customer \emph{does} want to make use of the flight.
@@ -125,7 +125,7 @@ After the Bernoulli trial, the customer will have to decide whether she will exe
 \vspace{1em}
 
 \noindent
-He will thus \emph{not} exercise his option when:
+She will thus \emph{not} exercise her option when:
 \begin{compactitem}
     \item the ticket fee on the option's date of maturity is littler than the strike price ($T_m \le S$), or
     \item the customer does \emph{not} want to make use of the flight.

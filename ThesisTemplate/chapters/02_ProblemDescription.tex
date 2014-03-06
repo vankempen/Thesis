@@ -66,7 +66,7 @@ To limit the scope of this research, I only use a specific set of flights that s
 
 Each ticket also has a certain price. This price can differ depending on the lookup~time of the ticket. In this research, airfare changes have been monitored up to six~weeks (i.e. 42~days) prior to departure. A certain price of a ticket can thus be defined in the number of \emph{days before departure}, or \emph{dbd}.
 
-Also, for the simulation model used in this research I make the assumption that the underlying tickets are non-transferable and non-refundable. The customer is therefore \emph{not} able to buy a ticket and get a refund at a later time, or transfer it to another person or departure date. This is essential for the concept of options to work, as else the passenger will likely always buy the ticket immediately at arrival and request a refund when he is unable to fly.
+Also, for the simulation model used in this research I make the assumption that the underlying tickets are non-transferable and non-refundable. The customer is therefore \emph{not} able to buy a ticket and get a refund at a later time, or transfer it to another person or departure date. This is essential for the concept of options to work, as else the passenger will likely always buy the ticket immediately at arrival and request a refund when she is unable to fly.
 
 During this thesis, a data set of airfares on flight tickets for 22~different routes was collected during a period of 12~weeks. The empirical data acquired in this stage are being used in the simulation model. The complete analysis on these airfares is given in \autoref{chap:DataAnalysis}.
 
@@ -79,17 +79,17 @@ The revenue management concept of discount buckets has lead to different prices 
 \subsection{Airfare lock-in product}
 The airfare~lock-in products gives its holder the right --- but not the obligation --- to buy the underlying flight on or before a certain maturity date for a predetermined strike price. The holder is thereby covered from sudden increases in price or potential sold-outs, but is still able to not fly at all or gain from large price decreases.
 
-The strike price, denoted by $S$, is the cost at which the passenger is able to buy the underlying flight ticket when he exercises the option. In this research I will consider the cases where the strike price of the airfare~lock-in product is equal to the initial airfare of the underlying flight at purchase of the option.
+The strike price, denoted by $S$, is the cost at which the passenger is able to buy the underlying flight ticket when she exercises the option. In this research I will consider the cases where the strike price of the airfare~lock-in product is equal to the initial airfare of the underlying flight at purchase of the option.
 $$S = T_0$$
 
-For example, when the current ticket price $T_0$ is equal to US\$\,100 and the customer decides to purchase the option, he has the opportunity to buy the ticket for US\$\,100 at the date of maturity. This opportunity price stays fixed for the customer. So if the price rises, she will still be able to buy the underlying flight for that same amount. When the price drops to under US\$\,100, the customer is still able to not exercise the option, but purchase the ticket directly from the airliner. The airfare lock-in product thus gives the passenger best of both worlds.
+For example, when the current ticket price $T_0$ is equal to US\$\,100 and the customer decides to purchase the option, she has the opportunity to buy the ticket for US\$\,100 at the date of maturity. This opportunity price stays fixed for the customer. So if the price rises, she will still be able to buy the underlying flight for that same amount. When the price drops to under US\$\,100, the customer is still able to not exercise the option, but purchase the ticket directly from the airliner. The airfare lock-in product thus gives the passenger best of both worlds.
 
 Setting the strike price to a different level than the initial ticket price is also possible in a realistic setting, and can provide --- in some cases --- even better alignment with the customer's preferences. For example, \citeA{courty2000sequential} show in their research that by setting different combinations of ticket price and possible level of refund, the airliner is able to segment customers relative to their level of uncertainty. A more detailed description of this paper can be found in \autoref{subsec:AviationIndustry}. In this research, however, I will not evaluate those cases, and will thus only consider strike prices that are equal to the initial airfare.
 
 
-Another property that is associated with an airfare~lock-in products, is the \emph{maturity time} of said option. This value denotes the number of days of extra decision time a customer gains when he buys the option. At the date of maturity, the customer has to make the decision to actually buy the ticket, or to not exercise the option at all. A passenger will choose for the first alternative when he has decided to actually fly, and the current airfare is higher than the agreed upon strike price. During this number of days $m$, the customer is thus \emph{insured} against price fluctuations and will therefore not risk high fare increases.
+Another property that is associated with an airfare~lock-in products, is the \emph{maturity time} of said option. This value denotes the number of days of extra decision time a customer gains when she buys the option. At the date of maturity, the customer has to make the decision to actually buy the ticket, or to not exercise the option at all. A passenger will choose for the first alternative when she has decided to actually fly, and the current airfare is higher than the agreed upon strike price. During this number of days $m$, the customer is thus \emph{insured} against price fluctuations and will therefore not risk high fare increases.
 
-For the simulation models used in this thesis, I assume a maturity time of 3~days. When a passenger thus purchases the option, he will be able to decide whether to exercise the option 3~days after the acquisition of the lock-in product.
+For the simulation models used in this thesis, I assume a maturity time of 3~days. When a passenger thus purchases the option, she will be able to decide whether to exercise the option 3~days after the acquisition of the lock-in product.
 
 For real world application, the customer is able to exercise the airfare lock-in product on any moment in time till maturity. However, I will assume the customer will only exercise the option on the maturity date itself. See \autoref{sec:OptionStyle} for a description.
 
@@ -133,12 +133,12 @@ When a doubting passenger arrives at the booking process, there is a series of e
 
 \insertfigure{PassengersDecisionTree}{Passenger's decision tree}
 
-First, the customer has to decide whether to \emph{buy the flight} immediately, \emph{wait} a certain amount of time, or \emph{buy an option} on the flight and postpone the decision. Next, after a certain period of time, the customer will know whether he will actually take the flight. The probability of flying or not flying is respectively $P^f$ and $1 - P^f$, and is based upon uncertain events that might occur. For instance, the probability of not flying might consist of the probability that the passenger is not able to take a week vacation from work, or even that the weather is bad when the customer wants to go on a sunny holiday.
+First, the customer has to decide whether to \emph{buy the flight} immediately, \emph{wait} a certain amount of time, or \emph{buy an option} on the flight and postpone the decision. Next, after a certain period of time, the customer will know whether she will actually take the flight. The probability of flying or not flying is respectively $P^f$ and $1 - P^f$, and is based upon uncertain events that might occur. For instance, the probability of not flying might consist of the probability that the passenger is not able to take a week vacation from work, or even that the weather is bad when the customer wants to go on a sunny holiday.
 
 The action that follows this outcome depends upon the decision made in the first phase. As shown in the figure, there are several paths a passenger can make. Each path has his own level of expected costs. The associated costs with each decision can be explained as follows:
 
 \begin{description}
-\item[buy flight:] in this scenario, the passenger has decided to already buy the ticket when he arrives at the model. Because tickets are non-transferable and non-refundable, the outcome of whether she will fly on maturity or not does not influence the costs the passenger will make. For example, when the customer decides to fly, she can use her previously bought ticket. When the passenger does not decide to fly however, she will have a worthless ticket she will not be able to use. The costs associated with this decision thus are the costs of the initial ticket price, $T_0$.
+\item[buy flight:] in this scenario, the passenger has decided to already buy the ticket when she arrives at the model. Because tickets are non-transferable and non-refundable, the outcome of whether she will fly on maturity or not does not influence the costs the passenger will make. For example, when the customer decides to fly, she can use her previously bought ticket. When the passenger does not decide to fly, however, she will have ticket that is rendered useless as she will not be able to use it. The costs associated with this decision thus are the costs of the initial ticket price, $T_0$.
 
 \item[wait $\rightarrow$ don't fly:] in this case, the passenger has decided to wait $m$~days before making the decision to buy the ticket. Because the probability of not flying is $(1 - P^f)$ she has this same probability of not spending anything, as she will not buy the flight in that case. The costs associated with this path thus are none, $(1 - P^F) \times 0 = 0$.
 
@@ -171,11 +171,11 @@ P^f \times (p_O + S) + (1 - P^f) \times p_O = P^f \times S + p_O
 \subsubsection{Passenger's WTP and the third party's WTA}
 \label{subsec:PassengersWTP}
 In a risk neutral setting with equal shared information between option seller and buyer, the price a passenger is willing to pay for the option equals:
-\begin{equation}
+\begin{equation*}
 \min(P^f \times T_m, (1 - P^f) \times T_0)
-\end{equation}
+\end{equation*}
 
-This can be derived from the fact that a rational customer will always choose her best option, and will thus decide for the alternative with the least costs; either waiting, or buying the flight ticket immediately.
+This can be derived from the fact that a rationally thinking customer will always choose her best option, and will thus decide for the alternative with the least costs; either waiting, or buying the flight ticket immediately.
 
 From the third party's perspective the minimum option price the company is willing to accept is equal to expected incurred costs of selling the product. For a set $\left\{ E(p_1), E(p_2), \ldots, E(p_n)\right\}$ where $E(p_n)$ is the expected result (i.e. $(p_n - T_0) \times P^{\,p_n}$) of price $p_n$ occurring at maturity. The value of $p_O$ can thus be defined as:
 \begin{equation*}
