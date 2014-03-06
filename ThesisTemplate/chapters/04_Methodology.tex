@@ -4,7 +4,7 @@ This research will be divided into two consecutive phases.
 
 The first part, \typenameref{subsec:DataCollectionAndParsing}, will focus on retrieving the pricing-data on a predetermined set of routes. This phase will gather data during a period of 6~weeks and parse it into a new interlinked format. The information retrieved and parsed during this period will be used as the census for the whole study.
 
-The second phase, \typenameref{subsec:OptionValuationModels}, will deal with the analysis of the data and build simulation models. These simulation models will be used to test the performance of the different configurations of option seller and customer. Furthermore, they will provide answers to the research questions as defined in \todo{ref}.
+The second phase will deal with the analysis of the data and build simulation models. These simulation models will be used to test the performance of the different configurations of option seller and customer. Furthermore, they will provide answers to the research questions as defined in \autoref{chap:ResearchQuestions}.
 
 A more detailed description of the first phase will be given in the next section. The thorough definition of the simulation models used in this study will be given in \ref{chap:ModelDevelopment}.
 
@@ -57,7 +57,7 @@ After parsing of the files, the prices of the 6~hour time windows will be conver
 
 When certain timeslots contain no price observation, this single timeslot is left out of the calculation of the average airfare for that specific number of days before departure. Only when all 4~of the timeslots for a specific day have no data available, the value in the new data matrix is assigned as \emph{missing value} (i.e. n/a).
 
-The whole illustrated process only describes one route (i.e. \emph{ATL} to \emph{MCO}) departing on one specific date (i.e. departure on \emph{August $20^{th}$}). The automated program however takes into account every route described in \autoref{app:selectedroutes}, and all dates in the period from August $20^{th}$ till September $30^{th}$.
+The whole illustrated process only describes one route (i.e. \emph{ATL} to \emph{MCO}) departing on one specific date (i.e. departure on \emph{August $20^{th}$}). The automated program however takes into account every route described in \autoref{app:SelectedRoutes}, and all dates in the period from August $20^{th}$ till September $30^{th}$.
 
 After retrieval of the flight information, the data is parsed and stored in the \href{http://www.hdfgroup.org/HDF5/}{HDF5-format}. This data format is often used in big data analysis, and enables quick reading of big sets of data to memory. Following the loading into RAM, the data will be converted to a \href{http://pandas.pydata.org/}{Pandas} object after which analysis can be done.
 

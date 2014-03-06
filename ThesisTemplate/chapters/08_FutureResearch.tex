@@ -1,14 +1,45 @@
-\chapter{Future research}
+\chapter{Conclusions and recommendations}
 
-%Future research
-%passenger arrival rate to de Boer and Wetherford
+During the course of this Master's thesis, I have been able to collect ticket pricing data on 22~different routes for a period of 6~weeks. With the help of these data I have empirically analysed several simulation models, which allowed me to provide answers to the research questions. In this last chapter I will give the concluding remarks on these inquiries, and will try to supply recommendations for future research on this topic.
 
-%is it really bad? => surplus
+The main research question of this research is stated as follows:
 
-%more months of data -> seasonaity
+\begin{quote}\emph{Is it sustainable for an external company without capacity information or seat reservation capabilities to set the price of airfare~lock-in~products at a level that the customer accepts?}\end{quote}
+
+In \autoref{chap:Methodology} I have theoretically analysed the viability of offering airfare lock-in products in a hypothetical scenario. In the presented case, both the option seller and customer had perfect and shared information on future ticket price movements and likelihood of travelling. Furthermore, this scenario assumed a passenger that was risk neutral.
+
+The theoretical analysis showed that it was indeed possible to offer options at a fee that both the seller and customer would accept. However, in the proposed model the company would never be able to make any profits on selling lock-in products. This was because due to the characteristics of the passenger with perfect knowledge and risk neutrality, the only acceptable option fee was equal to the expected costs associated with providing the option. For the other models in this thesis I thus released the first assumption, which resulted in a customer that made less accurate forecasts than the option selling company.
+
+In \autoref{chap:Results} I tested the new configuration of the passenger in several simulation models. The benchmark model immediately showed that it was actually possible for the option selling company to offer lock-in products at a price the customer accepts, and still make profits on this process. The simulation model later in the same chapter --- which relied on Monte~Carlo simulation --- even showed that it was possible for an option seller to make profits in a realistic scenario. This practically implementable forecasting method showed positive outcomes when combined with a company that had more accurate information than the buyer.
+
+The empirical analysis showed that it is certainly possible to offer airfare lock-in products to passengers in a sustainable manner. The only important restricting assumption I applied to the model was that the company should always be able to obtain the passenger's exact level of likelihood of travelling. Without this figure, the seller will be unable to set optimal option prices for an individual customer. While some research on this topic has already been done, future studies could provide answers on how to retrieve such information of the customer to make the simulation models in this thesis practically valuable.
+
+The second research question I concerned myself with during this thesis is defined as follows:
+
+\begin{quote}\emph{What are the implications for the customer resulted from the purchase of an an airfare~lock-in product?}\end{quote}
+
+As \autoref{subsec:CustomersAdvantages} showed, the passenger will in some situations benefit from purchasing an option. The section presented two~cases in which the decision to buy an airfare lock-in product was different from the outcomes of the actual decision if no options would be available. The analysis of the first case, in which the customer would buy an option when he instead should have bought the flight immediately, showed that the customer would be worse off by purchasing the lock-in product. In the other case, in which the overestimating passenger would have made the wrong decision to buy the flight instead of waiting, the purchase of an option actually results in positive outcomes for the customer.
+
+The subsection defined three~strategies of option purchasing: the first assumed the customer would never buy an option, the second strategy assumed the passenger would always purchase the lock-in product, and the third methodology assumed the customer would either choose to buy an option or not. I was able to show that the third strategy was almost always preferable relative to the first strategy. The cost savings would become higher as the inaccuracy of the customer's forecasts progressed. Furthermore, the analysis showed that after a certain level of the passenger's error term, the second strategy would even be better than the methodology of never buying an option.
+
+The final research question in this thesis is stated as follows:
+
+\begin{quote}\emph{What are the effects of the option seller's level of forecasting accuracy and applied margin, and the customer's level of accuracy on the performance of the model?}\end{quote}
+
+\Cref{chap:Results} showed that a higher forecasting error of the seller results in less profits for the company. While the company's level of $\mbox{MAPE}$ was less relevant, the amount of underestimations of the seller's forecasts was directly correlated with the expected profits.
+
+Furthermore, the analysis also revealed that the customer's level of accuracy was of much greater influence. A decrease of a passenger's $\mbox{MAPE}$ not only resulted in higher option profits for the option writer, but is also responsible for an increase in these customers making the wrong buy/wait decision. Due to this last property, a higher inaccuracy of the customer thus will yield to more benefits for her when she buys the airfare lock-in product.
+
+The level of applied margin was also of significant importance to the seller's realized profits. By setting the right margin, a company is able to make profits in situations where its forecasting accuracy is low. This has come forward in the Monte~Carlo scenario. The option seller should, however, make sure it will not set the margin too high, as this will result in loss of acceptances on the customer's side.
+
+These answers provided previously are based upon empirical analysis of the simulation model defined in \autoref{chap:ModelDevelopment}. I have done my utmost best to make these simulations as close to reality as possible. However, due to limited time and resources, some concepts in this Master's thesis are overly simplifications of the real world. Future research could tackle these issues and continue to build on this research to make the models more practically implementable.
+
+One of such simplifications is the arrival rate of the customer. While I have chosen for a homogeneous Poisson distribution with a single class of passengers arriving, many current researchers use different distributions with multi-class passengers (e.g.,\citeA{weatherford1993modeling}, \citeA{bertsimas2005simulation}).
+
+Also, the current model does not take into account the risk utility of the customers. While more risk averse customers will likely yield better results, the outcomes might become more aligned with the real world.
+
+Furthermore, the simulation models now assume the arriving customers are willing to pay the current ticket price. This assumption is probably not realistic and could be improved by empirical research.
+
+Next, the passenger behaviour model as described in \autoref{sec:ModelPassengerBehaviour} is based on theoretical thinking. Future research could offer insights in how a customer acts in a realistic setting by doing empirical research.
 
 
-\todo[The distribution of the arrival process for the simulation of passengers will be derived from the article by \citeA{weatherford1993modeling}. In their paper, the authors simulate the arrival according to a inhomogeneous Poisson process. \citeA{bertsimas2005simulation} defined a model more specific for the aviation industry based on the PARM-model.]{move to future research}
-
-
-%passenger's ticket WTP = T_0

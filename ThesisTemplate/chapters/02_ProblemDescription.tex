@@ -91,11 +91,9 @@ Another property that is associated with an airfare~lock-in products, is the \em
 
 For the simulation models used in this thesis, I assume a maturity time of 3~days. When a passenger thus purchases the option, he will be able to decide whether to exercise the option 3~days after the acquisition of the lock-in product.
 
-Next to these configurable parameters, an airfare~lock-in product also has a certain price at which the option is offered to the customer. The theoretical level of this option price is described in \typenameref{subsec:PassengersWTP}. In this research, however, a number of different option valuation techniques are being considered. These pricing models are characterized by different configurations of the parameters of this simulation model, and will be described in detail in \autoref{chap:ModelDevelopment}.
+For real world application, the customer is able to exercise the airfare lock-in product on any moment in time till maturity. However, I will assume the customer will only exercise the option on the maturity date itself. See \autoref{sec:OptionStyle} for a description.
 
-\subsubsection{Option style}
-\label{sec:OptionStyle}
-While customers might be allowed to execute their option during the whole period up till maturity (i.e. American style), I will assume that all options are exercised on the date of maturity (i.e. European option). This is in accordance with the theory of \citeA{merton1973theory}, who states that an American option that does not return dividends should rationally only be exercised at maturity. This assumption can easily be illustrated with the use of an example. If a customer who has bought a real option has decided to exercise the option, it has nothing to lose by waiting till the option matures. By waiting this extra time, the customer only gains an advantage which allows him to still withhold himself from actually buying the ticket. In this way, when there occurs an unforeseen situation after his decision, he still has not bought the ticket and can waive the flight. Therefore it would be unrealistic of the customer to exercise the option before the date of maturity.
+Next to these configurable parameters, an airfare~lock-in product also has a certain price at which the option is offered to the customer. The theoretical level of this option price is described in \typenameref{subsec:PassengersWTP}. In this research, however, a number of different option valuation techniques are being considered. These pricing models are characterized by different configurations of the parameters of this simulation model, and will be described in detail in \autoref{chap:ModelDevelopment}.
 
 
 \subsection{External company}
@@ -210,7 +208,6 @@ For combinations of $P^f$ and $\frac{T_m}{T_0}$ that result in an outcome left o
 The combinations to the right of this function do not result in an option price the passenger will accept. In these cases the customer will rather directly buy the flight ticket at arrival. An option seller can still target passengers in this area by providing them with a ticket and an option that allows the customers to return the ticket's without additional costs (i.e a put option). However, this is outside the scope of this research.
 
 The only combinations that both satisfy the company and the customer lie directly on the $\frac{T_m}{T_0}$ curve. These option prices, however, result in $0$ profits for the seller as the expected costs are equal to the gains of providing the options. In the situation described above --- with a risk neutral customer and perfect shared information --- the selling of lock-in product is feasible, but will not return in any returns in the long run. However, in a realistic setting customers are unlikely to be totally risk-neutral or have perfect shared information on price movements. Therefore, the rest of this thesis will assume that the customer has less accurate information than the seller has access to. This is expected to result in positive returns for the seller, as this uncertainty will allow him to set option prices higher than the market equilibrium.
-
 
 
 
