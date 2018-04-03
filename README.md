@@ -1,4 +1,4 @@
 Thesis
 ======
 
-Master's Thesis - Evalutaion of airfare lock-in products
+Master's Thesis - Evaluation of airfare lock-in products
